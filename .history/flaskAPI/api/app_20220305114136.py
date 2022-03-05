@@ -84,7 +84,7 @@ def get_ip_server():
         object = Round_robin.hostServerConnectionRR(queue_rr, topo_network, hosts, servers, priority)
     # chay thuat toan Dinjkstra
     else:
-        object = DijkstraLearning.hostServerConnection(topo_network, hosts, servers, priority)
+        object = DijkstraLearning.hostServerConnection(topo_network, hosts, servers)
 
     # truyen ip xuat phat va lay ra ip server dich den
     object.set_host_ip(host_ip= str(host_ip))

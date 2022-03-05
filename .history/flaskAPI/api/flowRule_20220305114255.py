@@ -25,6 +25,7 @@ class flowRule(object):
         self.dst = dst
         self.json_rule = dict() 
         self.jsonRulePath = ""
+        self.priority = 200
 
     def get_json_rule(self):
         return self.json_rule
@@ -38,7 +39,7 @@ class flowRule(object):
     def get_shortest_path(self):
         return self.shortest_path
 
-    def create_flow_rule(self, flows, priority):  
+    def create_flow_rule(self, flows):  
         """
         Generates flow rule framework
         """
@@ -73,8 +74,8 @@ class flowRule(object):
                         else: # cac trung gian con lai
                             port_in = self.shortest_path[link-1].get_port_in()
 
-                    priority +=1
-                    flow = Flow.Flow(priority = priority, timeout = 0, isPermanent = True, deviceId = device.get_id()  )
+                    self.priority +=1
+                    flow = Flow.Flow(priority = self.priority, timeout = 0, isPermanent = True, deviceId = device.get_id()  )
                     treatment = Treatment.Treatment()
                     selector = Selector.Selector()
 
@@ -107,12 +108,12 @@ class flowRule(object):
                     # add each flow to flows object
                     flows.set_flows(flow_object = flow)
 
-    def add_flow_rule(self, priority):
+    def add_flow_rule(self):
         """
         set attributes of flow rule
         """
         flows = Flows.Flows()
-        self.create_flow_rule(flows, priority)
+        self.create_flow_rule(flows)
 
         json_flows = []
         self.json_rule['flows'] = json_flows
@@ -165,7 +166,8 @@ class flowRule(object):
         # with open('/home/onos/Downloads/flaskSDN/flaskAPI/jsonRuleXuoi.json', 'w') as json_file:
         #      json.dump(self.json_rule, json_file)
 
-    def write_json_rule_to_file(self, json_rule_path, json_rule_reversing_path):
+    def write_json_rule_to_file(self, json_rule_path, json_rule_reversing_path, pr):
+
         flows_reversing_path = json_rule_reversing_path['flows']
         flows_path = json_rule_path['flows']
         #print(flows_path)

@@ -107,12 +107,12 @@ class flowRule(object):
                     # add each flow to flows object
                     flows.set_flows(flow_object = flow)
 
-    def add_flow_rule(self, priority):
+    def add_flow_rule(self):
         """
         set attributes of flow rule
         """
         flows = Flows.Flows()
-        self.create_flow_rule(flows, priority)
+        self.create_flow_rule(flows, pri)
 
         json_flows = []
         self.json_rule['flows'] = json_flows

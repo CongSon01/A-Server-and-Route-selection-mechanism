@@ -29,12 +29,7 @@ def get_multiple_data():
     return list(data)
 
 def remove_all():
-    """
-    remove all documents in collection
-    :return:
-    """
-    collection.remove({})
-    return
+    ""
 
 # CLOSE DATABASE
 connection.close()

@@ -86,7 +86,7 @@ class hostServerConnection(object):
 
         #print("\n\nadd reverse flow JSon")
         reverse_flow = flowRule.flowRule(topo = self.topo, shortest_path = reverse_path, src = dest_object, dst = host_object)
-        reverse_flow.add_flow_rule(self.priority)
+        reverse_flow.add_flow_rule()
         reverse_flow_rule = reverse_flow.get_json_rule()
         
         flow.write_json_rule_to_file(json_rule_path = flow_rule, 

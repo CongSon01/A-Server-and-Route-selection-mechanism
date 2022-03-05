@@ -33,7 +33,7 @@ def remove_all():
     remove all documents in collection
     :return:
     """
-    collection.remove({})
+    collection.remove()
     return
 
 # CLOSE DATABASE

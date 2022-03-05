@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 
 # mongo_uri = "mongodb://username:" + urllib.quote("p@ssword") + "@127.0.0.1:27001/"
-mongo_uri = "mongodb://10.20.0.248:27017"
+mongo_uri = "mongodb://10.20.0.250:27017"
 connection = MongoClient(mongo_uri)
 
 # CREATE DATABASE
@@ -28,13 +28,6 @@ def get_multiple_data():
     data = collection.find()
     return list(data)
 
-def remove_all():
-    """
-    remove all documents in collection
-    :return:
-    """
-    collection.remove({})
-    return
 
 # CLOSE DATABASE
 connection.close()
