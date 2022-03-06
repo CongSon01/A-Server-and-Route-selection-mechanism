@@ -3,7 +3,7 @@ import pandas as pd
 import sub
 import sys
 sys.path.append('/home/onos/Downloads/flaskSDN/flaskAPI/model')
-import model
+import model, model_1
 import history_weights
 
 class updateWeight(object):
@@ -60,6 +60,7 @@ class updateWeight(object):
         
         # xoa het trong so cu o Mongo
         model.remove_all()
+        model_1.remove_all()
         print("Write update weight to file ...")
         
         for link in self.link_set:
@@ -70,6 +71,7 @@ class updateWeight(object):
             temp_data = { "src": src, "dst": dst, "weight": weight }
             # save into update weight database mongoDB
             model.insert_data(temp_data)
+            model_1.insert_data(temp_data)
             #history_weights.insert_data(temp_data)
         
 class WeightLink(object):
@@ -138,6 +140,3 @@ class WeightLink(object):
 
             link_cost = self.get_link_cost(mean_W)
             return link_cost
-           
-    
-      

@@ -1,9 +1,0 @@
-Tao 2 SDN
-
-
-2 SDN co 1 switch chung
-
-
-
-
-=> co 2 database => client, server nao lam viec o SDN do

@@ -30,17 +30,56 @@ class connectGraph(object):
             for link in links:
                 result_topo['links'].append(link)
             
-            link_fix = {
+            link_fix_xuoi_1 = {
                     "src": {
-                        "port": 6,
-                        "id": "of:0000000000000003"
+                        "port": 10,
+                        "id": "of:0000000000000005"
                     },
                     "dst": {
-                        "port": 7,
+                        "port": 10,
+                        "id": "of:0000000000000006"
+                    }
+            }
+  
+            link_fix_nguoc_1 = {
+                    "src": {
+                        "port": 10,
+                        "id": "of:0000000000000006"
+                    },
+                    "dst": {
+                        "port": 10,
+                        "id": "of:0000000000000005"
+                    }
+            }
+
+            ###########################
+            link_fix_xuoi_2 = {
+                    "src": {
+                        "port": 11,
+                        "id": "of:0000000000000004"
+                    },
+                    "dst": {
+                        "port": 11,
+                        "id": "of:0000000000000007"
+                    }
+            }
+
+            link_fix_nguoc_2 = {
+                    "src": {
+                        "port": 11,
+                        "id": "of:0000000000000007"
+                    },
+                    "dst": {
+                        "port": 11,
                         "id": "of:0000000000000004"
                     }
             }
-            result_topo['links'].append(link_fix)
+
+            result_topo['links'].append(link_fix_xuoi_1)
+            result_topo['links'].append(link_fix_nguoc_1)
+            result_topo['links'].append(link_fix_xuoi_2)
+            result_topo['links'].append(link_fix_nguoc_2)
+
             for switch in devices:
                 result_topo['devices'].append(switch)
      
@@ -63,11 +102,15 @@ class connectGraph(object):
                 object = "\'" + object + "\'"
                 object =  ast.literal_eval(object)
                 object = json.loads(object)
-
+                
+            print(object)
             for host in object['hosts']:
                 #print("123")
                 host_mac = str(host['mac'])
-                host_ip = str(host['ipAddresses'][0])
+                
+                
+                host_ip = str(host['ipAddresses'][0]) 
+                # print(host['ipAddresses'][0])
                     
                 locations = host['locations']
                 location = locations[0]
@@ -79,7 +122,6 @@ class connectGraph(object):
                     'mac': host_mac, 
                     'deviceId': device_id,
                     'ipAddresses': host_ip
-
                 }
 
                 result_host['hosts'].append(host_value)

@@ -89,15 +89,13 @@ class Graph(object):
             device = self.find_device(device_id)
             host = CusHost.Host( id = host_mac, device = device, port = port, ip= host_ip)
 
+            # so cuoi dia chi ip cua host
             number = int(host_ip[-1])
-            if number <=4:
+            if number <=5:
                 hosts[host_ip] = host   
             else:
                 servers[host_ip] = host
                
-           
-            self.topo.set_hosts(hosts= hosts)
-            self.topo.set_servers(servers= servers)
             self.topo.add_node(host)
  
             edge1 = CusLink.HostEdge(host, device, 1 , port)
@@ -105,6 +103,9 @@ class Graph(object):
             
             self.topo.add_edge(edge1)
             self.topo.add_edge(edge2)
+
+        self.topo.set_hosts(hosts= hosts)
+        self.topo.set_servers(servers= servers)
         
     def find_device(self, target):
         nodes = self.topo.get_nodes()

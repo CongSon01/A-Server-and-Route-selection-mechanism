@@ -16,9 +16,9 @@ class destQueueRabbit(object):
             msg = str(ip_dest)
             #print("msg =", msg)
             #print("type msg", type(msg))
-            # print("DAY VAO QUEUE", msg)
+            print("DAY VAO QUEUE", msg)
             connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host='localhost'))
+            pika.ConnectionParameters(host='10.20.0.250'))
             channel = connection.channel()
 
             channel.queue_declare(queue='dest')
@@ -32,7 +32,7 @@ class destQueueRabbit(object):
 
     def receive_queue(self):
                 connection = pika.BlockingConnection(
-                pika.ConnectionParameters(host='localhost'))
+                pika.ConnectionParameters(host='10.20.0.250'))
                 channel = connection.channel()
                 channel.queue_declare(queue='dest')
                 #print('Waitting for data send')
