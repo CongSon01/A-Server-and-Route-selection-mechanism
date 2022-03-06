@@ -33,22 +33,22 @@ class connectGraph(object):
             link_fix_xuoi_1 = {
                     "src": {
                         "port": 10,
-                        "id": "of:0000000000000005"
+                        "id": "of:0000000000000004"
                     },
                     "dst": {
                         "port": 10,
-                        "id": "of:0000000000000006"
+                        "id": "of:0000000000000005"
                     }
             }
   
             link_fix_nguoc_1 = {
                     "src": {
                         "port": 10,
-                        "id": "of:0000000000000006"
+                        "id": "of:0000000000000005"
                     },
                     "dst": {
                         "port": 10,
-                        "id": "of:0000000000000005"
+                        "id": "of:0000000000000004"
                     }
             }
 
@@ -77,8 +77,8 @@ class connectGraph(object):
 
             result_topo['links'].append(link_fix_xuoi_1)
             result_topo['links'].append(link_fix_nguoc_1)
-            result_topo['links'].append(link_fix_xuoi_2)
-            result_topo['links'].append(link_fix_nguoc_2)
+            # result_topo['links'].append(link_fix_xuoi_2)
+            # result_topo['links'].append(link_fix_nguoc_2)
 
             for switch in devices:
                 result_topo['devices'].append(switch)

@@ -91,7 +91,7 @@ class Graph(object):
 
             # so cuoi dia chi ip cua host
             number = int(host_ip[-1])
-            if number <=5:
+            if number <=3:
                 hosts[host_ip] = host   
             else:
                 servers[host_ip] = host

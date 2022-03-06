@@ -47,54 +47,58 @@ def myNetwork():
     s6 = net.addSwitch('s6', cls=OVSKernelSwitch)
     s7 = net.addSwitch('s7', cls=OVSKernelSwitch)
     s8 = net.addSwitch('s8', cls=OVSKernelSwitch)
-    s9 = net.addSwitch('s9', cls=OVSKernelSwitch)
-    s10 = net.addSwitch('s10', cls=OVSKernelSwitch)
+    # s9 = net.addSwitch('s9', cls=OVSKernelSwitch)
+    # s10 = net.addSwitch('s10', cls=OVSKernelSwitch)
 
     info( '*** Add hosts\n')
     h1 = net.addHost('h1', cls=Host, ip='10.0.0.1', defaultRoute=None)
     h2 = net.addHost('h2', cls=Host, ip='10.0.0.2', defaultRoute=None)  
     h3 = net.addHost('h3', cls=Host, ip='10.0.0.3', defaultRoute=None)
-    h4 = net.addHost('h4', cls=Host, ip='10.0.0.4', defaultRoute=None)
-    h5 = net.addHost('h5', cls=Host, ip='10.0.0.5', defaultRoute=None)
+
+    #h4 = net.addHost('h4', cls=Host, ip='10.0.0.4', defaultRoute=None)
+    #h5 = net.addHost('h5', cls=Host, ip='10.0.0.5', defaultRoute=None)
     h6 = net.addHost('h6', cls=Host, ip='10.0.0.6', defaultRoute=None)
     h7 = net.addHost('h7', cls=Host, ip='10.0.0.7', defaultRoute=None)
     h8 = net.addHost('h8', cls=Host, ip='10.0.0.8', defaultRoute=None)
-    h9 = net.addHost('h9', cls=Host, ip='10.0.0.9', defaultRoute=None)
-    h10 = net.addHost('h10', cls=Host, ip='10.0.0.10', defaultRoute=None)
+    # # h9 = net.addHost('h9', cls=Host, ip='10.0.0.9', defaultRoute=None)
+    # h10 = net.addHost('h10', cls=Host, ip='10.0.0.10', defaultRoute=None)
 
     info( '*** Add links vs hosts\n')
     # bw-10Gb/s
     net.addLink(h1, s1, bw=10, delay='5ms', loss=4, use_htb=True)
-    net.addLink(h2, s1, bw=10, delay='5ms', loss=4, use_htb=True)
-    net.addLink(h3, s2, bw=10, delay='5ms', loss=4, use_htb=True)
-    net.addLink(h4, s2, bw=10, delay='5ms', loss=4, use_htb=True)
-    net.addLink(h5, s10, bw=10, delay='5ms', loss=4, use_htb=True)
+    net.addLink(h2, s2, bw=10, delay='5ms', loss=4, use_htb=True)
+    # net.addLink(h3, s2, bw=10, delay='5ms', loss=4, use_htb=True)
+    # net.addLink(h4, s2, bw=10, delay='5ms', loss=4, use_htb=True)
+    net.addLink(h3, s3, bw=10, delay='5ms', loss=4, use_htb=True)
 
     info( '*** Add links vs servers\n')
-    net.addLink(h6, s9, bw=10, delay='5ms', loss=4, use_htb=True)
-    net.addLink(h7, s3, bw=10, delay='5ms', loss=4, use_htb=True)
-    net.addLink(h8, s3, bw=10, delay='5ms', loss=4, use_htb=True)
-    net.addLink(h9, s8, bw=10, delay='5ms', loss=4, use_htb=True)
-    net.addLink(h10, s8, bw=10, delay='5ms', loss=4, use_htb=True)
+    net.addLink(h6, s6, bw=10, delay='5ms', loss=4, use_htb=True)
+    # net.addLink(h7, s3, bw=10, delay='5ms', loss=4, use_htb=True)
+    net.addLink(h7, s7, bw=10, delay='5ms', loss=4, use_htb=True)
+    # net.addLink(h9, s8, bw=10, delay='5ms', loss=4, use_htb=True)
+    net.addLink(h8, s8, bw=10, delay='5ms', loss=4, use_htb=True)
 
     info( '*** Add link vs link\n')
     # SDN 248 
     net.addLink(s1, s2, bw=10, delay='5ms', loss=4, use_htb=True)
     net.addLink(s2, s3, bw=10, delay='5ms', loss=4, use_htb=True)
     net.addLink(s3, s4, bw=10, delay='5ms', loss=4, use_htb=True)
-    net.addLink(s4, s5, bw=10, delay='5ms', loss=4, use_htb=True)
-    net.addLink(s5, s1, bw=10, delay='5ms', loss=4, use_htb=True)
+    net.addLink(s4, s1, bw=10, delay='5ms', loss=4, use_htb=True)
+    #net.addLink(s5, s1, bw=10, delay='5ms', loss=4, use_htb=True)
 
      # SDN 250 
+    net.addLink(s5, s6, bw=10, delay='5ms', loss=4, use_htb=True)
     net.addLink(s6, s7, bw=10, delay='5ms', loss=4, use_htb=True)
     net.addLink(s7, s8, bw=10, delay='5ms', loss=4, use_htb=True)
-    net.addLink(s8, s9, bw=10, delay='5ms', loss=4, use_htb=True)
-    net.addLink(s9, s10, bw=10, delay='5ms', loss=4, use_htb=True)
-    net.addLink(s10, s6, bw=10, delay='5ms', loss=4, use_htb=True)
+    net.addLink(s8, s5, bw=10, delay='5ms', loss=4, use_htb=True)
+
+
+    #net.addLink(s4, s5, bw=10, delay='5ms', loss=4, use_htb=True)
+    #net.addLink(s10, s6, bw=10, delay='5ms', loss=4, use_htb=True)
 
     info( '*** Add Bridge between 2 SDN \n')
-    net.addLink(s5, s6, port1= 10, port2=10, bw=10, delay='5ms', loss=4, use_htb=True)
-    net.addLink(s4, s7, port1= 11, port2=11, bw=10, delay='5ms', loss=4, use_htb=True)
+    net.addLink(s4, s5, port1= 10, port2=10, bw=10, delay='5ms', loss=4, use_htb=True)
+    # net.addLink(s4, s7, port1= 11, port2=11, bw=10, delay='5ms', loss=4, use_htb=True)
 
 
     info( '*** Starting network\n')
@@ -108,13 +112,13 @@ def myNetwork():
     net.get('s2').start([c0])
     net.get('s3').start([c0]) 
     net.get('s4').start([c0])
-    net.get('s5').start([c0])
 
+    net.get('s5').start([c1])
     net.get('s6').start([c1])
     net.get('s7').start([c1])
     net.get('s8').start([c1])
-    net.get('s9').start([c1])
-    net.get('s10').start([c1])
+    # net.get('s9').start([c1])
+    # net.get('s10').start([c1])
 
     info( '*** Post configure switches and hosts\n')
 
@@ -154,7 +158,7 @@ def generate_topo(net):
     start_server(host_list, server_list, net)
     print("Tuan bat flask 60s")
     # delay de chay flask da roi lap lich goi flask api
-    time.sleep(60)
+    time.sleep(130)
 
 
     # lap lich cho host
@@ -267,9 +271,9 @@ def create_host_server(net):
     server_list = []
 
     for h in range( len(net.hosts) ):
-        if h <=3:   # host 1 2 3 4 
+        if h <=2:   # host 1 2 3
             host_list.append( net.hosts[h])
-        else: # server  5 6 7 8
+        else: # server  6 7 8
             server_list.append( net.hosts[h])
 
     return (host_list, server_list)
@@ -309,12 +313,12 @@ def call_routing_api(host_list, server_list):
 
 def start_server(host_list, server_list, net):
 
-    p1, p2, p3,p4,p5,p6,p7,p8 = net.get('h1', 'h2', 'h3','h4', 'h5', 'h6','h7', 'h8')
-
+    #p1, p2, p3,p4,p5,p6,p7,p8 = net.get('h1', 'h2', 'h3','h4', 'h5', 'h6','h7', 'h8')
+    p1, p2, p3, p6, p7, p8 = net.get('h1', 'h2', 'h3', 'h6','h7', 'h8')
     plc1_cmd=''
     strGet=''
     plc2_cmd=''
-    i=4
+    i=5
     # duyet qua 8 host
     while i < 8:
         # moi lan khoi tao 1 server co khoang nghi giua chung

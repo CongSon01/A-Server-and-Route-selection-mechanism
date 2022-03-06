@@ -113,7 +113,7 @@ def write_data():
         dicdata[ d[0] ] = d[1] 
 
     #  Khong chon data mac dinh
-    if float(dicdata['byteSent']) > 556:
+    if float(dicdata['byteSent']) > 0:
       
       # them du lieu vao rabbit de lay ra lien tuc
       pub.connectRabbitMQ( data = dicdata )

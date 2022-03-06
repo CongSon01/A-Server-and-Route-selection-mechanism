@@ -60,7 +60,7 @@ class updateWeight(object):
         
         # xoa het trong so cu o Mongo
         model.remove_all()
-        model_1.remove_all()
+        # model_1.remove_all()
         print("Write update weight to file ...")
         
         for link in self.link_set:
@@ -71,7 +71,7 @@ class updateWeight(object):
             temp_data = { "src": src, "dst": dst, "weight": weight }
             # save into update weight database mongoDB
             model.insert_data(temp_data)
-            model_1.insert_data(temp_data)
+            # model_1.insert_data(temp_data)
             #history_weights.insert_data(temp_data)
         
 class WeightLink(object):

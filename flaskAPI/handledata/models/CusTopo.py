@@ -111,11 +111,11 @@ class Topo(object):
         """
         Read data from update_weights table-Mongo in SDN 248/250 and update new weight in each links
         """
-        params_248 = model.get_multiple_data()
+        # params_248 = model.get_multiple_data()
         params_250 = model_1.get_multiple_data()
 
-        params = params_250 + params_248
-        # print("+++++++truy van+++++++++++")
+        params = params_250 
+        # print("+++++++truy + params_248van+++++++++++")
         # print(new_params)
         # print("+++++++truy cap+++++++++++")
         # print(new_params)
