@@ -20,6 +20,8 @@ class hostServerConnection(object):
         self.servers = servers
         self.priority = priority
 
+        self.update_topo()
+
         # khoi tao thuat toan tim duong
         self.sol = ""
         self.reverse_sol = ""
@@ -66,6 +68,7 @@ class hostServerConnection(object):
                 dest_object = self.servers[server]
                 path = self.sol.get_result()
 
+        #print("----------------------------Duong tot nhat----------------------------", self.sol.display_result() )
         # bat dau goi flow rule 
         self.add_flow(host_object, dest_object, path)
       

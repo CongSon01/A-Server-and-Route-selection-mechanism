@@ -10,7 +10,7 @@ def connectRabbitMQ(data):
     
     creadentials = pika.PlainCredentials('onos', 'rocks')
     connection = pika.BlockingConnection(
-    pika.ConnectionParameters('10.20.0.250', 5672, '/', creadentials))
+    pika.ConnectionParameters('10.20.0.250', 5672, '/', credentials=creadentials))
     channel = connection.channel()
 
     # thiet lap queue

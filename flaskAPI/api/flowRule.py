@@ -198,13 +198,15 @@ class flowRule(object):
                     }
         data=json.dumps(data)
         query = {'appID': "tuanDepTrai"}
+
+        response_1 = requests.post('http://10.20.0.248:8181/onos/v1/flows?appId=onos.onosproject.routing', 
+        params=query,auth=HTTPBasicAuth('onos', 'rocks'), data = data, headers=  headers )
+        print("Add flow may 248: ", response_1)
         
         response = requests.post('http://10.20.0.250:8181/onos/v1/flows?appId=onos.onosproject.routing', 
         params=query,auth=HTTPBasicAuth('onos', 'rocks'), data = data, headers=  headers )
         print("Add flow may 250: ", response)
 
-        response_1 = requests.post('http://10.20.0.248:8181/onos/v1/flows?appId=onos.onosproject.routing', 
-        params=query,auth=HTTPBasicAuth('onos', 'rocks'), data = data, headers=  headers )
-        print("Add flow may 248: ", response_1)
+      
         #print("Da add flow thanh cong")
     

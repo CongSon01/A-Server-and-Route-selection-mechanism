@@ -100,7 +100,7 @@ class Dijkstra(object):
         # reverse result
         self.result = self.result[::-1]
 
-    def __str__(self):
+    def display_result(self):
         for e in self.result:
             print("from", e.get_src().get_id(), "->", e.get_dest().get_id(), 
                     " = ", e.get_weight() )

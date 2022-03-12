@@ -53,27 +53,27 @@ class connectGraph(object):
             }
 
             ###########################
-            link_fix_xuoi_2 = {
-                    "src": {
-                        "port": 11,
-                        "id": "of:0000000000000004"
-                    },
-                    "dst": {
-                        "port": 11,
-                        "id": "of:0000000000000007"
-                    }
-            }
+            # link_fix_xuoi_2 = {
+            #         "src": {
+            #             "port": 11,
+            #             "id": "of:0000000000000003"
+            #         },
+            #         "dst": {
+            #             "port": 11,
+            #             "id": "of:0000000000000006"
+            #         }
+            # }
 
-            link_fix_nguoc_2 = {
-                    "src": {
-                        "port": 11,
-                        "id": "of:0000000000000007"
-                    },
-                    "dst": {
-                        "port": 11,
-                        "id": "of:0000000000000004"
-                    }
-            }
+            # link_fix_nguoc_2 = {
+            #         "src": {
+            #             "port": 11,
+            #             "id": "of:0000000000000006"
+            #         },
+            #         "dst": {
+            #             "port": 11,
+            #             "id": "of:0000000000000003"
+            #         }
+            # }
 
             result_topo['links'].append(link_fix_xuoi_1)
             result_topo['links'].append(link_fix_nguoc_1)
@@ -117,14 +117,21 @@ class connectGraph(object):
                 port = int(location['port'])
                 device_id = str(location['elementId'])
 
-                host_value = {
-                    'port': port,
-                    'mac': host_mac, 
-                    'deviceId': device_id,
-                    'ipAddresses': host_ip
-                }
+                # neu dia chi device la 5 va 4 thi xoa het host o device day
+                # day la device cau noi giua 2 SDN
+                if int(device_id[-1]) == 5 or int(device_id[-1]) == 4:
+                    #print("hello world = ", device_id[-1] ) 
+                    continue
+                else:
 
-                result_host['hosts'].append(host_value)
+                    host_value = {
+                        'port': port,
+                        'mac': host_mac, 
+                        'deviceId': device_id,
+                        'ipAddresses': host_ip
+                    }
+
+                    result_host['hosts'].append(host_value)
 
 
         file_host_done =  '/home/onos/Downloads/flaskSDN/flaskAPI/host.json'

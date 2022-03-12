@@ -10,7 +10,7 @@ sys.path.append(PATH_ABSOLUTE+'core')
 sys.path.append(PATH_ABSOLUTE+'routingAlgorithm')
 
 # import from model
-import params_model, params_model_1
+import params_model_248, params_model_250
 
 # import from handledata/models 
 import CusTopo
@@ -49,7 +49,7 @@ topo_network = CusTopo.Topo()
 graph = Graph.Graph(topo_network, 'topo.json', 'host.json')
 
 
-print(topo_network, "\n")
+#print(topo_network, "\n")
 # get tap host va server tronng topo
 hosts = topo_network.get_hosts()
 servers = topo_network.get_servers()
@@ -113,7 +113,8 @@ def write_data():
         dicdata[ d[0] ] = d[1] 
 
     #  Khong chon data mac dinh
-    if float(dicdata['byteSent']) > 0:
+    if float(dicdata['byteSent']) > 600:
+      #print( "nhan data", dicdata['byteSent'] )
       
       # them du lieu vao rabbit de lay ra lien tuc
       pub.connectRabbitMQ( data = dicdata )
@@ -122,10 +123,10 @@ def write_data():
       update.read_params_from_rabbit()
 
       # them data vao MONGO o moi SDN de theo doi ve sau
-      params_model.insert_data(dicdata) # DB may 248
-      params_model_1.insert_data(dicdata) # DB may 250
+      params_model_248.insert_data(dicdata) # DB may 248
+      params_model_250.insert_data(dicdata) # DB may 250
 
-      # Doc duoc 100 du lieu tu rabbit thi cap nhap trong so tren do thi
+      # Doc duoc 100 du lieu tu rabbit 
       if update.get_count() == 100: 
           app.logger.info("Da nhan dc 100 du lieu tu rabbit")
 
