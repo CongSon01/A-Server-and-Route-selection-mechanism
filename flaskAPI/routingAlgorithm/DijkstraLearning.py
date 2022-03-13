@@ -41,7 +41,10 @@ class hostServerConnection(object):
         self.topo.read_update_weight()
     
     def find_src(self):
+        
         host_object = self.hosts[self.host_ip]     
+       
+       
         return host_object
 
     def find_shortest_path(self):

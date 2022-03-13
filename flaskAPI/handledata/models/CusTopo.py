@@ -75,7 +75,7 @@ class Topo(object):
     def has_node(self, node):
         return node in self.nodes
 
-    def __str__(self):
+    def get_topo(self):
         for src in self.nodes:
             for child in self.edges[src]:
                 print( '{} --> {} has cost {} \n'.format(src.get_id(), child[0].get_id(), child[1]) )
@@ -135,9 +135,5 @@ class Topo(object):
             else:
                 edge[1] = weight # update new weight in edge list
                 edge[2].set_weight(weight= weight) # update new weight in edge object
-
-    def add_topo(self, topo):
-        print(topo)
-               
        
  

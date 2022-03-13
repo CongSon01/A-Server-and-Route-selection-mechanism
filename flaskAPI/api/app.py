@@ -49,12 +49,12 @@ topo_network = CusTopo.Topo()
 graph = Graph.Graph(topo_network, 'topo.json', 'host.json')
 
 
-#print(topo_network, "\n")
+#print(topo_network.get_topo(), "\n")
 # get tap host va server tronng topo
 hosts = topo_network.get_hosts()
 servers = topo_network.get_servers()
-print(hosts, "\n")
-print(servers)
+# print(hosts, "\n")
+# print(servers)
 
 if IS_RUN_RRBIN:
     print("Doc Queue 1 lan duy nhat")
@@ -76,6 +76,8 @@ def get_ip_server():
   
   if request.method == 'POST':
     host_ip = request.data
+    global priority 
+    priority +=1
 
     # chay thuat toan Round Robin 
     if IS_RUN_RRBIN:
@@ -111,10 +113,11 @@ def write_data():
         dicdata[ d[0] ] = ":".join(temp)
       else:
         dicdata[ d[0] ] = d[1] 
+    # print( "nhan data", dicdata['byteSent'] )
 
     #  Khong chon data mac dinh
     if float(dicdata['byteSent']) > 600:
-      #print( "nhan data", dicdata['byteSent'] )
+      print( "--------nhan data loc-------------", dicdata['byteSent'] )
       
       # them du lieu vao rabbit de lay ra lien tuc
       pub.connectRabbitMQ( data = dicdata )

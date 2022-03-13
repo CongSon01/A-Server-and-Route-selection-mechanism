@@ -54,9 +54,9 @@ class Graph(object):
             d_dst = self.find_device(id_dst)
 
             # add edge between src and dst devices
-            # trong so mac dinh la 10^-9
-            edge1 = CusLink.DeviceEdge(d_src, d_dst, 0.000000001, port_in, port_out)
-            edge2 = CusLink.DeviceEdge(d_dst, d_src, 0.000000001, port_out, port_in)
+            # trong so mac dinh la 10^-7
+            edge1 = CusLink.DeviceEdge(d_src, d_dst, 0.0000001, port_in, port_out)
+            edge2 = CusLink.DeviceEdge(d_dst, d_src, 0.0000001, port_out, port_in)
 
             # add edges to topo
             self.topo.add_edge(edge1)
@@ -92,15 +92,15 @@ class Graph(object):
 
             # so cuoi dia chi ip cua host
             number = int(host_ip[-1])
-            if number <=2:
+            if number <=5:
                 hosts[host_ip] = host   
             else:
                 servers[host_ip] = host
                
             self.topo.add_node(host)
  
-            edge1 = CusLink.HostEdge(host, device, 0.000000001 , port)
-            edge2 = CusLink.HostEdge(device, host, 0.000000001 , port)
+            edge1 = CusLink.HostEdge(host, device, 0.0000001 , port)
+            edge2 = CusLink.HostEdge(device, host, 0.0000001 , port)
             
             self.topo.add_edge(edge1)
             self.topo.add_edge(edge2)

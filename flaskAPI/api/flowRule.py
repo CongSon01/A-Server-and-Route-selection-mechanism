@@ -73,7 +73,7 @@ class flowRule(object):
                         else: # cac trung gian con lai
                             port_in = self.shortest_path[link-1].get_port_in()
 
-                    priority +=1
+                    # priority +=1
                     flow = Flow.Flow(priority = priority, timeout = 0, isPermanent = True, deviceId = device.get_id()  )
                     treatment = Treatment.Treatment()
                     selector = Selector.Selector()

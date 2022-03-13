@@ -7,6 +7,8 @@ class connectGraph(object):
         self.file_topos = file_topos
         self.file_hosts = file_hosts
 
+        
+
         self.merge_topo()
         self.merge_host()
 
@@ -24,7 +26,7 @@ class connectGraph(object):
                 object = json.loads( handle.read() )
                 object = ast.literal_eval( object )
 
-            print("-------------------------")
+            #print("-------------------------")
             devices = object['devices']
             links = object['links']
             for link in links:
@@ -33,18 +35,41 @@ class connectGraph(object):
             link_fix_xuoi_1 = {
                     "src": {
                         "port": 10,
-                        "id": "of:0000000000000004"
+                        "id": "of:0000000000000005"
                     },
                     "dst": {
                         "port": 10,
-                        "id": "of:0000000000000005"
+                        "id": "of:0000000000000006"
                     }
             }
   
             link_fix_nguoc_1 = {
                     "src": {
                         "port": 10,
+                        "id": "of:0000000000000006"
+                    },
+                    "dst": {
+                        "port": 10,
                         "id": "of:0000000000000005"
+                    }
+            }
+
+            ###########################
+            link_fix_xuoi_2 = {
+                    "src": {
+                        "port": 10,
+                        "id": "of:0000000000000004"
+                    },
+                    "dst": {
+                        "port": 10,
+                        "id": "of:0000000000000007"
+                    }
+            }
+
+            link_fix_nguoc_2 = {
+                    "src": {
+                        "port": 10,
+                        "id": "of:0000000000000007"
                     },
                     "dst": {
                         "port": 10,
@@ -52,33 +77,10 @@ class connectGraph(object):
                     }
             }
 
-            ###########################
-            # link_fix_xuoi_2 = {
-            #         "src": {
-            #             "port": 11,
-            #             "id": "of:0000000000000003"
-            #         },
-            #         "dst": {
-            #             "port": 11,
-            #             "id": "of:0000000000000006"
-            #         }
-            # }
-
-            # link_fix_nguoc_2 = {
-            #         "src": {
-            #             "port": 11,
-            #             "id": "of:0000000000000006"
-            #         },
-            #         "dst": {
-            #             "port": 11,
-            #             "id": "of:0000000000000003"
-            #         }
-            # }
-
             result_topo['links'].append(link_fix_xuoi_1)
             result_topo['links'].append(link_fix_nguoc_1)
-            # result_topo['links'].append(link_fix_xuoi_2)
-            # result_topo['links'].append(link_fix_nguoc_2)
+            result_topo['links'].append(link_fix_xuoi_2)
+            result_topo['links'].append(link_fix_nguoc_2)
 
             for switch in devices:
                 result_topo['devices'].append(switch)
@@ -95,43 +97,53 @@ class connectGraph(object):
             "hosts": []     
         }
 
+        remove_host_from_device = ["4","5","6","7"]
+
         for file in self.file_hosts:
 
             with open(file) as handle:
                 object = json.loads(handle.read())
                 object = "\'" + object + "\'"
                 object =  ast.literal_eval(object)
-                object = json.loads(object)
+                object = json.loads(object) 
                 
-            print(object)
+            #print(object)
             for host in object['hosts']:
                 #print("123")
-                host_mac = str(host['mac'])
-                
-                
+                host_mac = str(host['mac'])       
                 host_ip = str(host['ipAddresses'][0]) 
+                #print("--------------------------->IP-------------->", host_ip, "\n")
                 # print(host['ipAddresses'][0])
-                    
                 locations = host['locations']
-                location = locations[0]
+                #print("==========================================\n", locations)
+                location = locations[0]        
                 port = int(location['port'])
-                device_id = str(location['elementId'])
 
-                # neu dia chi device la 5 va 4 thi xoa het host o device day
-                # day la device cau noi giua 2 SDN
-                if int(device_id[-1]) == 5 or int(device_id[-1]) == 4:
-                    #print("hello world = ", device_id[-1] ) 
-                    continue
-                else:
+                try:
+                    device_id = str(location['elementId'])
+                    #print("---------------------------ID-------------\n", device_id)
 
-                    host_value = {
-                        'port': port,
-                        'mac': host_mac, 
-                        'deviceId': device_id,
-                        'ipAddresses': host_ip
-                    }
+                    # neu dia chi device la 5 va 4 thi xoa het host o device day
+                    # day la device cau noi giua 2 SDN
+                    if  device_id[-1] in remove_host_from_device:
+                        #print("hello world = ", device_id[-1] ) 
+                        continue
+                    else:
+                        print("hostip = ", host_ip)
+                        print("Id", device_id)
 
-                    result_host['hosts'].append(host_value)
+                        host_value = {
+                            'port': port,
+                            'mac': host_mac, 
+                            'deviceId': device_id,
+                            'ipAddresses': host_ip
+                        }
+
+                        result_host['hosts'].append(host_value)
+
+                except:
+                    print("----------------------------Loiiiiiiiiiiiiiiiiiiii------------------------------------")
+
 
 
         file_host_done =  '/home/onos/Downloads/flaskSDN/flaskAPI/host.json'
