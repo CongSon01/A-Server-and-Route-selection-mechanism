@@ -10,6 +10,15 @@ database = connection['SDN_data']
 collection = database['update_weights']
 # print("Database connected")
 
+def insert_n_data(data_list):
+    """
+    Insert new data or document in collection
+    :param data:
+    :return:
+    """
+    collection.insert_many(data_list)
+    return
+
 def insert_data(data):
     """
     Insert new data or document in collection

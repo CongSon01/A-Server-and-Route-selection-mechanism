@@ -35,52 +35,52 @@ class connectGraph(object):
             link_fix_xuoi_1 = {
                     "src": {
                         "port": 10,
-                        "id": "of:0000000000000005"
+                        "id": "of:0000000000000004"
                     },
                     "dst": {
                         "port": 10,
-                        "id": "of:0000000000000006"
+                        "id": "of:0000000000000005"
                     }
             }
   
             link_fix_nguoc_1 = {
                     "src": {
                         "port": 10,
-                        "id": "of:0000000000000006"
+                        "id": "of:0000000000000005"
                     },
                     "dst": {
                         "port": 10,
-                        "id": "of:0000000000000005"
+                        "id": "of:0000000000000004"
                     }
             }
 
             ###########################
-            link_fix_xuoi_2 = {
-                    "src": {
-                        "port": 10,
-                        "id": "of:0000000000000004"
-                    },
-                    "dst": {
-                        "port": 10,
-                        "id": "of:0000000000000007"
-                    }
-            }
+            # link_fix_xuoi_2 = {
+            #         "src": {
+            #             "port": 10,
+            #             "id": "of:0000000000000004"
+            #         },
+            #         "dst": {
+            #             "port": 10,
+            #             "id": "of:0000000000000007"
+            #         }
+            # }
 
-            link_fix_nguoc_2 = {
-                    "src": {
-                        "port": 10,
-                        "id": "of:0000000000000007"
-                    },
-                    "dst": {
-                        "port": 10,
-                        "id": "of:0000000000000004"
-                    }
-            }
+            # link_fix_nguoc_2 = {
+            #         "src": {
+            #             "port": 10,
+            #             "id": "of:0000000000000007"
+            #         },
+            #         "dst": {
+            #             "port": 10,
+            #             "id": "of:0000000000000004"
+            #         }
+            # }
 
             result_topo['links'].append(link_fix_xuoi_1)
             result_topo['links'].append(link_fix_nguoc_1)
-            result_topo['links'].append(link_fix_xuoi_2)
-            result_topo['links'].append(link_fix_nguoc_2)
+            # result_topo['links'].append(link_fix_xuoi_2)
+            # result_topo['links'].append(link_fix_nguoc_2)
 
             for switch in devices:
                 result_topo['devices'].append(switch)
@@ -96,8 +96,9 @@ class connectGraph(object):
         result_host = { 
             "hosts": []     
         }
-
-        remove_host_from_device = ["4","5","6","7"]
+        ###############################################
+        ######## xoa cac host tu tap switch bien
+        remove_host_from_device = ["4","5"]
 
         for file in self.file_hosts:
 
@@ -126,25 +127,22 @@ class connectGraph(object):
                     # neu dia chi device la 5 va 4 thi xoa het host o device day
                     # day la device cau noi giua 2 SDN
                     if  device_id[-1] in remove_host_from_device:
-                        #print("hello world = ", device_id[-1] ) 
+                        print("Xoa host tu switch bien------------------------->", device_id[-1] ) 
                         continue
                     else:
                         print("hostip = ", host_ip)
                         print("Id", device_id)
-
                         host_value = {
                             'port': port,
                             'mac': host_mac, 
                             'deviceId': device_id,
                             'ipAddresses': host_ip
-                        }
+                    }
 
-                        result_host['hosts'].append(host_value)
+                    result_host['hosts'].append(host_value)
 
                 except:
-                    print("----------------------------Loiiiiiiiiiiiiiiiiiiii------------------------------------")
-
-
+                    print("----------------------------Loiiiiiiiiiiiiiiiiiiii IP host ------------------------------------")
 
         file_host_done =  '/home/onos/Downloads/flaskSDN/flaskAPI/host.json'
         with open(file_host_done, 'w') as output_file:

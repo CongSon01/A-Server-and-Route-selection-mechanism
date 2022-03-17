@@ -71,6 +71,25 @@ update = updateWeight.updateWeight()
 # uu tien flow rule theo thu tu tu dau den cuoi
 priority = 200
 
+def get_BW_from_server(file_name, name_host):
+    results = []
+    with open(file_name) as file_in:
+        for line in file_in:
+            list_col = line.split()
+            if list_col[0] == '[SUM]':
+                # new_df = { 'Transfer': list_col[4], 'Bandwidth': list_col[6], 'Jitter': list_col[8], 'Lost': list_col[10],'Total': list_col[9], 'Datagrams': list_col[10] }
+                # print(list_col)
+                # if list_col[0][-1] == '-':
+                if len(list_col) == 13:
+                    results.append( {"NameHost":name_host,"Bandwidth":float(list_col[6])})
+                    # new_df =  [float(list_col[4]), float(list_col[6]), float(list_col[8]), float(list_col[10][:-1]), float(list_co[11]), float(list_col[12][1:-2]) ]
+                elif len(list_col) == 12:
+                    results.append( {"NameHost":name_host,"Bandwidth":float(list_col[5])})
+                    # new_df = [float(list_col[3]), float(list_col[5]), float(list_col[7]),  float(list_col[9][:-1]), float(list_co[10]), float(list_col[11][1:-2])]
+                else:
+                    continue
+        return results
+      
 @app.route('/getIpServer', methods=['POST'])
 def get_ip_server():
   
@@ -132,7 +151,7 @@ def write_data():
       # Doc duoc 100 du lieu tu rabbit 
       if update.get_count() == 100: 
           app.logger.info("Da nhan dc 100 du lieu tu rabbit")
-
+          
           # viet trong so moi ra Mongo
           update.write_update_data_base()
 

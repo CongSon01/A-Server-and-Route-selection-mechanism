@@ -3,6 +3,7 @@ import json
 sys.path.append('/home/onos/Downloads/flaskSDN/flaskAPI/model')
 # from flaskAPI.model import model
 import model_250
+
 class Topo(object):
     """Topology network object """
     def __init__(self):
@@ -127,13 +128,37 @@ class Topo(object):
 
             src_object = self.find_device(src)
             dest_object = self.find_device(dst)             
-            edge = self.find_edge(src= src_object, dest= dest_object)
+            # edge = self.find_edge(src= src_object, dest= dest_object)
             
-            if edge == None:
-                print("Not found edge")
-                continue
-            else:
-                edge[1] = weight # update new weight in edge list
-                edge[2].set_weight(weight= weight) # update new weight in edge object
+            # if edge == None:
+            #     print("Not found edge")
+            #     continue
+            # else:
+            #     edge[1] = weight # update new weight in edge list
+            #     edge[2].set_weight(weight= weight) # update new weight in edge object
+
+            ################################
+
+            found, edge = self.find_edge_from_mongo(src= src_object, dest= dest_object)
+            
+            # if edge is not used in mongo then update it with small value
+            if not found:
+                print("Not found edge, setup trong so canh mac dinh")
+                weight = 0.0000001                
+            # if edge is used in mongo then update it with real value
+            edge[1] = weight # update new weight in edge list
+            edge[2].set_weight(weight= weight) # update new weight in edge object
+
+    def find_edge_from_mongo(self, src, dest):
+        """
+        Return edge object and boolean value 
+        return True means found, else return False
+        """
+        found = None
+        for child in self.edges[src]:
+            if child[0].get_id() == dest.get_id():
+                found = True
+            return (found, child)
+                
        
  

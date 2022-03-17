@@ -13,7 +13,11 @@ from numpy import random, rate
 import json
 import time
 import pandas as pd
-
+import sys
+sys.path.append('/home/onos/Downloads/flaskSDN/flaskAPI/model')
+import BW_server
+import time
+import os
 import requests
 from requests.auth import HTTPBasicAuth
 import random
@@ -111,7 +115,7 @@ def generate_topo(net):
     print("So host =", num_host, " So server=", num_server) 
 
     period = 50 # random data from 0 to period 
-    interval = 5 # each host generates data 5 times randomly
+    interval = 10 # each host generates data 5 times randomly
 
     # khoi tao bang thoi gian cho tung host
     starting_table = create_starting_table(num_host, period, interval)
@@ -120,6 +124,17 @@ def generate_topo(net):
     # kich hoat server chuan bi lang nghe su dung iperf
     start_server(num_server, net)
     print("Tat reactive va  bat flask trong 1'")
+    
+    list_ip_server = []
+    for ip_server in server_list:
+        list_ip_server.append(str(ip_server.IP()))
+        
+    print(list_ip_server)
+    
+    # read file server and write to mongo
+    for ip_server in list_ip_server:
+        os.system('python readlog.py'+' '+ip_server+' &')
+        time.sleep(1)
     time.sleep(60)
 
     # lap lich cho host
@@ -169,7 +184,7 @@ def run_shedule(starting_table, period, interval, net):
                     # phan tram chiem dung bang thong
                     rate = random.randint(1000000, 8000000) #10^6 - 8*10^6
                     print("------------- gui du lieu-----------", rate)
-                    plc_cmd =  'iperf -c %s -b %d -u -p 1337 -t 100 &' %(des, rate)
+                    plc_cmd =  'iperf -c %s -b %d -u -p 1337 -t 600 &' %(des, rate)
                     p.cmd(plc_cmd)   
                     #print(plc_cmd)
                     #print("host", host + 1, " --> ", des, "tai giay thu", starting_table[host][t])
@@ -196,6 +211,7 @@ def call_routing_api_flask(host):
     dest_ip = response.text
     return str(dest_ip)
 
+                
 def start_server(num_server, net):
     """
     Kjch hoat server de truyen iperd
@@ -222,8 +238,18 @@ def start_server(num_server, net):
 
         # kich hoat server i, monitor moi 1s
         #plc2_cmd = 'iperf -s -p 1337 -i 1 &'
-        plc2_cmd = 'iperf -s -u -p 1337 -i 1 > server%s.txt &' %strGet
+        # path = '/home/onos/Downloads/flaskSDN/flaskAPI/run/'
+        # name_server = path + 'server' + strGet + ".txt"
+        # old_list_BW = get_BW_from_server(name_server, strGet)
+        plc2_cmd = 'iperf -s -u -p 1337 -i 1 > 10.0.0.%s.txt &' %i
+        # get BW from file server
+        
+        # if len(list_BW) != len(old_list_BW):
+            # BW_server.insert_data(list_BW[len(old_list_BW):])
         p.cmd(plc2_cmd)
+        # time.sleep(10)
+        # list_BW = get_BW_from_server(name_server, strGet)
+        # BW_server.insert_data(list_BW)
 
         i=i+1 
 
