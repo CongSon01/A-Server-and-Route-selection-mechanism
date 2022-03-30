@@ -20,7 +20,7 @@ class hostServerConnection(object):
         self.servers = servers
         self.priority = priority
 
-        self.update_topo()
+        # self.update_topo()
 
         # khoi tao thuat toan tim duong
         self.sol = ""
@@ -43,11 +43,12 @@ class hostServerConnection(object):
     def find_src(self):
         
         host_object = self.hosts[self.host_ip]     
-       
-       
+          
         return host_object
 
     def find_shortest_path(self):
+
+        ##### alpha * path cost + beta * server cost
         
         min_cost = 0
         host_object = self.find_src()
@@ -61,7 +62,18 @@ class hostServerConnection(object):
             self.sol.routing()
 
             # chon server co cost be nhat
-            current_cost = self.sol.get_minimum_cost()  
+            # current_cost = self.sol.get_minimum_cost()  
+            # if min_cost == 0:
+            #     min_cost = current_cost
+
+            # if min_cost >= current_cost:
+            #     min_cost = current_cost
+            #     # get server co cost be nhat va path den server do
+            #     dest_object = self.servers[server]
+            #     path = self.sol.get_result()
+
+            current_cost = 0.4 * self.sol.get_minimum_cost() + 0.6 * self.servers[server].get_server_cost()
+            #print("Current cost hien tai===========================", current_cost)
             if min_cost == 0:
                 min_cost = current_cost
 

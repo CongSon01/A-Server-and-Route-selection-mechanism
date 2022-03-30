@@ -7,7 +7,6 @@ class connectGraph(object):
         self.file_topos = file_topos
         self.file_hosts = file_hosts
 
-        
 
         self.merge_topo()
         self.merge_host()
@@ -21,11 +20,13 @@ class connectGraph(object):
         }
 
         for file in self.file_topos:
-
-            with open(file) as handle:
-                object = json.loads( handle.read() )
-                object = ast.literal_eval( object )
-
+            try:
+                with open(file) as handle:
+                    object = json.loads( handle.read() )
+                    object = ast.literal_eval( object )
+            except:
+                print("Loi khi doc topo")
+           
             #print("-------------------------")
             devices = object['devices']
             links = object['links']
@@ -35,52 +36,52 @@ class connectGraph(object):
             link_fix_xuoi_1 = {
                     "src": {
                         "port": 10,
-                        "id": "of:0000000000000004"
+                        "id": "of:0000000000000007"
                     },
                     "dst": {
                         "port": 10,
-                        "id": "of:0000000000000005"
+                        "id": "of:0000000000000008"
                     }
             }
   
             link_fix_nguoc_1 = {
                     "src": {
                         "port": 10,
-                        "id": "of:0000000000000005"
+                        "id": "of:0000000000000008"
                     },
                     "dst": {
                         "port": 10,
-                        "id": "of:0000000000000004"
+                        "id": "of:0000000000000007"
                     }
             }
 
             ###########################
-            # link_fix_xuoi_2 = {
-            #         "src": {
-            #             "port": 10,
-            #             "id": "of:0000000000000004"
-            #         },
-            #         "dst": {
-            #             "port": 10,
-            #             "id": "of:0000000000000007"
-            #         }
-            # }
+            link_fix_xuoi_2 = {
+                    "src": {
+                        "port": 10,
+                        "id": "of:0000000000000002"
+                    },
+                    "dst": {
+                        "port": 10,
+                        "id": "of:000000000000000e"
+                    }
+            }
 
-            # link_fix_nguoc_2 = {
-            #         "src": {
-            #             "port": 10,
-            #             "id": "of:0000000000000007"
-            #         },
-            #         "dst": {
-            #             "port": 10,
-            #             "id": "of:0000000000000004"
-            #         }
-            # }
+            link_fix_nguoc_2 = {
+                    "src": {
+                        "port": 10,
+                        "id": "of:000000000000000e"
+                    },
+                    "dst": {
+                        "port": 10,
+                        "id": "of:0000000000000002"
+                    }
+            }
 
             result_topo['links'].append(link_fix_xuoi_1)
             result_topo['links'].append(link_fix_nguoc_1)
-            # result_topo['links'].append(link_fix_xuoi_2)
-            # result_topo['links'].append(link_fix_nguoc_2)
+            result_topo['links'].append(link_fix_xuoi_2)
+            result_topo['links'].append(link_fix_nguoc_2)
 
             for switch in devices:
                 result_topo['devices'].append(switch)
@@ -98,7 +99,9 @@ class connectGraph(object):
         }
         ###############################################
         ######## xoa cac host tu tap switch bien
-        remove_host_from_device = ["4","5"]
+        #### alo ai dot nhap  alo vao hop di
+        
+        remove_host_from_device = ["02", "08", "07", "0e"]
 
         for file in self.file_hosts:
 
@@ -124,10 +127,17 @@ class connectGraph(object):
                     device_id = str(location['elementId'])
                     #print("---------------------------ID-------------\n", device_id)
 
-                    # neu dia chi device la 5 va 4 thi xoa het host o device day
-                    # day la device cau noi giua 2 SDN
-                    if  device_id[-1] in remove_host_from_device:
-                        print("Xoa host tu switch bien------------------------->", device_id[-1] ) 
+                    #neu dia chi device la 8 va 14 thi xoa het host o device day
+                    #day la device cau noi giua 2 SDN
+                    
+                    # lay chi so Hexa o 2 phan tu cuoi cung cua device_id
+                    last_device_id = device_id[ -2: len(device_id) ]
+                    # if  int(device_id[-1:-3]) in remove_host_from_device:
+                    #     print("Xoa host tu switch bien------------------------->", device_id[-1] ) 
+                    #     continue
+
+                    if  last_device_id in remove_host_from_device:
+                        print("Xoa host tu switch bien------------------------->",  last_device_id ) 
                         continue
                     else:
                         print("hostip = ", host_ip)
@@ -140,7 +150,16 @@ class connectGraph(object):
                     }
 
                     result_host['hosts'].append(host_value)
+                    #print("hostip = ", host_ip)
+                    print("Id", device_id)
+                    host_value = {
+                        'port': port,
+                        'mac': host_mac, 
+                        'deviceId': device_id,
+                        'ipAddresses': host_ip
+                    }
 
+                    result_host['hosts'].append(host_value)
                 except:
                     print("----------------------------Loiiiiiiiiiiiiiiiiiiii IP host ------------------------------------")
 

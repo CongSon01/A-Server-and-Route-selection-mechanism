@@ -10,7 +10,7 @@ sys.path.append(PATH_ABSOLUTE+'core')
 sys.path.append(PATH_ABSOLUTE+'routingAlgorithm')
 
 # import from model
-import params_model_248, params_model_250
+import params_model, link_version
 
 # import from handledata/models 
 import CusTopo
@@ -19,11 +19,12 @@ import CusTopo
 import connectGraph, Graph
 
 # import from routingAlgorithm
-import destQueueRabbit, updateWeight, Round_robin, DijkstraLearning, connectGraph
+import destQueueRabbit, updateWeight, Round_robin, DijkstraLearning, connectGraph, updateServerCost
 
 # import inside folder
 import pub
 import apiSDN
+import time
 
 # Init app
 app = Flask(__name__)
@@ -53,8 +54,8 @@ graph = Graph.Graph(topo_network, 'topo.json', 'host.json')
 # get tap host va server tronng topo
 hosts = topo_network.get_hosts()
 servers = topo_network.get_servers()
-# print(hosts, "\n")
-# print(servers)
+print(hosts)
+print(servers)
 
 if IS_RUN_RRBIN:
     print("Doc Queue 1 lan duy nhat")
@@ -66,29 +67,33 @@ if IS_RUN_RRBIN:
     for ip in servers:
         queue_rr.connectRabbitMQ(ip_dest= ip)
 
+# khoi tao bien CAP NHAP SERVER COST
+update_server = updateServerCost.updateServerCost(servers)
 # khoi tao bien CAP NHAP LINK COST
-update = updateWeight.updateWeight()
+update = updateWeight.updateWeight(topo= topo_network)
 # uu tien flow rule theo thu tu tu dau den cuoi
 priority = 200
 
-def get_BW_from_server(file_name, name_host):
-    results = []
-    with open(file_name) as file_in:
-        for line in file_in:
-            list_col = line.split()
-            if list_col[0] == '[SUM]':
-                # new_df = { 'Transfer': list_col[4], 'Bandwidth': list_col[6], 'Jitter': list_col[8], 'Lost': list_col[10],'Total': list_col[9], 'Datagrams': list_col[10] }
-                # print(list_col)
-                # if list_col[0][-1] == '-':
-                if len(list_col) == 13:
-                    results.append( {"NameHost":name_host,"Bandwidth":float(list_col[6])})
-                    # new_df =  [float(list_col[4]), float(list_col[6]), float(list_col[8]), float(list_col[10][:-1]), float(list_co[11]), float(list_col[12][1:-2]) ]
-                elif len(list_col) == 12:
-                    results.append( {"NameHost":name_host,"Bandwidth":float(list_col[5])})
-                    # new_df = [float(list_col[3]), float(list_col[5]), float(list_col[7]),  float(list_col[9][:-1]), float(list_co[10]), float(list_col[11][1:-2])]
-                else:
-                    continue
-        return results
+starttime = time.time()
+# def get_BW_from_server(file_name, name_host):
+#     results = []
+#     with open(file_name) as file_in:
+#         for line in file_in:
+#             list_col = line.split()
+#             if list_col[0] == '[SUM]':
+#                 # new_df = { 'Transfer': list_col[4], 'Bandwidth': list_col[6], 'Jitter': list_col[8], 'Lost': list_col[10],'Total': list_col[9], 'Datagrams': list_col[10] }
+#                 # print(list_col)
+#                 # if list_col[0][-1] == '-':
+#                 if len(list_col) == 13:
+#                     results.append( {"NameHost":name_host,"Bandwidth":float(list_col[6])})
+#                     # new_df =  [float(list_col[4]), float(list_col[6]), float(list_col[8]), float(list_col[10][:-1]), float(list_co[11]), float(list_col[12][1:-2]) ]
+#                 elif len(list_col) == 12:
+#                     results.append( {"NameHost":name_host,"Bandwidth":float(list_col[5])})
+#                     # new_df = [float(list_col[3]), float(list_col[5]), float(list_col[7]),  float(list_col[9][:-1]), float(list_co[10]), float(list_col[11][1:-2])]
+#                 else:
+#                     continue
+#         return results
+
       
 @app.route('/getIpServer', methods=['POST'])
 def get_ip_server():
@@ -111,9 +116,9 @@ def get_ip_server():
 
   return str(dest_ip)
 
-@app.route('/',  methods=['GET', 'POST'] )
+@app.route('/write_data',  methods=['GET', 'POST'] )
 def write_data():
-
+  
   if request.method == 'GET':
     return "Da nhan duoc GET"
 
@@ -133,11 +138,16 @@ def write_data():
       else:
         dicdata[ d[0] ] = d[1] 
     # print( "nhan data", dicdata['byteSent'] )
-
+    
     #  Khong chon data mac dinh
     if float(dicdata['byteSent']) > 600:
-      print( "--------nhan data loc-------------", dicdata['byteSent'] )
+      #print( "--------nhan data onos-------------", dicdata['byteSent'] )
+
+      version = params_model.count_link_version(dicdata['src'], dicdata['dst'])
+
       
+      dicdata['link_version'] = version + 1
+
       # them du lieu vao rabbit de lay ra lien tuc
       pub.connectRabbitMQ( data = dicdata )
 
@@ -145,20 +155,51 @@ def write_data():
       update.read_params_from_rabbit()
 
       # them data vao MONGO o moi SDN de theo doi ve sau
-      params_model_248.insert_data(dicdata) # DB may 248
-      params_model_250.insert_data(dicdata) # DB may 250
+      # params_model_248.insert_data(dicdata) # DB may 248
+      params_model.insert_data(dicdata) # DB may 250
 
-      # Doc duoc 100 du lieu tu rabbit 
-      if update.get_count() == 100: 
-          app.logger.info("Da nhan dc 100 du lieu tu rabbit")
+      # Cap nhat lai version trong bang version
+      if link_version != None:
+        link_version.insert_data({"version":1})
+      else:
+        if version + 1 > link_version.get_version_max():
+          link_version.insert_data({"version":version + 1})
+
+    global starttime
+    if time.time() - starttime > 10: 
+          # app.logger.info("Da nhan dc 100 du lieu tu rabbit")
+          app.logger.info("Cap nhat sau 10s")
           
           # viet trong so moi ra Mongo
-          update.write_update_data_base()
+          update.write_update_link_to_data_base()
+
+          # cap nhap trong so cho server
+          update_server.update_server_cost()
+
+          # global update
+          # # reset
+          # update = updateWeight.updateWeight()
 
           # reset bien doc du lieu
-          update.set_count(count = 0)
+          #update.set_count(count = 0)
+          starttime = time.time()
+
+# # print str after 2 minutes
+# print('start time: ' + str(starttime))
+
+# if time.time() - starttime > 120:
+#     print("Time out")
+# print('end time: ' + str(time.time()))
+
+      # Doc duoc 100 du lieu tu rabbit 
+      # if update.get_count() == 100: 
+   
 
     return content
+
+@app.route('/read_data',  methods=['GET', 'POST'] )
+def read_data():
+  return params_model.get_multiple_data()
 
 if __name__ == '__main__':
     app.run(host='10.20.0.250',debug=True, use_reloader=False)

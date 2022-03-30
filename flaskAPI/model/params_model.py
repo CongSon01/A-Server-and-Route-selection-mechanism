@@ -19,6 +19,13 @@ def insert_data(data):
     collection.insert(data)
     return
 
+def count_link_version(src, dest):
+    """
+    get document data by document ID
+    :return:
+    """
+    data = collection.find({"src": src, "dst": dest})
+    return data.count()
 
 def get_multiple_data():
     """

@@ -19,7 +19,9 @@ class Graph(object):
        PATH_CURRENT = '/home/onos/Downloads/flaskSDN/flaskAPI/'
        self.topo_path = PATH_CURRENT + topo_path
        self.host_path = PATH_CURRENT + host_path
-       
+
+       self.index_hosts = [20, 21, 23, 22]
+       self.index_servers = [11,10,17] 
        self.load_topo()
 
     def load_topo(self):
@@ -44,6 +46,7 @@ class Graph(object):
             # extract data from dictionary
             src = link['src']
             dst = link['dst']
+       
             id_src = src['id']
             id_dst = dst['id']
             port_out = src['port']
@@ -52,12 +55,19 @@ class Graph(object):
             # get device src and dst objects
             d_src = self.find_device(id_src)
             d_dst = self.find_device(id_dst)
+            # print("--------------------------------")
+            # print(src)
+            # print(dst)
+            # print("--------------------------------")
+            # print("src=", d_src.get_id())  
+            # print("dst=", d_dst.get_id())
+            
 
             # add edge between src and dst devices
             # trong so mac dinh la 10^-7
             edge1 = CusLink.DeviceEdge(d_src, d_dst, 0.0000001, port_in, port_out)
             edge2 = CusLink.DeviceEdge(d_dst, d_src, 0.0000001, port_out, port_in)
-
+            
             # add edges to topo
             self.topo.add_edge(edge1)
             self.topo.add_edge(edge2)
@@ -90,17 +100,26 @@ class Graph(object):
             device = self.find_device(device_id)
             host = CusHost.Host( id = host_mac, device = device, port = port, ip= host_ip)
 
-            # so cuoi dia chi ip cua host
-            number = int(host_ip[-1])
-            if number <=2:
+            # Tach chuoi va lay so cuoi dia chi ip cua host
+            host_ip_split = host_ip.split(".")
+            num_ip = int(host_ip_split[-1])
+            print("Number Host IP", num_ip)
+
+            # index_hosts = [20, 21, 23, 22]
+            # index_servers = [11,10,17]
+            # index_host = [1,2,3,4,5,6]
+            # index_hosts = [0,2,3,4,5,6,7,8,9,10,11,12]
+            # index_servers = [40,41,42,43,44,45,46,47,48,49,50,51]
+
+            if num_ip in self.index_hosts:
                 hosts[host_ip] = host   
-            else:
+            elif num_ip in self.index_servers:
                 servers[host_ip] = host
                
             self.topo.add_node(host)
  
-            edge1 = CusLink.HostEdge(host, device, 0.0000001 , port)
-            edge2 = CusLink.HostEdge(device, host, 0.0000001 , port)
+            edge1 = CusLink.HostEdge(host, device, 0.1 , port)
+            edge2 = CusLink.HostEdge(device, host, 0.1 , port)
             
             self.topo.add_edge(edge1)
             self.topo.add_edge(edge2)

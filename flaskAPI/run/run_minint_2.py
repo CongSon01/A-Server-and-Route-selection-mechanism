@@ -122,33 +122,25 @@ class Mininet:
             print(sw_in_c1)
             # not_host = ['h8', 'h9', 'h10', 'h11']
             # not_host = ['h1', 'h3']
-            # switch_not_host = [1,7,6,13]  # day la index khong phai ten switch
-            switch_not_host = []
             for (first,second,node_type) in sorted(self.topology_graph):
                 if node_type == "h":
-                    # if first[1] not in switch_not_host:
+                    #hosts.append(net.addHost('h'+str(i), cls=Host, defaultRoute=None))
                     hosts.append(net.addHost('h'+str(first[1]+1), cls=Host, ip=str(ipaddress.IPv4Address(int(ipaddress.IPv4Address(first_ip))+first[1]+1)), defaultRoute=None))   
-                    # else:
-                        # print("remove host " + str(first[1] + 1))
+
             info( '*** Add links\n' )
             # switch_not_host = ['s0', 's1', 's23', 's24']
             # switch_not_host = ['s0', 's52']
 
-            # switch_not_host = [1,2,6,13]
-            # switch_not_host = []
+            switch_not_host = [1,2,6,13]
             n = len(switches)
             Matrix_graph = [[0 for x in range(n)] for y in range(n)] 
-            # print(hosts)
-            # print(switches)
+            
             for (first,second,node_type) in self.topology_graph:
                 try:
                     if node_type=="h":
                         if ( second[1] not in switch_not_host ):
-                            ####################################### Trung doc lenh
-                            print('sw_',second[1] + 1, ' connected to ', hosts[first[1]])
-                            
+                            print('sw_',second[1], ' connected to ', hosts[first[1]])
                             net.addLink(hosts[first[1]],switches[second[1]], bw=10, delay='0ms', loss=0, use_htb=True)
-                            
 
                     elif node_type=="s":
                         # name_connect = str(node_1 +'_'+node_2)
@@ -161,17 +153,15 @@ class Mininet:
                         #     continue
                             # net.addLink(switches[first[1]],switches[second[1]], port1= 10, port2=10, bw=10, delay='0ms', loss=0, use_htb=True)
                         
-                        
+                        print('+Connenct', first[1], second[1])
                         Matrix_graph[int(first[1])][int(second[1])] = 1
                         if first[1] == 1 and second[1] == 13 :
-                            print('--BIEN--', switches[first[1]]  , '_____________', switches[second[1]])
                             net.addLink(switches[first[1]],switches[second[1]], port1= 10, port2=10, bw=10, delay='0ms', loss=0, use_htb=True)
-                        elif first[1] == 6 and second[1] == 7 :
-                            print('--BIEN--', switches[first[1]] , '_____________', switches[second[1]])
+                        elif first[1] == 2 and second[1] == 6 :
                             net.addLink(switches[first[1]],switches[second[1]], port1= 10, port2=10, bw=10, delay='0ms', loss=0, use_htb=True)
                         else:
                             net.addLink(switches[first[1]],switches[second[1]], bw=10, delay='0ms', loss=0, use_htb=True)
-                            print('+Connenct', first[1], second[1])
+
                     # elif node_type=="h":
                     #     if ( str(switches[second[1]]) not in switch_not_host ):
                     #         net.addLink(hosts[first[1]],switches[second[1]], bw=10, delay='0ms', loss=0, use_htb=True)
@@ -189,7 +179,6 @@ class Mininet:
             
             info( '*** Starting network\n' )
             net.build()
-
             info( '*** Starting controllers\n' )
             for controller in net.controllers:
                 controller.start()
@@ -222,37 +211,12 @@ class Mininet:
                     switches.get(i_sw).start([c1])
 
             info( '*** Post configure switches and hosts\n')
-            # time.sleep(15)
-            # CLI(net)
-            # net.pingAll()
-
-            # net.getNodeByName('h1')
-
-            ######## ping all cac host voi nhau
-            print("hostssssssssssssssssssssssssssssssssssssssssss")
-            # print(hosts)
-
-            host_1 = hosts[0]
-            for h in range( len(hosts) ):
-                host_i = hosts[h]
-                net.ping( [host_1, host_i] )
-
-
-            # host_i = net.getNodeByName( "h1" )
-            # switch_i = net.getNodeByName( "s1" )
-
-
-            # for h in :
-            #     host_list.append(net.hosts[h])
-
-            # print("typeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", host_i)
-            # net.ping( [host_i, switch_i] )
-            
-            # time.sleep(15)
+            time.sleep(15)
+            net.pingAll()
+            time.sleep(15)
 
             generate_topo(net)
             CLI(net)
-            
             # net.stop()
 
         setLogLevel( 'info' )
@@ -262,15 +226,13 @@ def generate_topo(net):
     host_list, server_list = create_host_server(net)
     num_host = len(host_list) 
     num_server = len(server_list) 
-    # print("So host =", num_host, " So server=", num_server) 
-    print("HOSTS: ", host_list)
-    print("SERVERS: ", server_list)
+    print("So host =", num_host, " So server=", num_server) 
 
 
     print("------------------   server  -----------------------")
     print(server_list)
 
-    period = 1000 # random data from 0 to period 
+    period = 100 # random data from 0 to period 
     interval = 10 # each host generates data 5 times randomly
 
     # khoi tao bang thoi gian cho tung host
@@ -285,8 +247,6 @@ def generate_topo(net):
     for ip_server in server_list:
         list_ip_server.append(str(ip_server.IP()))
         
-
-    print("list IP server")
     print(list_ip_server)
     
     # read file server and write to mongo
@@ -330,11 +290,11 @@ def run_shedule(starting_table, period, interval, net, host_list):
                 # sai so be hon 0.001
                 if  abs (starting_table[host][t] - current ) < 0.001 and visited[host][t] == False:
                     
-                        # get doi tuong host i
-                        p=net.get('h%s' %(host+1))
+                    # get doi tuong host i
+                    p=net.get('h%s' %(host+1))
                     
-                    # # neu object hien tai la host thi tien hanh goi iperf
-                    # if p in host_list:
+                    # neu object hien tai la host thi tien hanh goi iperf
+                    if p in host_list:
                         # get dich den server cua host i
                         des = call_routing_api_flask( p.IP() )
                     
@@ -360,8 +320,8 @@ def create_host_server(net):
 
     # index_hosts = [0, 2]
     # index_servers = [3, 4]
-    index_hosts = [20, 21, 23, 22]
-    index_servers = [11,10,17]
+    index_hosts = [21, 22, 23, 24]
+    index_servers = [11,13,18]
 
     for h in index_hosts:
         host_list.append(net.hosts[h])
@@ -392,22 +352,18 @@ def start_server(num_host, net):
 
     # net.get all
     # for i in range(num_host):
-    # print('------------------   get all  -----------------------')
-    # for i in range(1, num_host+1):
-    #     print('get host', i)
-    #     net.get('h%s' %(i))
+    for i in range(1, num_host+1):
+        net.get('h%s' %(i))
 
     plc1_cmd=''
     strGet=''
     plc2_cmd=''
 
-    # set_server theo ten server h12, h11, h18
-    set_server = [11,12,18]
+    set_server = [12,11,13]
     # set_server = [3,4]
     # i=6
 
     # duyet qua kich hoat cac server 3 4
-    print('------------------   PING SERVER  -----------------------')
     for i in set_server: 
         # ping server i
         plc1_cmd='ping -c5 10.0.0.%s' % i
@@ -481,7 +437,6 @@ def print_all_topos(extracted_dir):
 
 
 if __name__=="__main__":
-
     import argparse
     parser = argparse.ArgumentParser(
         description='This script is a fast way to run topology\'s that are available in topologyzoo.com on mininet!')

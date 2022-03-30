@@ -110,11 +110,14 @@ def myNetwork():
 
 def generate_topo(net):
     host_list, server_list = create_host_server(net)
+
+    print("------------------   server  -----------------------")
+    print(server_list)
     num_host = len(host_list) 
     num_server = len(server_list) 
     print("So host =", num_host, " So server=", num_server) 
 
-    period = 50 # random data from 0 to period 
+    period = 100 # random data from 0 to period 
     interval = 10 # each host generates data 5 times randomly
 
     # khoi tao bang thoi gian cho tung host
@@ -123,9 +126,9 @@ def generate_topo(net):
     
     # kich hoat server chuan bi lang nghe su dung iperf
     start_server(num_server, net)
-    print("Tat reactive va  bat flask trong 1'")
+    print("Tat reactive va bat flask trong 1 phut")
     
-    list_ip_server = []
+    list_ip_server = list()
     for ip_server in server_list:
         list_ip_server.append(str(ip_server.IP()))
         
@@ -138,7 +141,7 @@ def generate_topo(net):
     time.sleep(60)
 
     # lap lich cho host
-    run_shedule(starting_table, period, interval,net)
+    #run_shedule(starting_table, period, interval,net)
 
 def create_starting_table(num_host, period, interval):
     starting_table =  np.zeros( (num_host, interval) )

@@ -13,7 +13,7 @@ class Topo(object):
         """
         self.nodes = []
         self.edges = {}
-        # dicttionary has key: ip and value: host/server object
+        # dicttionary has key = ip and value = host/server object
         self.hosts = dict() 
         self.servers = dict()
 
@@ -45,10 +45,15 @@ class Topo(object):
         """
         edge: Edge object
         """
+        
         src_object = edge.get_src()
         dest_object = edge.get_dest()
         weight = edge.get_weight()
-            
+        
+        # print("src_object: ", src_object.get_id())
+        # print("dest_object: ", dest_object.get_id())
+        # print("node: ", self.nodes)
+
         if not (src_object in self.nodes and dest_object in self.nodes):
             raise ValueError('Node not in graph')
 
@@ -143,8 +148,8 @@ class Topo(object):
             
             # if edge is not used in mongo then update it with small value
             if not found:
-                print("Not found edge, setup trong so canh mac dinh")
-                weight = 0.0000001                
+                weight = 0.0000001 
+                print("Not found edge, setup trong so canh mac dinh = ", weight)               
             # if edge is used in mongo then update it with real value
             edge[1] = weight # update new weight in edge list
             edge[2].set_weight(weight= weight) # update new weight in edge object

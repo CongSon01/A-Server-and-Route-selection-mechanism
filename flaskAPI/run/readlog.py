@@ -53,10 +53,10 @@ def get_BW_from_server(file_name, name_host):
                 # print(list_col)
                 # if list_col[0][-1] == '-':
             if len(list_col) == 13:
-                results = [{"NameHost":name_host,"Bandwidth":float(list_col[6])}]
+                results = [{"Servername":name_host,"Bandwidth":float(list_col[6])}]
                     # new_df =  [float(list_col[4]), float(list_col[6]), float(list_col[8]), float(list_col[10][:-1]), float(list_co[11]), float(list_col[12][1:-2]) ]
             elif len(list_col) == 12:
-                results = [{"NameHost":name_host,"Bandwidth":float(list_col[5])}]
+                results = [{"Servername":name_host,"Bandwidth":float(list_col[5])}]
                     # new_df = [float(list_col[3]), float(list_col[5]), float(list_col[7]),  float(list_col[9][:-1]), float(list_co[10]), float(list_col[11][1:-2])]
             else:
                 continue

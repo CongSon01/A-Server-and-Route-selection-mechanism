@@ -2,7 +2,7 @@ import pymongo
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 mydb = myclient["SDN_data"]
-mycol = mydb["BW_server"]
+mycol = mydb["updated_BW_server"]
 
 
 def insert_n_data(list_BW):

@@ -83,7 +83,7 @@ class DeviceEdge(Edge):
     def get_port_out(self):
         return self.port_out
 
-    def __str__(self):
+    def display(self):
         return  'From {} to {} has cost = {}'.format(self.get_src().get_id(), 
                     self.get_dest().get_id(), self.get_weight() )
 
