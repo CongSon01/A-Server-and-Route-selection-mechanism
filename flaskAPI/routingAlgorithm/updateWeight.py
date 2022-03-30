@@ -2,7 +2,7 @@ import numpy as np
 import sub
 import sys
 sys.path.append('/home/onos/Downloads/flaskSDN/flaskAPI/model')
-import model_250
+import update_weights
 
 class updateWeight(object):
 
@@ -59,7 +59,7 @@ class updateWeight(object):
     def write_update_link_to_data_base(self):
         
         # xoa het trong so cu o Mongo
-        model_250.remove_all()
+        update_weights.remove_all()
         # model_1.remove_all()
 
         print("-------------------Write update link weight to MONGO------------- ...")     
@@ -74,7 +74,7 @@ class updateWeight(object):
             temp_data = { "src": src, "dst": dst, "weight": weight }
             print(temp_data)
             # save into update weight database mongoDB
-            model_250.insert_data(temp_data)
+            update_weights.insert_data(temp_data)
             # model_1.insert_data(temp_data)
             # history_weights.insert_data(temp_data)
         

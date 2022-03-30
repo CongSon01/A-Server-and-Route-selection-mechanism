@@ -10,7 +10,7 @@ sys.path.append(PATH_ABSOLUTE+'core')
 sys.path.append(PATH_ABSOLUTE+'routingAlgorithm')
 
 # import from model
-import params_model, link_version
+import params_model
 
 # import from handledata/models 
 import CusTopo
@@ -157,13 +157,6 @@ def write_data():
       # them data vao MONGO o moi SDN de theo doi ve sau
       # params_model_248.insert_data(dicdata) # DB may 248
       params_model.insert_data(dicdata) # DB may 250
-
-      # Cap nhat lai version trong bang version
-      if link_version != None:
-        link_version.insert_data({"version":1})
-      else:
-        if version + 1 > link_version.get_version_max():
-          link_version.insert_data({"version":version + 1})
 
     global starttime
     if time.time() - starttime > 10: 
