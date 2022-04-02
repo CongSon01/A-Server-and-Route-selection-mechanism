@@ -25,6 +25,7 @@ import destQueueRabbit, updateWeight, Round_robin, DijkstraLearning, connectGrap
 import pub
 import apiSDN
 import time
+import requests
 
 # Init app
 app = Flask(__name__)
@@ -94,7 +95,6 @@ starttime = time.time()
 #                     continue
 #         return results
 
-      
 @app.route('/getIpServer', methods=['POST'])
 def get_ip_server():
   
@@ -143,10 +143,10 @@ def write_data():
     if float(dicdata['byteSent']) > 600:
       #print( "--------nhan data onos-------------", dicdata['byteSent'] )
 
-      version = params_model.count_link_version(dicdata['src'], dicdata['dst'])
+      # version = params_model.count_link_version(dicdata['src'], dicdata['dst'])
 
       
-      dicdata['link_version'] = version + 1
+      # dicdata['link_version'] = version + 1
 
       # them du lieu vao rabbit de lay ra lien tuc
       pub.connectRabbitMQ( data = dicdata )
@@ -157,6 +157,8 @@ def write_data():
       # them data vao MONGO o moi SDN de theo doi ve sau
       # params_model_248.insert_data(dicdata) # DB may 248
       params_model.insert_data(dicdata) # DB may 250
+      ############### lan truyen data den cac SDN khac
+      response = requests.post("http://10.20.0.248:5000/write_data", data= dicdata)  
 
     global starttime
     if time.time() - starttime > 10: 
