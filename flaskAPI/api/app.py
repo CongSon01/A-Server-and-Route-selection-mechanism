@@ -42,6 +42,7 @@ host_path_1 = PATH_ABSOLUTE + 'host_1.json'
 host_path_2 = PATH_ABSOLUTE + 'host_2.json'
 topo_files = [topo_path_1, topo_path_2]
 host_files = [host_path_1, host_path_2]
+
 # sinh ra file hop nhat giua cac mang: topo.json va host.json 
 connectGraph.connectGraph(topo_files, host_files)
 
@@ -50,10 +51,9 @@ topo_network = CusTopo.Topo()
 # add do thi topo.json va host.json vao topo
 graph = Graph.Graph(topo_network, 'topo.json', 'host.json')
 
-
 #print(topo_network.get_topo(), "\n")
 # get tap host va server tronng topo
-hosts = topo_network.get_hosts()
+hosts   = topo_network.get_hosts()
 servers = topo_network.get_servers()
 print(hosts)
 print(servers)
@@ -152,25 +152,26 @@ def write_data():
       # them du lieu vao rabbit de lay ra lien tuc
     pub.connectRabbitMQ( data = dicdata )
 
-      # doc data tu rabbit lien tuc
+        # doc data tu rabbit lien tuc
     update.read_params_from_rabbit()
 
-      # them data vao MONGO o moi SDN de theo doi ve sau
-      # params_model_248.insert_data(dicdata) # DB may 248
-      # Params.insert_data(dicdata) # DB may 250
-    try:
-          Params.insert_data(dicdata) # DB may 250
-          response = requests.post("http://10.20.0.248:5000/write_data/", data= dicdata)  
-    except:
-          print("Goi nhieu SDN loiiiiiiiiiiiiiiiiiiiii")
+        # them data vao MONGO o moi SDN de theo doi ve sau
+        # params_model_248.insert_data(dicdata) # DB may 248
+        # Params.insert_data(dicdata) # DB may 250
+    Params.insert_data(dicdata) # DB may 250
+      # try:
+      #       Params.insert_data(dicdata) # DB may 250
+      #       response = requests.post("http://10.20.0.248:5000/write_data/", data= content)  
+      # except:
+      #       print("Goi nhieu SDN loiiiiiiiiiiiiiiiiiiiii")
 
 
-      # # Cap nhat lai version trong bang version
-      # if link_version != None:
-      #   link_version.insert_data({"version":1})
-      # else:
-      #   if version + 1 > link_version.get_version_max():
-      #     link_version.insert_data({"version":version + 1})
+        # # Cap nhat lai version trong bang version
+        # if link_version != None:
+        #   link_version.insert_data({"version":1})
+        # else:
+        #   if version + 1 > link_version.get_version_max():
+        #     link_version.insert_data({"version":version + 1})
 
     global starttime
     if time.time() - starttime > 10: 

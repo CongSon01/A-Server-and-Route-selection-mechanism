@@ -296,7 +296,7 @@ def generate_topo(net):
     time.sleep(60)
 
     # lap lich cho host
-    run_shedule(starting_table, period, interval,net, host_list)
+    #run_shedule(starting_table, period, interval,net, host_list)
 
 def create_starting_table(num_host, period, interval):
     starting_table =  np.zeros( (num_host, interval) )
@@ -518,4 +518,4 @@ if __name__=="__main__":
 
     tzoo2= TopologyZooXML(os.path.join(tmp_dir,"topologyzoo",args.topo_name+".graphml"))
     m = Mininet(tzoo2.get_topology(),args.controller_ip_0, args.controller_ip_1 ,args.controller_port,args.controller_type)   
-    
+    # sudo python3 -E run_mininet.py

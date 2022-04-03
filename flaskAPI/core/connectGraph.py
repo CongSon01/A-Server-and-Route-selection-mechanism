@@ -137,7 +137,7 @@ class connectGraph(object):
                     #     continue
 
                     if  last_device_id in remove_host_from_device:
-                        print("Xoa host tu switch bien------------------------->",  last_device_id ) 
+                        print("Xoa host tu switch bien co Dia chi =", last_device_id) 
                         continue
                     else:
                         print("hostip = ", host_ip)

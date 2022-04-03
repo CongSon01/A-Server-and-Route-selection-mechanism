@@ -64,9 +64,10 @@ class updateWeight(object):
         LinkVersion.remove_all()
         # model_1.remove_all()
 
-        print("-------------------Write update link weight to MONGO------------- ...")  
+        # print("-------------------Write update link weight to MONGO------------- ...")  
         self.link_version +=1   
         for link in self.link_set:
+            print("\n")
             #print( link.get_id_src(), "----------------->",link.get_id_dst() )
             src = link.get_id_src()
             dst = link.get_id_dst()
@@ -76,21 +77,35 @@ class updateWeight(object):
             delay = weight[0]
             link_utilization = weight[1]
             packet_loss = weight[2]
+            print("src", src)
+            print("dst", dst)
+            print("delay:", delay)
+            print("link_utilization:", link_utilization)
+            print("packet_loss:", packet_loss)
+            print("linkVersion:", self.link_version)
+          
             
-            temp_data = [{ "src": src, 
+            temp_data = { "src": src, 
                           "dst": dst,
-                          "delay": delay,
-                          "link_utilization": link_utilization,
-                          "packet_loss": packet_loss,
-                           "link_version": self.link_version
-                        }]
-            print(temp_data)
+                          "delay": str(delay),
+                          "linkUtilization": str(link_utilization),
+                          "packetLoss": str(packet_loss),
+                           "linkVersion": str(self.link_version)
+                        } 
+
+            # temp_data = {'src': 'of:0000000000000010', 'packetLoss': 1.0, 'dst': 'of:000000000000000d'{'src': 'of:0000000000000010', 'packetLoss', : 'linkVersion': 17, 'delay': 251.0, 'linkUtilization': 0.000112} 
+            #         {'src': ''of:00000d0e00la0y0'000011', 'packetLoss': : 0.16666667169650.0, , 'dst''linkUtilization': 0.000112}: 'of:0000000000000012', 'linkVersion': 32, 'delay': 6237021600000000.0, 'linkUtilization': 0.000112}
+            # print(temp_data)
             # save into update weight database mongoDB
             # model_250.insert_data(temp_data)
+
+            # temp_data = { "src": src, "dst": dst, "LU": str(link_utilization)}
             try:
                  LinkVersion.insert_data(temp_data)
+                 print("+++++++++++++++ Link version update Thanh cong")
             except:
-                 print("Link version update loi")
+                 print("--------------- Link version update loi")
+                
             # model_1.insert_data(temp_data)
             # history_weights.insert_data(temp_data)
         
