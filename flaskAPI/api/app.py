@@ -1,7 +1,8 @@
-from flask import Flask, request
+from flask import Flask, request, Response, jsonify
 
-import sys, os
-PATH_ABSOLUTE = "/home/onos/Downloads/flaskSDN/flaskAPI/"
+
+import sys, os, json
+PATH_ABSOLUTE = "/home/onos/Downloads/flask_SDN/Flask-SDN/flaskAPI/"
 IS_RUN_RRBIN = False
 
 sys.path.append(PATH_ABSOLUTE+'model')
@@ -10,7 +11,7 @@ sys.path.append(PATH_ABSOLUTE+'core')
 sys.path.append(PATH_ABSOLUTE+'routingAlgorithm')
 
 # import from model
-import params_model
+import Params, LinkVersion
 
 # import from handledata/models 
 import CusTopo
@@ -19,7 +20,7 @@ import CusTopo
 import connectGraph, Graph
 
 # import from routingAlgorithm
-import destQueueRabbit, updateWeight, Round_robin, DijkstraLearning, connectGraph, updateServerCost
+import destQueueRabbit, DijkstraLearning, Round_robin, updateServerCost, updateWeight
 
 # import inside folder
 import pub
@@ -95,6 +96,7 @@ starttime = time.time()
 #                     continue
 #         return results
 
+      
 @app.route('/getIpServer', methods=['POST'])
 def get_ip_server():
   
@@ -116,7 +118,7 @@ def get_ip_server():
 
   return str(dest_ip)
 
-@app.route('/write_data',  methods=['GET', 'POST'] )
+@app.route('/write_data/',  methods=['GET', 'POST'] )
 def write_data():
   
   if request.method == 'GET':
@@ -140,8 +142,8 @@ def write_data():
     # print( "nhan data", dicdata['byteSent'] )
     
     #  Khong chon data mac dinh
-    if float(dicdata['byteSent']) > 600:
-      #print( "--------nhan data onos-------------", dicdata['byteSent'] )
+    # if float(dicdata['byteSent']) > 600:
+    # print( "--------nhan data onos-------------", dicdata['byteSent'] )
 
       # version = params_model.count_link_version(dicdata['src'], dicdata['dst'])
 
@@ -149,24 +151,64 @@ def write_data():
       # dicdata['link_version'] = version + 1
 
       # them du lieu vao rabbit de lay ra lien tuc
-      pub.connectRabbitMQ( data = dicdata )
+    pub.connectRabbitMQ( data = dicdata )
 
       # doc data tu rabbit lien tuc
-      update.read_params_from_rabbit()
+    update.read_params_from_rabbit()
 
-      # them data vao MONGO o moi SDN de theo doi ve sau
-      # params_model_248.insert_data(dicdata) # DB may 248
-      params_model.insert_data(dicdata) # DB may 250
-      ############### lan truyen data den cac SDN khac
-      response = requests.post("http://10.20.0.248:5000/write_data", data= dicdata)  
+
+      # # Cap nhat lai version trong bang version
+      # if link_version != None:
+      #   link_version.insert_data({"version":1})
+      # else:
+      #   if version + 1 > link_version.get_version_max():
+      #     link_version.insert_data({"version":version + 1})
 
     global starttime
-    if time.time() - starttime > 10: 
+    if time.time() - starttime > 5: 
           # app.logger.info("Da nhan dc 100 du lieu tu rabbit")
-          app.logger.info("Cap nhat sau 10s")
+          # app.logger.info("Cap nhat sau 10s")
+          # print(LinkVersion.get_multiple_data())
           
+          # Doc R ong
+          try:
+              data_250 = requests.get("http://10.20.0.248:5000/read_link_version/") 
+
+              LinkVersions = data_250.text
+              update.write_update_link_to_data_base(LinkVersions)
+              # print(data_250.text)
+          except:
+            print("Doc data loi")
+          
+          # Ghi W ong
+          try:
+              response = requests.post("http://10.20.0.250:5000/write_link_version/", data= dicdata)
+          except:
+              print("Goi nhieu SDN loiiiiiiiiiiiiiiiiiiiii")
+
+
           # viet trong so moi ra Mongo
-          update.write_update_link_to_data_base()
+
+          
+
+          # cap nhap trong so cho server
+          # update_server.update_server_cost()
+
+              # them data vao MONGO o moi SDN de theo doi ve sau
+          # params_model_248.insert_data(dicdata) # DB may 248
+          # Params.insert_data(dicdata) # DB may 250
+          # Params.insert_data(dicdata) # DB may 250
+
+
+          
+
+
+
+
+
+
+          # viet trong so moi ra Mongo
+          # update.write_update_link_to_data_base()
 
           # cap nhap trong so cho server
           update_server.update_server_cost()
@@ -188,19 +230,24 @@ def write_data():
 
       # Doc duoc 100 du lieu tu rabbit 
       # if update.get_count() == 100: 
-   
-
     return content
 
-@app.route('/read_data',  methods=['GET', 'POST'] )
-def read_data():
-  return params_model.get_multiple_data()
+@app.route('/write_link_version/',  methods=['GET', 'POST'] )
+def write_link_version():
+  if request.method == 'POST':
+    #app.logger.info("Da nhan dc POST")
+    # get data from API
+    content = request.data
+    print(content)
+    LinkVersion.insert_data(content)
+
+@app.route('/read_link_version/',  methods=['GET', 'POST'] )
+def read_link_version():
+  if request.method == 'GET':
+    data = LinkVersion.get_multiple_data()
+    return jsonify({'link_versions':data})  #will return the json
+    # return Response(json.dumps(data),  mimetype='application/json')
 
 if __name__ == '__main__':
-    app.run(host='10.20.0.250',debug=True, use_reloader=False)
-  
-    
-
-   
-
+    app.run(host='10.20.0.248',debug=True, use_reloader=False)
    

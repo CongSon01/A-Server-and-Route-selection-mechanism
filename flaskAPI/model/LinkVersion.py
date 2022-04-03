@@ -10,6 +10,12 @@ database = connection['SDN_data']
 collection = database['LinkVersion']
 # print("Database connected")
 
+def insert_n_data(list_data):
+    if len(list_data) == 0:
+        return
+    else:
+        collection.insert_many(list_data)
+
 def insert_data(data):
     """
     Insert new data or document in collection
@@ -19,31 +25,14 @@ def insert_data(data):
     collection.insert(data)
     return
 
-def insert_n_data(data_list):
-    """
-    Insert new data or document in collection
-    :param data:
-    :return:
-    """
-    collection.insert_many(data_list)
-    return
-
-def get_version_max():
-    """
-    get document data by document ID
-    :return:
-    """
-    data = collection.find().sort("LinkVersion", -1).limit(1)
-    return int(data['version'])
 
 def get_multiple_data():
     """
     get document data by document ID
     :return:
     """
-    data = collection.find()
+    data = collection.find({},{'_id':0})
     return list(data)
-
 
 def remove_all():
     """
@@ -55,5 +44,3 @@ def remove_all():
     
 # CLOSE DATABASE
 connection.close()
-
-

@@ -1,5 +1,5 @@
 import sys
-sys.path.append('/home/onos/Downloads/flaskSDN/flaskAPI/model')
+sys.path.append('/home/onos/Downloads/flask_SDN/Flask-SDN/flaskAPI/model')
 import BW_server
 
 import time
@@ -66,6 +66,6 @@ def get_BW_from_server(file_name, name_host):
             
     logfile.close()
     
-path = '/home/onos/Downloads/flaskSDN/flaskAPI/run/' + sys.argv[1] + '.txt'
+path = '/home/onos/Downloads/flask_SDN/Flask-SDN/flaskAPI/run/' + sys.argv[1] + '.txt'
 list_BW = get_BW_from_server(path, sys.argv[1])
 # BW_server.insert_data(list_BW)

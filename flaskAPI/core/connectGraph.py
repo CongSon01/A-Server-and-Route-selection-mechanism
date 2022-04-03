@@ -87,8 +87,8 @@ class connectGraph(object):
                 result_topo['devices'].append(switch)
      
         # ghi ra file topo hop nhat mang
-        file_topo_done =  '/home/onos/Downloads/flaskSDN/flaskAPI/topo.json'
-        # file_host_done =  '/home/onos/Downloads/flaskSDN/flaskAPI/host.json'
+        file_topo_done =  '/home/onos/Downloads/flask_SDN/Flask-SDN/flaskAPI/topo.json'
+        # file_host_done =  '/home/onos/Downloads/flask_SDN/Flask-SDN/flaskAPI/host.json'
         with open(file_topo_done, 'w') as output_file:
             json.dump(result_topo, output_file)
 
@@ -163,12 +163,12 @@ class connectGraph(object):
                 except:
                     print("----------------------------Loiiiiiiiiiiiiiiiiiiii IP host ------------------------------------")
 
-        file_host_done =  '/home/onos/Downloads/flaskSDN/flaskAPI/host.json'
+        file_host_done =  '/home/onos/Downloads/flask_SDN/Flask-SDN/flaskAPI/host.json'
         with open(file_host_done, 'w') as output_file:
             json.dump(result_host, output_file)
 
 
-# PATH_ABSOLUTE = "/home/onos/Downloads/flaskSDN/flaskAPI/"    
+# PATH_ABSOLUTE = "/home/onos/Downloads/flask_SDN/Flask-SDN/flaskAPI/"    
 # topo_path_1 = PATH_ABSOLUTE + 'topo_1.json'
 # topo_path_2 = PATH_ABSOLUTE + 'topo_2.json'
 # host_path_1 = PATH_ABSOLUTE + 'host_1.json'

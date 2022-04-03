@@ -1,5 +1,5 @@
 import sys
-sys.path.append('/home/onos/Downloads/flaskSDN/flaskAPI/handledata/models')
+sys.path.append('/home/onos/Downloads/flask_SDN/Flask-SDN/flaskAPI/handledata/models')
 import CusHost, CusLink, CusDevice, CusTopo
 import json
 import ast
@@ -16,7 +16,7 @@ class Graph(object):
        self.topo = topo
        self.topo_file = ""
        self.host_file = ""
-       PATH_CURRENT = '/home/onos/Downloads/flaskSDN/flaskAPI/'
+       PATH_CURRENT = '/home/onos/Downloads/flask_SDN/Flask-SDN/flaskAPI/'
        self.topo_path = PATH_CURRENT + topo_path
        self.host_path = PATH_CURRENT + host_path
 

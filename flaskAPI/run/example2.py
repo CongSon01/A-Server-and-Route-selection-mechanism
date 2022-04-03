@@ -14,7 +14,7 @@ import json
 import time
 import pandas as pd
 import sys
-sys.path.append('/home/onos/Downloads/flaskSDN/flaskAPI/model')
+sys.path.append('/home/onos/Downloads/flask_SDN/Flask-SDN/flaskAPI/model')
 import BW_server
 import time
 import os
@@ -241,7 +241,7 @@ def start_server(num_server, net):
 
         # kich hoat server i, monitor moi 1s
         #plc2_cmd = 'iperf -s -p 1337 -i 1 &'
-        # path = '/home/onos/Downloads/flaskSDN/flaskAPI/run/'
+        # path = '/home/onos/Downloads/flask_SDN/Flask-SDN/flaskAPI/run/'
         # name_server = path + 'server' + strGet + ".txt"
         # old_list_BW = get_BW_from_server(name_server, strGet)
         plc2_cmd = 'iperf -s -u -p 1337 -i 1 > 10.0.0.%s.txt &' %i

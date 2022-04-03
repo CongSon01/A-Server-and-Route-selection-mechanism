@@ -1,6 +1,6 @@
 import sys
-sys.path.append('/home/onos/Downloads/flaskSDN/flaskAPI/core')
-sys.path.append('/home/onos/Downloads/flaskSDN/flaskAPI/handledata/models')
+sys.path.append('/home/onos/Downloads/flask_SDN/Flask-SDN/flaskAPI/core')
+sys.path.append('/home/onos/Downloads/flask_SDN/Flask-SDN/flaskAPI/handledata/models')
 
 import CusHost, Flow, Flows, Instruction, Selector, Treatment, Criteria
 import json
@@ -162,7 +162,7 @@ class flowRule(object):
                     count += 1
               
         #self.write_json_rule_to_file(self.json_rule)        
-        # with open('/home/onos/Downloads/flaskSDN/flaskAPI/jsonRuleXuoi.json', 'w') as json_file:
+        # with open('/home/onos/Downloads/flask_SDN/Flask-SDN/flaskAPI/jsonRuleXuoi.json', 'w') as json_file:
         #      json.dump(self.json_rule, json_file)
 
     def write_json_rule_to_file(self, json_rule_path, json_rule_reversing_path):
@@ -178,7 +178,7 @@ class flowRule(object):
         self.jsonRulePath = json_rule_path
         #self.call_routing_api()
         
-        with open('/home/onos/Downloads/flaskSDN/flaskAPI/jsonRulePath.json', 'w') as json_file:
+        with open('/home/onos/Downloads/flask_SDN/Flask-SDN/flaskAPI/jsonRulePath.json', 'w') as json_file:
             json.dump( json_rule_path, json_file)
 
         self.call_routing_api()
@@ -188,7 +188,7 @@ class flowRule(object):
         Automatically POST rulePath to API
         return 200 if successul routing
         """
-        with open("/home/onos/Downloads/flaskSDN/flaskAPI/jsonRulePath.json") as json_file:
+        with open("/home/onos/Downloads/flask_SDN/Flask-SDN/flaskAPI/jsonRulePath.json") as json_file:
                 data = json.load(json_file)
 
         headers = {

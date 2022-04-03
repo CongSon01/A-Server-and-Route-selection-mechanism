@@ -1,8 +1,9 @@
 import sys
 import json
-sys.path.append('/home/onos/Downloads/flaskSDN/flaskAPI/model')
+
+sys.path.append('/home/onos/Downloads/flask_SDN/Flask-SDN/flaskAPI/model')
 # from flaskAPI.model import model
-import update_weight
+import LinkVersion
 
 class Topo(object):
     """Topology network object """
@@ -115,10 +116,10 @@ class Topo(object):
 
     def read_update_weight(self):
         """
-        Read data from update_weights table-Mongo in SDN 248/250 and update new weight in each links
+        Read data from LinkVersion table-Mongo in SDN 248/250 and update new weight in each links
         """
         # params_248 = model.get_multiple_data()
-        params = update_weight.get_multiple_data()
+        params = LinkVersion.get_multiple_data()
 
         # print("+++++++truy + params_248van+++++++++++")
         # print(new_params)
