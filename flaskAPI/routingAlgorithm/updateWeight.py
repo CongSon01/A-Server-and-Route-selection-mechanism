@@ -57,8 +57,9 @@ class updateWeight(object):
                 return link
         return None
 
-    def write_update_link_to_data_base(self):
+    def write_update_link_to_data_base(self, Link_Versions):
         
+        print(Link_Versions)
         # xoa het trong so cu o Mongo
         # model_250.remove_all()
         LinkVersion.remove_all()
@@ -92,6 +93,7 @@ class updateWeight(object):
                           "packetLoss": str(packet_loss),
                            "linkVersion": str(self.link_version)
                         } 
+            
 
             # temp_data = {'src': 'of:0000000000000010', 'packetLoss': 1.0, 'dst': 'of:000000000000000d'{'src': 'of:0000000000000010', 'packetLoss', : 'linkVersion': 17, 'delay': 251.0, 'linkUtilization': 0.000112} 
             #         {'src': ''of:00000d0e00la0y0'000011', 'packetLoss': : 0.16666667169650.0, , 'dst''linkUtilization': 0.000112}: 'of:0000000000000012', 'linkVersion': 32, 'delay': 6237021600000000.0, 'linkUtilization': 0.000112}
@@ -101,6 +103,7 @@ class updateWeight(object):
 
             # temp_data = { "src": src, "dst": dst, "LU": str(link_utilization)}
             try:
+                
                  LinkVersion.insert_data(temp_data)
                  print("+++++++++++++++ Link version update Thanh cong")
             except:
@@ -109,13 +112,14 @@ class updateWeight(object):
             # model_1.insert_data(temp_data)
             # history_weights.insert_data(temp_data)
         
+        LinkVersion.insert_n_data(Link_Versions)
         # reset link set
         self.reset_link_set()
         # self.write_update_link_to_topo()
         #print("lennn cua set", len(self.link_set))
 
-    def write_update_link_to_topo(self):
-        self.topo.read_update_weight()
+    # def write_update_link_to_topo(self, link_versions):
+    #     self.topo.read_update_weight(link_versions)
         
 class WeightLink(object):
         def __init__(self, id_src, id_dst):

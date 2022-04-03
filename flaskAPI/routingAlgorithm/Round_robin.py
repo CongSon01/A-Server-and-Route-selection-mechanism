@@ -40,8 +40,8 @@ class hostServerConnectionRR(object):
     def set_host_ip(self, host_ip):
         self.host_ip = host_ip
 
-    def update_topo(self):
-        self.topo.read_update_weight()
+    def update_topo(self, link_versions):
+        self.topo.read_update_weight(link_versions)
     
     def find_src(self):
         host_object = self.hosts[self.host_ip]     

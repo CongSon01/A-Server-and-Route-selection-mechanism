@@ -10,6 +10,12 @@ database = connection['SDN_data']
 collection = database['LinkVersion']
 # print("Database connected")
 
+def insert_n_data(list_data):
+    if len(list_data) == 0:
+        return
+    else:
+        collection.insert_many(list_data)
+
 def insert_data(data):
     """
     Insert new data or document in collection

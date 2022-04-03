@@ -112,12 +112,13 @@ class Topo(object):
                 return device
         return found
 
-    def read_update_weight(self):
+    def read_update_weight(self, link_versions):
         """
         Read data from update_weights table-Mongo in SDN 248/250 and update new weight in each links
         """
         # params_248 = model.get_multiple_data()
-        link_version = LinkVersion.get_multiple_data()
+        # link_version = LinkVersion.get_multiple_data()
+        link_version = link_versions
 
         # print("+++++++truy + params_248van+++++++++++")
         # print(new_params)
