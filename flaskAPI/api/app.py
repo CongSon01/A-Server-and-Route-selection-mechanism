@@ -10,7 +10,7 @@ sys.path.append(PATH_ABSOLUTE+'core')
 sys.path.append(PATH_ABSOLUTE+'routingAlgorithm')
 
 # import from model
-import Params
+import Params, LinkVersion
 
 # import from handledata/models 
 import CusTopo
@@ -155,15 +155,9 @@ def write_data():
         # doc data tu rabbit lien tuc
     update.read_params_from_rabbit()
 
-        # them data vao MONGO o moi SDN de theo doi ve sau
-        # params_model_248.insert_data(dicdata) # DB may 248
-        # Params.insert_data(dicdata) # DB may 250
     Params.insert_data(dicdata) # DB may 250
-      # try:
-      #       Params.insert_data(dicdata) # DB may 250
-      #       response = requests.post("http://10.20.0.248:5000/write_data/", data= content)  
-      # except:
-      #       print("Goi nhieu SDN loiiiiiiiiiiiiiiiiiiiii")
+
+    
 
 
         # # Cap nhat lai version trong bang version
@@ -178,11 +172,29 @@ def write_data():
           # app.logger.info("Da nhan dc 100 du lieu tu rabbit")
           # app.logger.info("Cap nhat sau 10s")
           
+          try:
+              data_248 = requests.post("http://10.20.0.248:5000/read_link_version/") 
+
+              LinkVersions = data_248 
+          except:
+            print("Doc data loi")
           # viet trong so moi ra Mongo
-          update.write_update_link_to_data_base()
+          update.write_update_link_to_data_base(LinkVersions)
 
           # cap nhap trong so cho server
           update_server.update_server_cost()
+
+              # them data vao MONGO o moi SDN de theo doi ve sau
+          # params_model_248.insert_data(dicdata) # DB may 248
+          # Params.insert_data(dicdata) # DB may 250
+          # Params.insert_data(dicdata) # DB may 250
+          try:
+
+                response = requests.post("http://10.20.0.248:5000/write_link_version/", data= content)
+          except:
+                print("Goi nhieu SDN loiiiiiiiiiiiiiiiiiiiii")
+          
+          
 
           # global update
           # # reset
@@ -203,9 +215,18 @@ def write_data():
       # if update.get_count() == 100: 
     return content
 
-@app.route('/read_data',  methods=['GET', 'POST'] )
-def read_data():
-  return Params.get_multiple_data()
+@app.route('/write_link_version/',  methods=['GET', 'POST'] )
+def write_link_version():
+  if request.method == 'POST':
+    #app.logger.info("Da nhan dc POST")
+    # get data from API
+    content = request.data
+    print(content)
+    LinkVersion.insert_data(content)
+
+@app.route('/read_link_version/',  methods=['GET', 'POST'] )
+def read_link_version():
+  return LinkVersion.get_multiple_data()
 
 if __name__ == '__main__':
     app.run(host='10.20.0.250',debug=True, use_reloader=False)
