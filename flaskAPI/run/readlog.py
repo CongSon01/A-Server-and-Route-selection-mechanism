@@ -1,6 +1,6 @@
 import sys
 sys.path.append('/home/onos/Downloads/flaskSDN/flaskAPI/model')
-import BW_server
+import ServerCost
 
 import time
 import sys
@@ -62,7 +62,7 @@ def get_BW_from_server(file_name, name_host):
                 continue
             # CALL API
             # print(results)
-            BW_server.insert_data(results)
+            ServerCost.insert_data(results)
             
     logfile.close()
     

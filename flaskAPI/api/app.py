@@ -10,7 +10,7 @@ sys.path.append(PATH_ABSOLUTE+'core')
 sys.path.append(PATH_ABSOLUTE+'routingAlgorithm')
 
 # import from model
-import params_model, link_version
+import Params
 
 # import from handledata/models 
 import CusTopo
@@ -19,12 +19,13 @@ import CusTopo
 import connectGraph, Graph
 
 # import from routingAlgorithm
-import destQueueRabbit, updateWeight, Round_robin, DijkstraLearning, connectGraph, updateServerCost
+import destQueueRabbit, DijkstraLearning, Round_robin, updateServerCost, updateWeight
 
 # import inside folder
 import pub
 import apiSDN
 import time
+import requests
 
 # Init app
 app = Flask(__name__)
@@ -116,7 +117,7 @@ def get_ip_server():
 
   return str(dest_ip)
 
-@app.route('/write_data',  methods=['GET', 'POST'] )
+@app.route('/write_data/',  methods=['GET', 'POST'] )
 def write_data():
   
   if request.method == 'GET':
@@ -140,35 +141,41 @@ def write_data():
     # print( "nhan data", dicdata['byteSent'] )
     
     #  Khong chon data mac dinh
-    if float(dicdata['byteSent']) > 600:
-      #print( "--------nhan data onos-------------", dicdata['byteSent'] )
+    # if float(dicdata['byteSent']) > 600:
+    # print( "--------nhan data onos-------------", dicdata['byteSent'] )
 
-      version = params_model.count_link_version(dicdata['src'], dicdata['dst'])
+      # version = params_model.count_link_version(dicdata['src'], dicdata['dst'])
 
       
-      dicdata['link_version'] = version + 1
+      # dicdata['link_version'] = version + 1
 
       # them du lieu vao rabbit de lay ra lien tuc
-      pub.connectRabbitMQ( data = dicdata )
+    pub.connectRabbitMQ( data = dicdata )
 
       # doc data tu rabbit lien tuc
-      update.read_params_from_rabbit()
+    update.read_params_from_rabbit()
 
       # them data vao MONGO o moi SDN de theo doi ve sau
       # params_model_248.insert_data(dicdata) # DB may 248
-      params_model.insert_data(dicdata) # DB may 250
+      # Params.insert_data(dicdata) # DB may 250
+    try:
+          Params.insert_data(dicdata) # DB may 250
+          response = requests.post("http://10.20.0.248:5000/write_data/", data= dicdata)  
+    except:
+          print("Goi nhieu SDN loiiiiiiiiiiiiiiiiiiiii")
 
-      # Cap nhat lai version trong bang version
-      if link_version != None:
-        link_version.insert_data({"version":1})
-      else:
-        if version + 1 > link_version.get_version_max():
-          link_version.insert_data({"version":version + 1})
+
+      # # Cap nhat lai version trong bang version
+      # if link_version != None:
+      #   link_version.insert_data({"version":1})
+      # else:
+      #   if version + 1 > link_version.get_version_max():
+      #     link_version.insert_data({"version":version + 1})
 
     global starttime
     if time.time() - starttime > 10: 
           # app.logger.info("Da nhan dc 100 du lieu tu rabbit")
-          app.logger.info("Cap nhat sau 10s")
+          # app.logger.info("Cap nhat sau 10s")
           
           # viet trong so moi ra Mongo
           update.write_update_link_to_data_base()
@@ -193,13 +200,11 @@ def write_data():
 
       # Doc duoc 100 du lieu tu rabbit 
       # if update.get_count() == 100: 
-   
-
     return content
 
 @app.route('/read_data',  methods=['GET', 'POST'] )
 def read_data():
-  return params_model.get_multiple_data()
+  return Params.get_multiple_data()
 
 if __name__ == '__main__':
     app.run(host='10.20.0.250',debug=True, use_reloader=False)

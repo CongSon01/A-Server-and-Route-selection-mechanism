@@ -1,13 +1,13 @@
 from pymongo import MongoClient
 
 # mongo_uri = "mongodb://username:" + urllib.quote("p@ssword") + "@127.0.0.1:27001/"
-mongo_uri = "mongodb://localhost:27017"
+mongo_uri = "mongodb://localhost:27017/"
 connection = MongoClient(mongo_uri)
 
 # CREATE DATABASE
 database = connection['SDN_data']
 # CREATE COLLECTION
-collection = database['params']
+collection = database['Params']
 # print("Database connected")
 
 def insert_data(data):

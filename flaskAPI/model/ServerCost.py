@@ -2,8 +2,7 @@ import pymongo
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 mydb = myclient["SDN_data"]
-mycol = mydb["BW_server"]
-
+mycol = mydb["ServerCost"]
 
 def insert_n_data(list_BW):
     if len(list_BW) == 0:

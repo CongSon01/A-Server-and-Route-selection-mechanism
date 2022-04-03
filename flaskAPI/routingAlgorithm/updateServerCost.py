@@ -1,8 +1,6 @@
-import numpy as np
-import sub
 import sys
 sys.path.append('/home/onos/Downloads/flaskSDN/flaskAPI/model')
-import BW_server, updated_BW_server
+import ServerCost
 
 class updateServerCost(object):
 
@@ -12,8 +10,9 @@ class updateServerCost(object):
     def update_server_cost(self):
         #print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA server cost")
         current_server = []
-        server_cost = BW_server.get_multiple_data()
-        BW_server.remove_all()
+        server_cost = ServerCost.get_multiple_data()
+        ServerCost.remove_all()
+        
         #print(server_cost)
         for server in server_cost:
             band_width = server['Bandwidth']
@@ -28,7 +27,7 @@ class updateServerCost(object):
                 if server_object not in current_server:
                     current_server.append(server_object)
                 # print( "server cost = ", server_object.get_server_cost() )
-                #updated_BW_server.insert_data(server_object)
+                #updated_ServerCost.insert_data(server_object)
             #     continue
             # else:
             #     server_object.add_cost(band_width)

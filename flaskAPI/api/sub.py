@@ -17,9 +17,9 @@ class Sub(object):
 
     def receive_queue(self):
         
-        creadentials = pika.PlainCredentials('onos', 'rocks')
+        creadentials = pika.PlainCredentials('guest', 'guest')
         connection = pika.BlockingConnection(
-        pika.ConnectionParameters('10.20.0.250', 5672, '/', credentials=creadentials))
+        pika.ConnectionParameters('localhost', 5672, '/', credentials=creadentials))
         channel = connection.channel()
         channel.queue_declare(queue='onos')
         #print('Waitting for data send')

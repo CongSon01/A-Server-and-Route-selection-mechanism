@@ -1,6 +1,6 @@
 import sys
 sys.path.append('/home/onos/Downloads/flaskSDN/flaskAPI/handledata/models')
-import CusHost, CusLink, CusDevice, CusTopo
+import CusHost, CusLink, CusDevice
 import json
 import ast
 
