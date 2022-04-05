@@ -1,8 +1,9 @@
 import numpy as np
 import sub
-import sys
+import sys, json, requests, random
 sys.path.append('/home/onos/Downloads/flask_SDN/Flask-SDN/flaskAPI/model')
 import LinkVersion
+
 
 class updateWeight(object):
 
@@ -57,19 +58,29 @@ class updateWeight(object):
                 return link
         return None
 
-    def write_update_link_to_data_base(self, Link_Versions):
+    def write_update_link_to_data_base(self, LinkVersions):
+
+        self.count +=1
+        print("Goi lan thu", self.count)
         
-        print("LINK________________VERSION______________")
-        print(Link_Versions)
+        # print("LINK________________VERSION______________")
+        # print(Link_Versions)
         # xoa het trong so cu o Mongo
         # model_250.remove_all()
-        LinkVersion.remove_all()
+        try:
+            LinkVersion.remove_all()
+            print("Remove thanh cong")
+        except:
+            print("Remove loi .................")
         # model_1.remove_all()
 
         # print("-------------------Write update link weight to MONGO------------- ...")  
+        # print("LINK_____LENGTH___________VERSION______________")
+        print(len(self.link_set))
         self.link_version +=1   
+      
         for link in self.link_set:
-            print("\n")
+            # print("\n")
             #print( link.get_id_src(), "----------------->",link.get_id_dst() )
             src = link.get_id_src()
             dst = link.get_id_dst()
@@ -79,20 +90,21 @@ class updateWeight(object):
             delay = weight[0]
             link_utilization = weight[1]
             packet_loss = weight[2]
-            print("src", src)
-            print("dst", dst)
-            print("delay:", delay)
-            print("link_utilization:", link_utilization)
-            print("packet_loss:", packet_loss)
-            print("linkVersion:", self.link_version)
+            # print("src", src)
+            # print("dst", dst)
+            # print("delay:", delay)
+            # print("link_utilization:", link_utilization)
+            # print("packet_loss:", packet_loss)
+            # print("linkVersion:", self.link_version)
           
             
             temp_data = { "src": src, 
                           "dst": dst,
-                          "delay": str(delay),
-                          "linkUtilization": str(link_utilization),
-                          "packetLoss": str(packet_loss),
-                           "linkVersion": str(self.link_version)
+                          "delay": float(delay),
+                          "linkUtilization": float(link_utilization),
+                          "packetLoss": float(packet_loss),
+                           "linkVersion": float(self.link_version),
+                           "IpSDN": "10.20.0.248"
                         } 
             
 
@@ -106,15 +118,23 @@ class updateWeight(object):
             try:
                  LinkVersion.insert_data(temp_data)
             except:
-                 print("--------------- Link version update loi")
+                 print("--------------- Local Link version update loi")
                 
             # model_1.insert_data(temp_data)
             # history_weights.insert_data(temp_data)
-        
+        # Ghi W ong
+        W = 2
+        ip_sdn = ['10.20.0.248','10.20.0.251','10.20.0.244','10.20.0.243']
         try:
-            LinkVersion.insert_n_data(Link_Versions)
+            data = LinkVersion.get_multiple_data()
+            for ip in random.sample(ip_sdn, W):
+                requests.post( "http://"+ ip  +"/write_link_version/", data= json.dumps( { 'link_versions':data} ) )
         except:
-            print("--------------- Link Nhieu version update loi")
+            print("flask Goi nhieu SDN loiiiiiiiiiiiiiiiiiiiii")
+        # try:
+        #     LinkVersion.insert_n_data(LinkVersions)
+        # except:
+        #     print("--------------- Link Nhieu version update loiiiiiiiiiiiiiiii")
         
         # reset link set
         self.reset_link_set()
@@ -123,6 +143,7 @@ class updateWeight(object):
 
     # def write_update_link_to_topo(self, link_versions):
     #     self.topo.read_update_weight(link_versions)
+
         
 class WeightLink(object):
         def __init__(self, id_src, id_dst):

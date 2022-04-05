@@ -22,7 +22,7 @@ class Sub(object):
         pika.ConnectionParameters('localhost', 5672, '/', credentials=creadentials))
         channel = connection.channel()
         channel.queue_declare(queue='onos')
-        #print('Waitting for data send')
+        #('Waitting for data send')
 
         channel.basic_qos(prefetch_count=1)
         channel.basic_consume(queue='onos', on_message_callback= self.callback )

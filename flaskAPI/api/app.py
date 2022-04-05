@@ -108,9 +108,11 @@ def get_ip_server():
     # chay thuat toan Round Robin 
     if IS_RUN_RRBIN:
         object = Round_robin.hostServerConnectionRR(queue_rr, topo_network, hosts, servers, priority)
+        print('RR return ip dest ')
     # chay thuat toan Dinjkstra
     else:
         object = DijkstraLearning.hostServerConnection(topo_network, hosts, servers, priority)
+        print('Dijkstra return ip dest ')
 
     # truyen ip xuat phat va lay ra ip server dich den
     object.set_host_ip(host_ip= str(host_ip))
@@ -142,19 +144,22 @@ def write_data():
     # print( "nhan data", dicdata['byteSent'] )
     
     #  Khong chon data mac dinh
-    # if float(dicdata['byteSent']) > 600:
-    # print( "--------nhan data onos-------------", dicdata['byteSent'] )
+    # if float(dicdata['byteSent']) > 600 and float(dicdata['byteReceived']) > 600:
+     
+    # # print( "--------nhan data onos-------------", dicdata['byteSent'] )
 
-      # version = params_model.count_link_version(dicdata['src'], dicdata['dst'])
+    #   # version = params_model.count_link_version(dicdata['src'], dicdata['dst'])
 
       
-      # dicdata['link_version'] = version + 1
+    #   # dicdata['link_version'] = version + 1
 
-      # them du lieu vao rabbit de lay ra lien tuc
-    pub.connectRabbitMQ( data = dicdata )
+    # # them du lieu vao rabbit de lay ra lien tuc
+    #   pub.connectRabbitMQ( data = dicdata )
 
-      # doc data tu rabbit lien tuc
-    update.read_params_from_rabbit()
+    # # doc data tu rabbit lien tuc
+    #   update.read_params_from_rabbit()
+    # # chen data vao local
+    #   Params.insert_data(dicdata)
 
 
       # # Cap nhat lai version trong bang version
@@ -164,54 +169,33 @@ def write_data():
       #   if version + 1 > link_version.get_version_max():
       #     link_version.insert_data({"version":version + 1})
 
+
     global starttime
-    if time.time() - starttime > 5: 
+    if time.time() - starttime > 10: 
+          print("hellooooooooooooooooooooooooooooooo")
           # app.logger.info("Da nhan dc 100 du lieu tu rabbit")
           # app.logger.info("Cap nhat sau 10s")
           # print(LinkVersion.get_multiple_data())
           
           # Doc R ong
-          try:
-              data_250 = requests.get("http://10.20.0.248:5000/read_link_version/") 
+          # try:
+          #     data_250 = requests.get("http://10.20.0.250:5000/read_link_version/") 
 
-              LinkVersions = data_250.text
-              update.write_update_link_to_data_base(LinkVersions)
-              # print(data_250.text)
-          except:
-            print("Doc data loi")
+          #     LinkVersions = json.loads(data_250.text)
+          update.write_update_link_to_data_base()
+          #     #update.read_link_version_from_many_SDN(LinkVersions)
+          #     update.write_update_link_to_data_base(LinkVersions['link_versions'])
+          #     # print(data_250.text)
+          # except:
+          #   print("flask Doc data loi")
           
-          # Ghi W ong
-          try:
-              response = requests.post("http://10.20.0.250:5000/write_link_version/", data= dicdata)
-          except:
-              print("Goi nhieu SDN loiiiiiiiiiiiiiiiiiiiii")
-
-
-          # viet trong so moi ra Mongo
-
           
 
-          # cap nhap trong so cho server
-          # update_server.update_server_cost()
-
-              # them data vao MONGO o moi SDN de theo doi ve sau
-          # params_model_248.insert_data(dicdata) # DB may 248
-          # Params.insert_data(dicdata) # DB may 250
-          # Params.insert_data(dicdata) # DB may 250
-
-
-          
-
-
-
-
-
-
-          # viet trong so moi ra Mongo
+          # viet trong so moi ra Mongoroc
           # update.write_update_link_to_data_base()
 
           # cap nhap trong so cho server
-          update_server.update_server_cost()
+          # update_server.update_server_cost()
 
           # global update
           # # reset
@@ -238,8 +222,9 @@ def write_link_version():
     #app.logger.info("Da nhan dc POST")
     # get data from API
     content = request.data
-    print(content)
-    LinkVersion.insert_data(content)
+    LinkVersion.insert_n_data(json.loads(content)['link_versions'])
+    print("Ghi vao W SDN thanh cong")
+    return content
 
 @app.route('/read_link_version/',  methods=['GET', 'POST'] )
 def read_link_version():
