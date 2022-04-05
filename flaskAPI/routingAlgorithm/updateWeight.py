@@ -4,7 +4,6 @@ import sys, json, requests, random
 sys.path.append('/home/onos/Downloads/flask_SDN/Flask-SDN/flaskAPI/model')
 import LinkVersion
 
-
 class updateWeight(object):
 
     def __init__(self, topo):
@@ -58,25 +57,24 @@ class updateWeight(object):
                 return link
         return None
 
-    def write_update_link_to_data_base(self, LinkVersions):
+    def write_update_link_to_data_base(self):
 
-        self.count +=1
-        print("Goi lan thu", self.count)
+        # self.count +=1
+        # print("Goi lan thu", self.count)
         
-        # print("LINK________________VERSION______________")
+        print("LINK________________VERSION______________")
         # print(Link_Versions)
         # xoa het trong so cu o Mongo
         # model_250.remove_all()
         try:
             LinkVersion.remove_all()
-            print("Remove thanh cong")
         except:
             print("Remove loi .................")
         # model_1.remove_all()
 
         # print("-------------------Write update link weight to MONGO------------- ...")  
         # print("LINK_____LENGTH___________VERSION______________")
-        print(len(self.link_set))
+        # print(len(self.link_set))
         self.link_version +=1   
       
         for link in self.link_set:
@@ -97,17 +95,16 @@ class updateWeight(object):
             # print("packet_loss:", packet_loss)
             # print("linkVersion:", self.link_version)
           
-            
             temp_data = { "src": src, 
                           "dst": dst,
                           "delay": float(delay),
                           "linkUtilization": float(link_utilization),
                           "packetLoss": float(packet_loss),
-                           "linkVersion": float(self.link_version),
-                           "IpSDN": "10.20.0.248"
+                          "linkVersion": float(self.link_version),
+                          "IpSDN": "10.20.0.248"
                         } 
-            
-
+            # print(temp_data)
+            # print("version =", self.link_version)
             # temp_data = {'src': 'of:0000000000000010', 'packetLoss': 1.0, 'dst': 'of:000000000000000d'{'src': 'of:0000000000000010', 'packetLoss', : 'linkVersion': 17, 'delay': 251.0, 'linkUtilization': 0.000112} 
             #         {'src': ''of:00000d0e00la0y0'000011', 'packetLoss': : 0.16666667169650.0, , 'dst''linkUtilization': 0.000112}: 'of:0000000000000012', 'linkVersion': 32, 'delay': 6237021600000000.0, 'linkUtilization': 0.000112}
             # print(temp_data)
@@ -124,20 +121,23 @@ class updateWeight(object):
             # history_weights.insert_data(temp_data)
         # Ghi W ong
         W = 2
-        ip_sdn = ['10.20.0.248','10.20.0.251','10.20.0.244','10.20.0.243']
+        ip_sdn = ['10.20.0.251','10.20.0.243', '10.20.0.244']
         try:
             data = LinkVersion.get_multiple_data()
-            for ip in random.sample(ip_sdn, W):
-                requests.post( "http://"+ ip  +"/write_link_version/", data= json.dumps( { 'link_versions':data} ) )
+            for ip in random.sample(ip_sdn, W):  
+                print("goi ip", ip)
+                url = "http://" + ip + ":5000/write_link_version/"
+                requests.post(url, data= json.dumps( { 'link_versions':data} ) )
         except:
             print("flask Goi nhieu SDN loiiiiiiiiiiiiiiiiiiiii")
-        # try:
+        # # try:
         #     LinkVersion.insert_n_data(LinkVersions)
         # except:
         #     print("--------------- Link Nhieu version update loiiiiiiiiiiiiiiii")
         
         # reset link set
         self.reset_link_set()
+       
         # self.write_update_link_to_topo()
         #print("lennn cua set", len(self.link_set))
 

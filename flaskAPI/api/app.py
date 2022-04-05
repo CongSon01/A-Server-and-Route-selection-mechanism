@@ -59,6 +59,8 @@ servers = topo_network.get_servers()
 print(hosts)
 print(servers)
 
+count = 1
+
 if IS_RUN_RRBIN:
     print("Doc Queue 1 lan duy nhat")
     print(servers)
@@ -144,7 +146,10 @@ def write_data():
     # print( "nhan data", dicdata['byteSent'] )
     
     #  Khong chon data mac dinh
-    # if float(dicdata['byteSent']) > 600 and float(dicdata['byteReceived']) > 600:
+    if float(dicdata['byteSent']) > 600 and float(dicdata['byteReceived']) > 600:
+        pub.connectRabbitMQ( data = dicdata )
+        update.read_params_from_rabbit()
+        Params.insert_data(dicdata)
      
     # # print( "--------nhan data onos-------------", dicdata['byteSent'] )
 
@@ -154,25 +159,23 @@ def write_data():
     #   # dicdata['link_version'] = version + 1
 
     # # them du lieu vao rabbit de lay ra lien tuc
-    #   pub.connectRabbitMQ( data = dicdata )
+     
 
     # # doc data tu rabbit lien tuc
     #   update.read_params_from_rabbit()
     # # chen data vao local
     #   Params.insert_data(dicdata)
 
-
-      # # Cap nhat lai version trong bang version
-      # if link_version != None:
-      #   link_version.insert_data({"version":1})
-      # else:
-      #   if version + 1 > link_version.get_version_max():
-      #     link_version.insert_data({"version":version + 1})
-
-
     global starttime
-    if time.time() - starttime > 10: 
-          print("hellooooooooooooooooooooooooooooooo")
+    # global count
+    if time.time() - starttime > 30: 
+          #print("hellooooooooooooooooooooooooooooooo")
+          # count += 1 
+          # print("chay count =", count)
+          # time.sleep(10)
+          update.write_update_link_to_data_base()
+          starttime = time.time()
+         
           # app.logger.info("Da nhan dc 100 du lieu tu rabbit")
           # app.logger.info("Cap nhat sau 10s")
           # print(LinkVersion.get_multiple_data())
@@ -182,7 +185,7 @@ def write_data():
           #     data_250 = requests.get("http://10.20.0.250:5000/read_link_version/") 
 
           #     LinkVersions = json.loads(data_250.text)
-          update.write_update_link_to_data_base()
+        
           #     #update.read_link_version_from_many_SDN(LinkVersions)
           #     update.write_update_link_to_data_base(LinkVersions['link_versions'])
           #     # print(data_250.text)
@@ -203,7 +206,7 @@ def write_data():
 
           # reset bien doc du lieu
           #update.set_count(count = 0)
-          starttime = time.time()
+         
 
 # # print str after 2 minutes
 # print('start time: ' + str(starttime))
