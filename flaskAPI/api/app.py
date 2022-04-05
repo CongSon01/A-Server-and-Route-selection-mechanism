@@ -32,51 +32,51 @@ import requests
 app = Flask(__name__)
 
 # goi api tu cac SDN 
-apiSDN.call_topo_api_sdn_1()
-apiSDN.call_topo_api_sdn_2()
-apiSDN.call_host_api_sdn_1()
-apiSDN.call_host_api_sdn_2()
+# apiSDN.call_topo_api_sdn_1()
+# apiSDN.call_topo_api_sdn_2()
+# apiSDN.call_host_api_sdn_1()
+# apiSDN.call_host_api_sdn_2()
 
-topo_path_1 = PATH_ABSOLUTE + 'topo_1.json'
-topo_path_2 = PATH_ABSOLUTE + 'topo_2.json'
-host_path_1 = PATH_ABSOLUTE + 'host_1.json'
-host_path_2 = PATH_ABSOLUTE + 'host_2.json'
-topo_files = [topo_path_1, topo_path_2]
-host_files = [host_path_1, host_path_2]
+# topo_path_1 = PATH_ABSOLUTE + 'topo_1.json'
+# topo_path_2 = PATH_ABSOLUTE + 'topo_2.json'
+# host_path_1 = PATH_ABSOLUTE + 'host_1.json'
+# host_path_2 = PATH_ABSOLUTE + 'host_2.json'
+# topo_files = [topo_path_1, topo_path_2]
+# host_files = [host_path_1, host_path_2]
 # sinh ra file hop nhat giua cac mang: topo.json va host.json 
-connectGraph.connectGraph(topo_files, host_files)
+# connectGraph.connectGraph(topo_files, host_files)
 
 # khoi tao topo rong
-topo_network = CusTopo.Topo()
+# topo_network = CusTopo.Topo()
 # add do thi topo.json va host.json vao topo
-graph = Graph.Graph(topo_network, 'topo.json', 'host.json')
+# graph = Graph.Graph(topo_network, 'topo.json', 'host.json')
 
 
 #print(topo_network.get_topo(), "\n")
 # get tap host va server tronng topo
-hosts = topo_network.get_hosts()
-servers = topo_network.get_servers()
-print(hosts)
-print(servers)
+# hosts = topo_network.get_hosts()
+# servers = topo_network.get_servers()
+# print(hosts)
+# print(servers)
 
 count = 1
 
-if IS_RUN_RRBIN:
-    print("Doc Queue 1 lan duy nhat")
-    print(servers)
-    # khoi tao queue co che Round robin
-    queue_rr = destQueueRabbit.destQueueRabbit()
+# if IS_RUN_RRBIN:
+#     print("Doc Queue 1 lan duy nhat")
+#     print(servers)
+#     # khoi tao queue co che Round robin
+#     queue_rr = destQueueRabbit.destQueueRabbit()
 
-    # day tap server vao rabbit queue
-    for ip in servers:
-        queue_rr.connectRabbitMQ(ip_dest= ip)
+#     # day tap server vao rabbit queue
+#     for ip in servers:
+#         queue_rr.connectRabbitMQ(ip_dest= ip)
 
-# khoi tao bien CAP NHAP SERVER COST
-update_server = updateServerCost.updateServerCost(servers)
-# khoi tao bien CAP NHAP LINK COST
-update = updateWeight.updateWeight(topo= topo_network)
-# uu tien flow rule theo thu tu tu dau den cuoi
-priority = 200
+# # khoi tao bien CAP NHAP SERVER COST
+# update_server = updateServerCost.updateServerCost(servers)
+# # khoi tao bien CAP NHAP LINK COST
+update = updateWeight.updateWeight()
+# # uu tien flow rule theo thu tu tu dau den cuoi
+# priority = 200
 
 starttime = time.time()
 # def get_BW_from_server(file_name, name_host):
@@ -99,28 +99,28 @@ starttime = time.time()
 #         return results
 
       
-@app.route('/getIpServer', methods=['POST'])
-def get_ip_server():
+# @app.route('/getIpServer', methods=['POST'])
+# def get_ip_server():
   
-  if request.method == 'POST':
-    host_ip = request.data
-    global priority 
-    priority +=1
+#   if request.method == 'POST':
+#     host_ip = request.data
+#     global priority 
+#     priority +=1
 
-    # chay thuat toan Round Robin 
-    if IS_RUN_RRBIN:
-        object = Round_robin.hostServerConnectionRR(queue_rr, topo_network, hosts, servers, priority)
-        print('RR return ip dest ')
-    # chay thuat toan Dinjkstra
-    else:
-        object = DijkstraLearning.hostServerConnection(topo_network, hosts, servers, priority)
-        print('Dijkstra return ip dest ')
+#     # chay thuat toan Round Robin 
+#     if IS_RUN_RRBIN:
+#         object = Round_robin.hostServerConnectionRR(queue_rr, topo_network, hosts, servers, priority)
+#         print('RR return ip dest ')
+#     # chay thuat toan Dinjkstra
+#     else:
+#         object = DijkstraLearning.hostServerConnection(topo_network, hosts, servers, priority)
+#         print('Dijkstra return ip dest ')
 
-    # truyen ip xuat phat va lay ra ip server dich den
-    object.set_host_ip(host_ip= str(host_ip))
-    dest_ip = object.find_shortest_path()
+#     # truyen ip xuat phat va lay ra ip server dich den
+#     object.set_host_ip(host_ip= str(host_ip))
+#     dest_ip = object.find_shortest_path()
 
-  return str(dest_ip)
+#   return str(dest_ip)
 
 @app.route('/write_data/',  methods=['GET', 'POST'] )
 def write_data():

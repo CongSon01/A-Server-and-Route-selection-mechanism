@@ -6,12 +6,12 @@ import LinkVersion
 
 class updateWeight(object):
 
-    def __init__(self, topo):
+    def __init__(self):
         self.params_data = ""
         self.link_set = list()
         self.consumer = sub.Sub()
         self.count = 0
-        self.topo = topo
+        # self.topo = topo
         self.link_version = 0
 
     def get_link_set(self):
