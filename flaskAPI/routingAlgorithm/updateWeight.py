@@ -76,7 +76,7 @@ class updateWeight(object):
         # print("LINK_____LENGTH___________VERSION______________")
         # print(len(self.link_set))
         self.link_version +=1   
-      
+        print("So du lieu duoc cap nhat: ", len(self.link_set))
         for link in self.link_set:
             # print("\n")
             #print( link.get_id_src(), "----------------->",link.get_id_dst() )
@@ -120,12 +120,12 @@ class updateWeight(object):
             # model_1.insert_data(temp_data)
             # history_weights.insert_data(temp_data)
         # Ghi W ong
-        W = 2
+        W = 3
         ip_sdn = ['10.20.0.251','10.20.0.243', '10.20.0.244']
         try:
             data = LinkVersion.get_multiple_data()
             for ip in random.sample(ip_sdn, W):  
-                print("goi ip", ip)
+                print('ghi vao ip: ', ip)
                 url = "http://" + ip + ":5000/write_link_version/"
                 requests.post(url, data= json.dumps( { 'link_versions':data} ) )
         except:

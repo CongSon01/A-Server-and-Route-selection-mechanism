@@ -7,13 +7,25 @@ class connectGraph(object):
         self.file_topos = file_topos
         self.file_hosts = file_hosts
 
-
         self.merge_topo()
         self.merge_host()
 
+        self.remove_host_from_device = ["02", "08", "07", "0e"]
+
+        # khai bao 5 canh bien
+        self.bridge = [       
+            ["of:0000000000000001", "of:0000000000000006"],
+            ["of:0000000000000002", "of:0000000000000007"],
+            ["of:0000000000000003", "of:0000000000000008"],
+            ["of:0000000000000004", "of:0000000000000009"],
+            ["of:0000000000000005", "of:00000000000000010"]
+
+            ]
+
+    
     def merge_topo(self):  
-        result_links = list()
-        result_devices = list()
+        # result_links = list()
+        # result_devices = list()
         result_topo = { 
             "devices": [],
             "links": []
@@ -32,56 +44,86 @@ class connectGraph(object):
             links = object['links']
             for link in links:
                 result_topo['links'].append(link)
-            
-            link_fix_xuoi_1 = {
-                    "src": {
-                        "port": 10,
-                        "id": "of:0000000000000007"
-                    },
-                    "dst": {
-                        "port": 10,
-                        "id": "of:0000000000000008"
-                    }
-            }
+                
+            # them canh bien vao do thi topo
+            for edge in range(len(self.bridge)):
+                src = edge[0]
+                dst = edge[1]
+
+                link_fix_xuoi = {
+                        "src": {
+                            "port": 10,
+                            "id": src
+                        },
+                        "dst": {
+                            "port": 10,
+                            "id": dst
+                        }
+                }
+
+                link_fix_nguoc = {
+                        "src": {
+                            "port": 10,
+                            "id": dst
+                        },
+                        "dst": {
+                            "port": 10,
+                            "id": src
+                        }
+                }
+                result_topo['links'].append(link_fix_xuoi)
+                result_topo['links'].append(link_fix_nguoc)
   
-            link_fix_nguoc_1 = {
-                    "src": {
-                        "port": 10,
-                        "id": "of:0000000000000008"
-                    },
-                    "dst": {
-                        "port": 10,
-                        "id": "of:0000000000000007"
-                    }
-            }
+            
+            # link_fix_xuoi_1 = {
+            #         "src": {
+            #             "port": 10,
+            #             "id": "of:0000000000000007"
+            #         },
+            #         "dst": {
+            #             "port": 10,
+            #             "id": "of:0000000000000008"
+            #         }
+            # }
+  
+            # link_fix_nguoc_1 = {
+            #         "src": {
+            #             "port": 10,
+            #             "id": "of:0000000000000008"
+            #         },
+            #         "dst": {
+            #             "port": 10,
+            #             "id": "of:0000000000000007"
+            #         }
+            # }
 
-            ###########################
-            link_fix_xuoi_2 = {
-                    "src": {
-                        "port": 10,
-                        "id": "of:0000000000000002"
-                    },
-                    "dst": {
-                        "port": 10,
-                        "id": "of:000000000000000e"
-                    }
-            }
+            # ###########################
+            # link_fix_xuoi_2 = {
+            #         "src": {
+            #             "port": 10,
+            #             "id": "of:0000000000000002"
+            #         },
+            #         "dst": {
+            #             "port": 10,
+            #             "id": "of:000000000000000e"
+            #         }
+            # }
 
-            link_fix_nguoc_2 = {
-                    "src": {
-                        "port": 10,
-                        "id": "of:000000000000000e"
-                    },
-                    "dst": {
-                        "port": 10,
-                        "id": "of:0000000000000002"
-                    }
-            }
+            # link_fix_nguoc_2 = {
+            #         "src": {
+            #             "port": 10,
+            #             "id": "of:000000000000000e"
+            #         },
+            #         "dst": {
+            #             "port": 10,
+            #             "id": "of:0000000000000002"
+            #         }
+            # }
 
-            result_topo['links'].append(link_fix_xuoi_1)
-            result_topo['links'].append(link_fix_nguoc_1)
-            result_topo['links'].append(link_fix_xuoi_2)
-            result_topo['links'].append(link_fix_nguoc_2)
+            # result_topo['links'].append(link_fix_xuoi_1)
+            # result_topo['links'].append(link_fix_nguoc_1)
+            # result_topo['links'].append(link_fix_xuoi_2)
+            # result_topo['links'].append(link_fix_nguoc_2)
 
             for switch in devices:
                 result_topo['devices'].append(switch)
@@ -101,7 +143,7 @@ class connectGraph(object):
         ######## xoa cac host tu tap switch bien
         #### alo ai dot nhap  alo vao hop di
         
-        remove_host_from_device = ["02", "08", "07", "0e"]
+        # remove_host_from_device = ["02", "08", "07", "0e"]
 
         for file in self.file_hosts:
 
@@ -136,7 +178,7 @@ class connectGraph(object):
                     #     print("Xoa host tu switch bien------------------------->", device_id[-1] ) 
                     #     continue
 
-                    if  last_device_id in remove_host_from_device:
+                    if  last_device_id in self.remove_host_from_device:
                         print("Xoa host tu switch bien------------------------->",  last_device_id ) 
                         continue
                     else:

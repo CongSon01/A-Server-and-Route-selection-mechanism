@@ -1,1 +1,324 @@
-{"flows": [{"isPermanent": true, "selector": {"criteria": [{"type": "IN_PORT", "port": 1}, {"mac": "C2:A2:06:02:7F:B9", "type": "ETH_SRC", "port": 0}, {"mac": "DE:9C:DF:76:16:36", "type": "ETH_DST", "port": 0}]}, "priority": 220, "deviceId": "of:0000000000000002", "timeout": 0, "treatment": {"instructions": [{"type": "OUTPUT", "port": 3}]}}, {"isPermanent": true, "selector": {"criteria": [{"type": "IN_PORT", "port": 1}, {"mac": "C2:A2:06:02:7F:B9", "type": "ETH_SRC", "port": 0}, {"mac": "DE:9C:DF:76:16:36", "type": "ETH_DST", "port": 0}]}, "priority": 220, "deviceId": "of:0000000000000003", "timeout": 0, "treatment": {"instructions": [{"type": "OUTPUT", "port": 2}]}}, {"isPermanent": true, "selector": {"criteria": [{"type": "IN_PORT", "port": 1}, {"mac": "C2:A2:06:02:7F:B9", "type": "ETH_SRC", "port": 0}, {"mac": "DE:9C:DF:76:16:36", "type": "ETH_DST", "port": 0}]}, "priority": 220, "deviceId": "of:0000000000000004", "timeout": 0, "treatment": {"instructions": [{"type": "OUTPUT", "port": 10}]}}, {"isPermanent": true, "selector": {"criteria": [{"type": "IN_PORT", "port": 10}, {"mac": "C2:A2:06:02:7F:B9", "type": "ETH_SRC", "port": 0}, {"mac": "DE:9C:DF:76:16:36", "type": "ETH_DST", "port": 0}]}, "priority": 220, "deviceId": "of:0000000000000005", "timeout": 0, "treatment": {"instructions": [{"type": "OUTPUT", "port": 1}]}}, {"isPermanent": true, "selector": {"criteria": [{"type": "IN_PORT", "port": 2}, {"mac": "C2:A2:06:02:7F:B9", "type": "ETH_SRC", "port": 0}, {"mac": "DE:9C:DF:76:16:36", "type": "ETH_DST", "port": 0}]}, "priority": 220, "deviceId": "of:0000000000000006", "timeout": 0, "treatment": {"instructions": [{"type": "OUTPUT", "port": 1}]}}, {"isPermanent": true, "selector": {"criteria": [{"type": "IN_PORT", "port": 1}, {"mac": "DE:9C:DF:76:16:36", "type": "ETH_SRC", "port": 0}, {"mac": "C2:A2:06:02:7F:B9", "type": "ETH_DST", "port": 0}]}, "priority": 220, "deviceId": "of:0000000000000006", "timeout": 0, "treatment": {"instructions": [{"type": "OUTPUT", "port": 2}]}}, {"isPermanent": true, "selector": {"criteria": [{"type": "IN_PORT", "port": 1}, {"mac": "DE:9C:DF:76:16:36", "type": "ETH_SRC", "port": 0}, {"mac": "C2:A2:06:02:7F:B9", "type": "ETH_DST", "port": 0}]}, "priority": 220, "deviceId": "of:0000000000000005", "timeout": 0, "treatment": {"instructions": [{"type": "OUTPUT", "port": 10}]}}, {"isPermanent": true, "selector": {"criteria": [{"type": "IN_PORT", "port": 10}, {"mac": "DE:9C:DF:76:16:36", "type": "ETH_SRC", "port": 0}, {"mac": "C2:A2:06:02:7F:B9", "type": "ETH_DST", "port": 0}]}, "priority": 220, "deviceId": "of:0000000000000004", "timeout": 0, "treatment": {"instructions": [{"type": "OUTPUT", "port": 2}]}}, {"isPermanent": true, "selector": {"criteria": [{"type": "IN_PORT", "port": 3}, {"mac": "DE:9C:DF:76:16:36", "type": "ETH_SRC", "port": 0}, {"mac": "C2:A2:06:02:7F:B9", "type": "ETH_DST", "port": 0}]}, "priority": 220, "deviceId": "of:0000000000000001", "timeout": 0, "treatment": {"instructions": [{"type": "OUTPUT", "port": 2}]}}, {"isPermanent": true, "selector": {"criteria": [{"type": "IN_PORT", "port": 2}, {"mac": "DE:9C:DF:76:16:36", "type": "ETH_SRC", "port": 0}, {"mac": "C2:A2:06:02:7F:B9", "type": "ETH_DST", "port": 0}]}, "priority": 220, "deviceId": "of:0000000000000002", "timeout": 0, "treatment": {"instructions": [{"type": "OUTPUT", "port": 1}]}}]}
+{
+    "flows": [
+        {
+            "isPermanent": true,
+            "selector": {
+                "criteria": [
+                    {
+                        "type": "IN_PORT",
+                        "port": 1
+                    },
+                    {
+                        "mac": "C2:A2:06:02:7F:B9",
+                        "type": "ETH_SRC",
+                        "port": 0
+                    },
+                    {
+                        "mac": "DE:9C:DF:76:16:36",
+                        "type": "ETH_DST",
+                        "port": 0
+                    }
+                ]
+            },
+            "priority": 220,
+            "deviceId": "of:0000000000000002",
+            "timeout": 0,
+            "treatment": {
+                "instructions": [
+                    {
+                        "type": "OUTPUT",
+                        "port": 3
+                    }
+                ]
+            }
+        },
+        {
+            "isPermanent": true,
+            "selector": {
+                "criteria": [
+                    {
+                        "type": "IN_PORT",
+                        "port": 1
+                    },
+                    {
+                        "mac": "C2:A2:06:02:7F:B9",
+                        "type": "ETH_SRC",
+                        "port": 0
+                    },
+                    {
+                        "mac": "DE:9C:DF:76:16:36",
+                        "type": "ETH_DST",
+                        "port": 0
+                    }
+                ]
+            },
+            "priority": 220,
+            "deviceId": "of:0000000000000003",
+            "timeout": 0,
+            "treatment": {
+                "instructions": [
+                    {
+                        "type": "OUTPUT",
+                        "port": 2
+                    }
+                ]
+            }
+        },
+        {
+            "isPermanent": true,
+            "selector": {
+                "criteria": [
+                    {
+                        "type": "IN_PORT",
+                        "port": 1
+                    },
+                    {
+                        "mac": "C2:A2:06:02:7F:B9",
+                        "type": "ETH_SRC",
+                        "port": 0
+                    },
+                    {
+                        "mac": "DE:9C:DF:76:16:36",
+                        "type": "ETH_DST",
+                        "port": 0
+                    }
+                ]
+            },
+            "priority": 220,
+            "deviceId": "of:0000000000000004",
+            "timeout": 0,
+            "treatment": {
+                "instructions": [
+                    {
+                        "type": "OUTPUT",
+                        "port": 10
+                    }
+                ]
+            }
+        },
+        {
+            "isPermanent": true,
+            "selector": {
+                "criteria": [
+                    {
+                        "type": "IN_PORT",
+                        "port": 10
+                    },
+                    {
+                        "mac": "C2:A2:06:02:7F:B9",
+                        "type": "ETH_SRC",
+                        "port": 0
+                    },
+                    {
+                        "mac": "DE:9C:DF:76:16:36",
+                        "type": "ETH_DST",
+                        "port": 0
+                    }
+                ]
+            },
+            "priority": 220,
+            "deviceId": "of:0000000000000005",
+            "timeout": 0,
+            "treatment": {
+                "instructions": [
+                    {
+                        "type": "OUTPUT",
+                        "port": 1
+                    }
+                ]
+            }
+        },
+        {
+            "isPermanent": true,
+            "selector": {
+                "criteria": [
+                    {
+                        "type": "IN_PORT",
+                        "port": 2
+                    },
+                    {
+                        "mac": "C2:A2:06:02:7F:B9",
+                        "type": "ETH_SRC",
+                        "port": 0
+                    },
+                    {
+                        "mac": "DE:9C:DF:76:16:36",
+                        "type": "ETH_DST",
+                        "port": 0
+                    }
+                ]
+            },
+            "priority": 220,
+            "deviceId": "of:0000000000000006",
+            "timeout": 0,
+            "treatment": {
+                "instructions": [
+                    {
+                        "type": "OUTPUT",
+                        "port": 1
+                    }
+                ]
+            }
+        },
+        {
+            "isPermanent": true,
+            "selector": {
+                "criteria": [
+                    {
+                        "type": "IN_PORT",
+                        "port": 1
+                    },
+                    {
+                        "mac": "DE:9C:DF:76:16:36",
+                        "type": "ETH_SRC",
+                        "port": 0
+                    },
+                    {
+                        "mac": "C2:A2:06:02:7F:B9",
+                        "type": "ETH_DST",
+                        "port": 0
+                    }
+                ]
+            },
+            "priority": 220,
+            "deviceId": "of:0000000000000006",
+            "timeout": 0,
+            "treatment": {
+                "instructions": [
+                    {
+                        "type": "OUTPUT",
+                        "port": 2
+                    }
+                ]
+            }
+        },
+        {
+            "isPermanent": true,
+            "selector": {
+                "criteria": [
+                    {
+                        "type": "IN_PORT",
+                        "port": 1
+                    },
+                    {
+                        "mac": "DE:9C:DF:76:16:36",
+                        "type": "ETH_SRC",
+                        "port": 0
+                    },
+                    {
+                        "mac": "C2:A2:06:02:7F:B9",
+                        "type": "ETH_DST",
+                        "port": 0
+                    }
+                ]
+            },
+            "priority": 220,
+            "deviceId": "of:0000000000000005",
+            "timeout": 0,
+            "treatment": {
+                "instructions": [
+                    {
+                        "type": "OUTPUT",
+                        "port": 10
+                    }
+                ]
+            }
+        },
+        {
+            "isPermanent": true,
+            "selector": {
+                "criteria": [
+                    {
+                        "type": "IN_PORT",
+                        "port": 10
+                    },
+                    {
+                        "mac": "DE:9C:DF:76:16:36",
+                        "type": "ETH_SRC",
+                        "port": 0
+                    },
+                    {
+                        "mac": "C2:A2:06:02:7F:B9",
+                        "type": "ETH_DST",
+                        "port": 0
+                    }
+                ]
+            },
+            "priority": 220,
+            "deviceId": "of:0000000000000004",
+            "timeout": 0,
+            "treatment": {
+                "instructions": [
+                    {
+                        "type": "OUTPUT",
+                        "port": 2
+                    }
+                ]
+            }
+        },
+        {
+            "isPermanent": true,
+            "selector": {
+                "criteria": [
+                    {
+                        "type": "IN_PORT",
+                        "port": 3
+                    },
+                    {
+                        "mac": "DE:9C:DF:76:16:36",
+                        "type": "ETH_SRC",
+                        "port": 0
+                    },
+                    {
+                        "mac": "C2:A2:06:02:7F:B9",
+                        "type": "ETH_DST",
+                        "port": 0
+                    }
+                ]
+            },
+            "priority": 220,
+            "deviceId": "of:0000000000000001",
+            "timeout": 0,
+            "treatment": {
+                "instructions": [
+                    {
+                        "type": "OUTPUT",
+                        "port": 2
+                    }
+                ]
+            }
+        },
+        {
+            "isPermanent": true,
+            "selector": {
+                "criteria": [
+                    {
+                        "type": "IN_PORT",
+                        "port": 2
+                    },
+                    {
+                        "mac": "DE:9C:DF:76:16:36",
+                        "type": "ETH_SRC",
+                        "port": 0
+                    },
+                    {
+                        "mac": "C2:A2:06:02:7F:B9",
+                        "type": "ETH_DST",
+                        "port": 0
+                    }
+                ]
+            },
+            "priority": 220,
+            "deviceId": "of:0000000000000002",
+            "timeout": 0,
+            "treatment": {
+                "instructions": [
+                    {
+                        "type": "OUTPUT",
+                        "port": 1
+                    }
+                ]
+            }
+        }
+    ]
+}
