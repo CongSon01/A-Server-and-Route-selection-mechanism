@@ -70,10 +70,14 @@ class Dijkstra(object):
             if u in visited:
                 continue
             visited.add(u)
-
+            # print("duong di")
+            # print(u.get_id())
+           
             if u.get_id() == self.end.get_id():
                 self.minimum_cost = current_cost
                 # backtrack to save shortest path
+                # print("dich den", self.end.get_id())
+                # print("dinh u", u.get_id())
                 self.save_result()
                 return 
                 
@@ -87,10 +91,13 @@ class Dijkstra(object):
         return -1
   
     def save_result(self):
+        # print("+++++++++++++++++++++++++++++++++++++++++++++++++++++")
         current = self.end
         
         while current != self.start:
+            # print("current", current)
             parent = self.path[current]
+            # print("parent cua current =", parent)
             edge_object = self.topo.find_edge(src= parent, dest = current)
 
             weight = edge_object[1] # access weight in list

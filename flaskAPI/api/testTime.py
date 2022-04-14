@@ -1,9 +1,12 @@
 import time
 starttime = time.time()
-# print str after 2 minutes
-print('start time: ' + str(starttime))
 
-if time.time() - starttime > 120:
-    print("Time out")
-print('end time: ' + str(time.time()))
+# print str after 2 minutes
+while True:
+    # print(starttime)
+    # print(time.time() - starttime)
+
+    if time.time() - starttime > 3:
+        print("Time out")
+        starttime = time.time()
 

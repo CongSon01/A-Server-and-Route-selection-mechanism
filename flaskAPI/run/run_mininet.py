@@ -291,6 +291,7 @@ def generate_topo(net):
     
     # read file server and write to mongo
     for ip_server in list_ip_server:
+        print("ip server=", ip_server)
         os.system('python readlog.py'+' '+ip_server+' &')
         time.sleep(1)
     time.sleep(60)

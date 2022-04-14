@@ -12,3 +12,9 @@ def get_connect():
     mongo_uri = os.environ.get('MONGO_URL')
     connection = MongoClient(mongo_uri)
     return connection
+
+
+
+db.find_one_and_update({"src": "of:0000000000000006",
+                        "dst":"of:0000000000000005"}, 
+                                 {"linkVersion": 100})

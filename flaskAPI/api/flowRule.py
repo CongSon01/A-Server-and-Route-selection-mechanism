@@ -161,9 +161,6 @@ class flowRule(object):
                 else:
                     count += 1
               
-        #self.write_json_rule_to_file(self.json_rule)        
-        # with open('/home/onos/Downloads/flaskSDN/flaskAPI/jsonRuleXuoi.json', 'w') as json_file:
-        #      json.dump(self.json_rule, json_file)
 
     def write_json_rule_to_file(self, json_rule_path, json_rule_reversing_path):
         flows_reversing_path = json_rule_reversing_path['flows']
@@ -197,16 +194,21 @@ class flowRule(object):
                     "Authorization": "Basic a2FyYWY6a2FyYWY="
                     }
         data=json.dumps(data)
-        query = {'appID': "tuanDepTrai"}
-
-        response_1 = requests.post('http://10.20.0.248:8181/onos/v1/flows?appId=onos.onosproject.routing', 
-        params=query,auth=HTTPBasicAuth('onos', 'rocks'), data = data, headers=  headers )
-        print("Add flow may 248: ", response_1)
         
-        response = requests.post('http://10.20.0.250:8181/onos/v1/flows?appId=onos.onosproject.routing', 
-        params=query,auth=HTTPBasicAuth('onos', 'rocks'), data = data, headers=  headers )
-        print("Add flow may 250: ", response)
+        # id of flow
+        query = {'appID': "tuanSonDepTrai"}
 
-      
-        #print("Da add flow thanh cong")
+        try:
+            # get full ip of SDN
+            list_ip = json.load(open('/home/onos/Downloads/flaskSDN/flaskAPI/set_up/ip_SDN.json'))['ip_sdn']
+
+            for ip in list_ip:
+                response = requests.post('http://'+str(ip)+':8181/onos/v1/flows?appId=onos.onosproject.routing', 
+                params=query,auth=HTTPBasicAuth('onos', 'rocks'), data = data, headers=  headers )
+                # print("Add flow may ", str(ip), " : ", response)
+
+        except:
+            print("add flow xitttttttt")
+        
+        
     

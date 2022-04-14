@@ -143,16 +143,19 @@ class Topo(object):
             #     edge[2].set_weight(weight= weight) # update new weight in edge object
 
             ################################
-
-            found, edge = self.find_edge_from_mongo(src= src_object, dest= dest_object)
-            
-            # if edge is not used in mongo then update it with small value
-            if not found:
-                weight = 0.0000001 
-                print("Not found edge, setup trong so canh mac dinh = ", weight)               
-            # if edge is used in mongo then update it with real value
-            edge[1] = weight # update new weight in edge list
-            edge[2].set_weight(weight= weight) # update new weight in edge object
+           
+            try:
+                found, edge = self.find_edge_from_mongo(src= src_object, dest= dest_object)
+                
+                # if edge is not used in mongo then update it with small value
+                if not found:
+                    weight = 0.0000001 
+                    # print("Not found edge, setup trong so canh mac dinh = ", weight)               
+                # if edge is used in mongo then update it with real value
+                edge[1] = weight # update new weight in edge list
+                edge[2].set_weight(weight= weight) # update new weight in edge object
+            except:
+                print("LOI DOC CANH")
 
     def find_edge_from_mongo(self, src, dest):
         """

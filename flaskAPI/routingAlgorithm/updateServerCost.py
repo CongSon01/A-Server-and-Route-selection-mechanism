@@ -8,7 +8,7 @@ class updateServerCost(object):
         self.servers = servers
 
     def update_server_cost(self):
-        #print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA server cost")
+        # print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA server cost")
         current_server = []
         server_cost = ServerCost.get_multiple_data()
         ServerCost.remove_all()
