@@ -18,7 +18,6 @@ app = Flask(__name__)
 # init W object included link version of each link
 update = updateWeight.updateWeight()
 starttime = time.time()
-WD_starttime = 0
 WD_SDN = 0
 
 @app.route('/write_data/',  methods=['GET', 'POST'])
@@ -48,7 +47,7 @@ def write_data():
             Params.insert_data(dicdata)
 
         # Sau 60s se lan truyen DB den cac SDN khac
-        global starttime, WD_starttime, WD
+        global starttime, WD_SDN
         
         if time.time() - starttime > 30:
             write_time = time.time() - starttime
@@ -58,7 +57,7 @@ def write_data():
             # viet trong so ra nhieu SDN khac
             WD_starttime = time.time()
             update.write_W_SDN()
-            WD_SDN = time.time() - WD_starttime
+            WD_SDN = (time.time() - WD_starttime) 
 
         return content
 
