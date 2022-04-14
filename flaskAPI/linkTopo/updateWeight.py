@@ -19,7 +19,8 @@ class updateWeight(object):
 
         # So lan write ra nhieu SDN
         self.num_W = 2
-        self.ip_sdn = ['10.20.0.251', '10.20.0.243', '10.20.0.249']
+        self.ip_local = str(json.load(open('/home/onos/Downloads/flask_SDN/Flask-SDN/config.json'))['ip_local'])
+        self.ip_remote = json.load(open('/home/onos/Downloads/flask_SDN/Flask-SDN/config.json'))['ip_remote']
         self.count = 0
         # self.ip_sdn = ['10.20.0.251']
 
@@ -88,7 +89,7 @@ class updateWeight(object):
                          "linkUtilization": float(link_utilization),
                          "packetLoss": float(packet_loss),
                          "linkVersion": self.link_version,
-                         "IpSDN": "10.20.0.248",
+                         "IpSDN": self.ip_local,
                          "writeTime": write_time}
             try:
                 LinkVersion.insert_data(temp_data)
@@ -99,7 +100,7 @@ class updateWeight(object):
     def write_W_SDN(self):
         try:
             data = LinkVersion.get_multiple_data()
-            for ip in random.sample(self.ip_sdn, self.num_W):
+            for ip in random.sample(self.ip_remote, self.num_W):
                 print('ghi vao ip: ', ip)
                 url = "http://" + ip + ":5000/write_link_version/"
                 requests.post(url, data=json.dumps({'link_versions': data}))

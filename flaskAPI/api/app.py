@@ -1,7 +1,7 @@
 import sys
-PATH_ABSOLUTE = "/home/onos/Downloads/flask_SDN/Flask-SDN/flaskAPI/"
-sys.path.append(PATH_ABSOLUTE+'dataBaseMongo')
-sys.path.append(PATH_ABSOLUTE+'linkTopo')
+PATH_ABSOLUTE = "/home/onos/Downloads/flask_SDN/Flask-SDN/"
+sys.path.append(PATH_ABSOLUTE+'flaskAPI/dataBaseMongo')
+sys.path.append(PATH_ABSOLUTE+'flaskAPI/linkTopo')
 
 from flask import Flask, request, jsonify
 import Params  # import from model
@@ -85,4 +85,5 @@ def read_link_version():
 
 
 if __name__ == '__main__':
+    ip_local = str(json.load(open(PATH_ABSOLUTE+'/config.json'))['ip_local'])
     app.run(host='10.20.0.248', debug=True, use_reloader=False)
