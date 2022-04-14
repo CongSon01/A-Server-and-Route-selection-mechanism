@@ -18,8 +18,8 @@ app = Flask(__name__)
 # init W object included link version of each link
 update = updateWeight.updateWeight()
 starttime = time.time()
-WD_starttime = time.time()
-# WD = 0
+WD_starttime = 0
+WD = 0
 
 @app.route('/write_data/',  methods=['GET', 'POST'])
 def write_data():
@@ -48,8 +48,7 @@ def write_data():
             Params.insert_data(dicdata)
 
         # Sau 60s se lan truyen DB den cac SDN khac
-        # global starttime, WD_starttime, WD
-        global starttime
+        global starttime, WD_starttime, WD
         
         if time.time() - starttime > 30:
             write_time = time.time() - starttime
@@ -57,10 +56,9 @@ def write_data():
             update.write_update_link_to_data_base(write_time)
             starttime = time.time()
             # viet trong so ra nhieu SDN khac
-            
-            # WD = time.time()
+            WD_starttime = time.time()
             update.write_W_SDN()
-            # WD = time.time - WD_starttime
+            WD = time.time - WD_starttime
 
         return content
 
@@ -77,10 +75,10 @@ def write_link_version():
 
 @app.route('/read_link_version/',  methods=['GET', 'POST'])
 def read_link_version():
-    # global WD
+    global WD
     if request.method == 'GET':
         data = LinkVersion.get_multiple_data()
-        return jsonify({'link_versions': data})  # will return the json
+        return jsonify({'link_versions': data}, {'WD': WD})  # will return the json
         # return Response(json.dumps(data),  mimetype='application/json')
 
 
