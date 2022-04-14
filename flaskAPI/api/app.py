@@ -8,7 +8,7 @@ import Params  # import from model
 import LinkVersion
 import updateWeight  # import from routingAlgorithm
 import pub
-import time
+import time, requests
 import json
 
 
@@ -53,6 +53,7 @@ def write_data():
             write_time = time.time() - starttime
             # viet trong so ra local SDN
             update.write_update_link_to_data_base(write_time)
+
             starttime = time.time()
             # viet trong so ra nhieu SDN khac
             WD_starttime = time.time()

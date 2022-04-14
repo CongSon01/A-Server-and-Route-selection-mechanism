@@ -21,6 +21,7 @@ class updateWeight(object):
         self.num_W = 2
         self.ip_local = str(json.load(open('/home/onos/Downloads/flask_SDN/Flask-SDN/config.json'))['ip_local'])
         self.ip_remote = json.load(open('/home/onos/Downloads/flask_SDN/Flask-SDN/config.json'))['ip_remote']
+        self.ip_ccdn =  str(json.load(open('/home/onos/Downloads/flask_SDN/Flask-SDN/config.json'))['ip_ccdn'])
         self.count = 0
         # self.ip_sdn = ['10.20.0.251']
 
@@ -100,6 +101,11 @@ class updateWeight(object):
     def write_W_SDN(self):
         try:
             data = LinkVersion.get_multiple_data()
+
+            # Viet vao DB cua CCDN
+            url_ccdn = "http://" + self.ip_ccdn + ":5000/write_full_data/"
+            requests.post(url_ccdn, data=json.dumps({'link_versions': data}))
+
             for ip in random.sample(self.ip_remote, self.num_W):
                 print('ghi vao ip: ', ip)
                 url = "http://" + ip + ":5000/write_link_version/"
