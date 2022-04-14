@@ -86,4 +86,4 @@ def read_link_version():
 
 if __name__ == '__main__':
     ip_local = str(json.load(open(PATH_ABSOLUTE+'/config.json'))['ip_local'])
-    app.run(host='10.20.0.248', debug=True, use_reloader=False)
+    app.run(host=ip_local, debug=True, use_reloader=False)
