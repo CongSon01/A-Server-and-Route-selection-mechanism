@@ -83,6 +83,9 @@ class updateWeight(object):
             delay = weight[0]
             link_utilization = weight[1]
             packet_loss = weight[2]
+            byte_sent = weight[3]
+            byte_received = weight[4]
+            overhead = byte_sent + byte_received
 
             temp_data = {"src": src,
                          "dst": dst,
@@ -91,7 +94,9 @@ class updateWeight(object):
                          "packetLoss": float(packet_loss),
                          "linkVersion": self.link_version,
                          "IpSDN": self.ip_local,
-                         "writeTime": write_time}
+                         "writeTime": write_time,
+                         "overhead": float(overhead)
+                         }
             try:
                 LinkVersion.insert_data(temp_data)
             except:
