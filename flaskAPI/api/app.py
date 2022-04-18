@@ -8,7 +8,7 @@ import Params  # import from model
 import LinkVersion
 import updateWeight  # import from routingAlgorithm
 import pub
-import time, requests
+import time
 import json
 
 
@@ -50,9 +50,9 @@ def write_data():
         global starttime, WD_SDN
         
         if time.time() - starttime > 30:
-            write_time = time.time() - starttime
+            # write_time = time.time() - starttime
             # viet trong so ra local SDN
-            update.write_update_link_to_data_base(write_time)
+            update.write_update_link_to_data_base()
 
             starttime = time.time()
             # viet trong so ra nhieu SDN khac
@@ -69,7 +69,8 @@ def write_link_version():
         # app.logger.info("Da nhan dc POST")
         content = request.data
         LinkVersion.insert_n_data(json.loads(content)['link_versions'])
-        print("Ghi vao local SDN thanh cong")
+        print("Ghi vao local SDN tu SDN khac thanh cong")
+        time.sleep(1)
         return content
 
 
