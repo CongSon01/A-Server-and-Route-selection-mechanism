@@ -8,6 +8,7 @@ import random
 import LinkVersion
 import sub
 import linkWeight
+import time 
 
 class updateWeight(object):
 
@@ -18,7 +19,7 @@ class updateWeight(object):
         self.link_version = 0
 
         # So lan write ra nhieu SDN
-        self.num_W = 2
+        self.num_W = 1
         self.ip_local = str(json.load(open('/home/onos/Downloads/flask_SDN/Flask-SDN/config.json'))['ip_local'])
         self.ip_remote = json.load(open('/home/onos/Downloads/flask_SDN/Flask-SDN/config.json'))['ip_remote']
         self.ip_ccdn =  str(json.load(open('/home/onos/Downloads/flask_SDN/Flask-SDN/config.json'))['ip_ccdn'])
@@ -66,7 +67,7 @@ class updateWeight(object):
                 return link
         return None
 
-    def write_update_link_to_data_base(self, write_time):
+    def write_update_link_to_data_base(self):
         try:
             LinkVersion.remove_all()
         except:
@@ -74,10 +75,12 @@ class updateWeight(object):
 
         self.link_version += 1
         self.count +=1
+
+        # start_time = time.time()
         for link in self.link_set:
             src = link.get_id_src()
             dst = link.get_id_dst()
-            print("chay lan thu", self.count)
+            # print("chay lan thu", self.count)
             weight = link.find_link_cost()
 
             delay = weight[0]
@@ -94,14 +97,15 @@ class updateWeight(object):
                          "packetLoss": float(packet_loss),
                          "linkVersion": self.link_version,
                          "IpSDN": self.ip_local,
-                         "writeTime": write_time,
                          "overhead": float(overhead)
                          }
             try:
                 LinkVersion.insert_data(temp_data)
+                # print("Ghi vao local may nay thanh cong")
             except:
                 print("--------------- Write Local Link version loi")
             self.reset_link_set()
+            # time.sleep(1)
 
     def write_W_SDN(self):
         try:
@@ -111,13 +115,16 @@ class updateWeight(object):
             url_ccdn = "http://" + self.ip_ccdn + ":5000/write_full_data/"
             requests.post(url_ccdn, data=json.dumps({'link_versions': data}))
 
+
             for ip in random.sample(self.ip_remote, self.num_W):
-                print('ghi vao ip: ', ip)
+                # print('ghi vao ip: ', ip)
                 url = "http://" + ip + ":5000/write_link_version/"
                 requests.post(url, data=json.dumps({'link_versions': data}))
                 # print("Thanh cong")
         except:
             print("flask Goi nhieu SDN loiiiiiiiiiiiiiiiiiiiii")
+
+        # time.sleep(1)
 
   
         # data = LinkVersion.get_multiple_data()

@@ -62,7 +62,7 @@ class linkWeight(object):
         self.W.append(byte_sent_vector)
         self.W.append(byte_received_vector)
         
-        print("len cua W", self.W)
+        # print("len cua W", self.W)
         print("-----------------")
 
         for x in range(len(self.W)):
