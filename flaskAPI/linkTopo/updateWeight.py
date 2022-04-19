@@ -7,8 +7,7 @@ import requests
 import random
 import LinkVersion
 import sub
-import linkWeight
-import time 
+import linkWeight 
 
 class updateWeight(object):
 
@@ -87,7 +86,7 @@ class updateWeight(object):
             packet_loss = weight[2]
             byte_sent = weight[3]
             byte_received = weight[4]
-            overhead = byte_sent + byte_received
+            overhead = (byte_sent + byte_received) / 2
 
             temp_data = {"src": src,
                          "dst": dst,
@@ -123,12 +122,3 @@ class updateWeight(object):
         except:
             print("flask Goi nhieu SDN loiiiiiiiiiiiiiiiiiiiii")
 
-        # time.sleep(1)
-
-  
-        # data = LinkVersion.get_multiple_data()
-        # ip = "10.20.0.251"
-        # print('ghi vao ip: ', ip)
-        # url = "http://" + ip + ":5000/write_link_version/"
-        # requests.post(url, data=json.dumps({'link_versions': data}))
-       
