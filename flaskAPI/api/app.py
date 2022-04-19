@@ -18,7 +18,6 @@ app = Flask(__name__)
 # init W object included link version of each link
 update = updateWeight.updateWeight()
 starttime = time.time()
-WD_SDN = 0
 
 @app.route('/write_data/',  methods=['GET', 'POST'])
 def write_data():
@@ -55,13 +54,15 @@ def write_data():
             update.write_update_link_to_data_base()
 
             starttime = time.time()
-            # viet trong so ra nhieu SDN khac
-            WD_starttime = time.time()
-            update.write_W_SDN()
-            WD_SDN = (time.time() - WD_starttime) 
 
         return content
 
+# viet trong so ra nhieu SDN khac
+@app.route('/write_W_SDN/',  methods=['GET', 'POST'])
+def write_W_SDN():
+    if request.method == 'POST':
+        W = request.data
+        update.write_W_SDN(int(W))
 
 @app.route('/write_link_version/',  methods=['GET', 'POST'])
 def write_link_version():
@@ -76,10 +77,9 @@ def write_link_version():
 
 @app.route('/read_link_version/',  methods=['GET', 'POST'])
 def read_link_version():
-    global WD_SDN
     if request.method == 'GET':
         data = LinkVersion.get_multiple_data()
-        return jsonify({'link_versions': data}, {'WD_SDN': WD_SDN})  # will return the json
+        return jsonify({'link_versions': data})  # will return the json
         # return Response(json.dumps(data),  mimetype='application/json')
 
 
