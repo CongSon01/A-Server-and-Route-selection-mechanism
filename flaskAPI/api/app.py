@@ -69,8 +69,8 @@ def write_link_version():
         # app.logger.info("Da nhan dc POST")
         content = request.data
         LinkVersion.insert_n_data(json.loads(content)['link_versions'])
-        print("Ghi vao local SDN tu SDN khac thanh cong")
-        time.sleep(1)
+        # print("Ghi vao local SDN tu SDN khac thanh cong")
+        # time.sleep(1)
         return content
 
 
