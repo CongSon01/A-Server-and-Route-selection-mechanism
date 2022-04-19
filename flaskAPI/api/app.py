@@ -61,8 +61,9 @@ def write_data():
 @app.route('/write_W_SDN/',  methods=['GET', 'POST'])
 def write_W_SDN():
     if request.method == 'POST':
-        W = request.data
-        update.write_W_SDN(int(W))
+        W_contant = request.data
+        update.write_W_SDN(int(W_contant))
+        return W_contant
 
 @app.route('/write_link_version/',  methods=['GET', 'POST'])
 def write_link_version():

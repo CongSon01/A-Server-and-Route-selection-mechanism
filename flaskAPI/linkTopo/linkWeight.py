@@ -63,7 +63,7 @@ class linkWeight(object):
         self.W.append(byte_received_vector)
         
         # print("len cua W", self.W)
-        print("-----------------")
+        # print("-----------------")
 
         for x in range(len(self.W)):
             cost = np.mean(self.W[x])
