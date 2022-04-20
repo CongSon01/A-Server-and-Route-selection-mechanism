@@ -95,7 +95,9 @@ class updateWeight(object):
                          "packetLoss": float(packet_loss),
                          "linkVersion": self.link_version,
                          "IpSDN": self.ip_local,
-                         "overhead": float(overhead)
+                         "overhead": float(overhead),
+                         "byteSent": float(byte_sent),
+                         "byteReceived": float(byte_received)
                          }
             try:
                 LinkVersion.insert_data(temp_data)
