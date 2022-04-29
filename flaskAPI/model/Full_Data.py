@@ -23,7 +23,9 @@ def insert_n_data(list_data):
     if len(list_data) == 0:
         return
     else:
-        collection.insert_many(list_data)
+        for data in list_data:
+            if not collection.find_one(data): 
+                collection.insert(data)
 
 
 def get_multiple_data():

@@ -9,7 +9,7 @@ class Custom_env(Env):
         self.action_space = Discrete(9)
         # Do thay doi min va max.
         # it nhat 1 may va nhieu nhat 4 may
-        self.observation_space = 500
+        self.observation_space = 1000
         # Set times
         self.times = 1
 
@@ -17,14 +17,14 @@ class Custom_env(Env):
         # self.state = 300 + random.randint(-3, 3)
 
         # tham so dau vao
-        self.writeThreshold = 20
-        self.readThreshold = 20
+        self.writeThreshold = 30
+        self.readThreshold = 30
         self.V_stalenessThreshold = 5
         
     def step(self, RD, WD, V_staleness):
         # Apply action
         # W: w+1, r+1, w-1, r-1, w+0
-        state = RD * 2 + WD
+        state = RD * 10 + WD
 
         # print('state: ', state)
         
@@ -35,7 +35,7 @@ class Custom_env(Env):
         if WD<self.writeThreshold and RD<self.readThreshold: 
             reward = self.V_stalenessThreshold - V_staleness
         else: 
-            reward = -100 
+            reward = -1000 
         
         # Check is done
         if self.times <= 0: 
@@ -50,7 +50,7 @@ class Custom_env(Env):
         # Implement viz
         pass
     
-    def reset(self):
+    def reset(self, RD, WD):
         self.times = 60 
-        state = 300 + random.randint(-3, 3)
+        state = RD * 10 + WD
         return state

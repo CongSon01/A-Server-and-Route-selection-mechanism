@@ -10,6 +10,7 @@ class Q_table(object):
         self.env = custom_env.Custom_env()
         action_size = self.env.action_space.n
         state_size = self.env.observation_space
+        # khoi tao q ban dau full 0
         self.qtable = np.zeros((state_size, action_size))
 
         self.learning_rate = 0.8           # Learning rate
@@ -18,8 +19,10 @@ class Q_table(object):
 
         # Exploration parameters
         self.epsilon = 1.0                 # Exploration rate
-        self.max_epsilon = 0.5            # Exploration probability at start
-        self.min_epsilon = 0.5            # Minimum exploration probability 
+
+        # max_epsilon = min_epsilon ( du lieu khai pha )
+        self.max_epsilon = 0.5             # Exploration probability at start
+        self.min_epsilon = 0.5             # Minimum exploration probability 
         self.decay_rate = 0.001             # Exponential decay rate for exploration prob
 
         # List of rewards
@@ -27,9 +30,9 @@ class Q_table(object):
 
     # 2 For life or until learning is stopped
     def get_q_table(self, RD, WD, V_staleness, episode):
-        # print(RD, WD, V_staleness, episode)
+        print(RD, WD, V_staleness, episode)
         # Reset the environment
-        state = self.env.reset()
+        state = self.env.reset(RD, WD)
         done = False
         total_rewards = 0
         
@@ -40,7 +43,8 @@ class Q_table(object):
             
             ## If this number > greater than epsilon --> exploitation (taking the biggest Q value for this state)
             if exp_exp_tradeoff > self.epsilon:
-                action = np.argmax(self.qtable[state,:])
+                if state <= 1000:
+                    action = np.argmax(self.qtable[state,:])
 
             # Else doing a random choice --> exploration
             else:
@@ -53,8 +57,8 @@ class Q_table(object):
             # qtable[new_state,:] : all the actions we can take from new state
             # print(f(action, R, W))
             # R, W = f(action, R, W)
-            
-            self.qtable[state, action] = self.qtable[state, action] + self.learning_rate * (reward + self.gamma * np.max(self.qtable[new_state, :]) - self.qtable[state, action])
+            if ( new_state <= 1000 ):
+                self.qtable[state, action] = self.qtable[state, action] + self.learning_rate * (reward + self.gamma * np.max(self.qtable[new_state, :]) - self.qtable[state, action])
             
             total_rewards =total_rewards + reward
             

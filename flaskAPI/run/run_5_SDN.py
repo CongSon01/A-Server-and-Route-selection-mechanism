@@ -5,14 +5,12 @@ from topozoo_mininet import TopologyZooXML
 from zipfile import ZipFile
 import time
 import pandas as pd
+from requests.auth import HTTPBasicAuth
 import random
 import os
 import numpy as np
 import random, json
-
-os.system('sudo mn -c')
-os.system('sudo mn -c')
-set_up_topo = json.load(open('/home/onos/Downloads/flaskSDN/flaskAPI/set_up/set_up_topo.json'))
+from os import path
 
 class Mininet:
     def __init__(self,topology_graph, list_ip , controller_port, controller_type):
@@ -25,29 +23,32 @@ class Mininet:
     def run_topo(self):
         from mininet.net import Mininet
         from mininet.node import Controller, RemoteController, OVSController
-        from mininet.node import Host
-        from mininet.node import OVSKernelSwitch
+        from mininet.node import CPULimitedHost, Host, Node
+        from mininet.node import OVSKernelSwitch, UserSwitch
+        from mininet.node import IVSSwitch
         from mininet.cli import CLI
         from mininet.log import setLogLevel, info
+        from mininet.link import TCLink, Intf
+        from subprocess import call
         import ipaddress
 
         def myNetwork():
-            net = Mininet( topo=None, build=False )
+            net = Mininet( topo=None,
+                        build=False,
+                        ipBase='10.0.0.0/8')
 
             info( '*** Adding controller\n' )
             controller = None
-
-            number_controllers = len(set_up_topo['switch_in_controllers'])
-            list_controllers = [None for i in range(number_controllers)]
-            list_name_controllers = ['c'+str(i) for i in range(number_controllers) ]
-
+            list_c = [None, None, None, None]
+            c_controllers = ['c0', 'c1', 'c2', 'c3']
+            # c_controllers = ['c0']
             print(self.controller_ip_s)
-            print(list_name_controllers)
+            print(c_controllers)
             if self.controller_type == "controller":
                 controller = Controller
                 self.controller_port = 6653
-                for c in range(len(list_name_controllers)):
-                    list_controllers[c]=net.addController(name=list_name_controllers[c],
+                for c in range(len(c_controllers)):
+                    list_c[c]=net.addController(name=c_controllers[c],
                         controller=controller,
                         protocol='tcp',
                         port=self.controller_port)
@@ -55,8 +56,8 @@ class Mininet:
                 
             elif self.controller_type =="remote":
                 controller = RemoteController
-                for c in range(len(list_name_controllers)):
-                    list_controllers[c]=net.addController(name=list_name_controllers[c],
+                for c in range(len(c_controllers)):
+                    list_c[c]=net.addController(name=c_controllers[c],
                     controller=controller,
                     protocol='tcp',
                     ip=self.controller_ip_s[c],
@@ -66,14 +67,14 @@ class Mininet:
             elif self.controller_type == "ovscontroller":
                 controller = OVSController
                 self.controller_port = 6633
-                for c in range(len(list_name_controllers)):
-                    list_controllers[c]=net.addController(name=list_name_controllers[c],
+                for c in range(len(c_controllers)):
+                    list_c[c]=net.addController(name=c_controllers[c],
                         controller=controller,
                         protocol='tcp',
                         port=self.controller_port)
             else:
-                for c in range(len(list_name_controllers)):
-                    list_controllers[c]=net.addController(name=list_name_controllers[c],
+                for c in range(len(c_controllers)):
+                    list_c[c]=net.addController(name=c_controllers[c],
                         controller=RemoteController,
                         protocol='tcp',
                         ip=self.controller_ip_s[c],
@@ -97,26 +98,52 @@ class Mininet:
             hosts= []
             
             first_ip = '10.0.0.0'
+            ##########################################################################################################
+            sw_0 = [10,11,12,15,16,17,13]
+            sw_1 = [4,5,7,8,9]
+            sw_2 = [0,1,2,3,6,14,19,25,26]
+            sw_3 = [18,20,21,22,23,24,27]
+            # sw_0 = []
+            # total_sw = np.arange(0,int(len(switches)))
+            
+            # sw_1 = list(set(total_sw) - set(sw_0))
+            # sw_0 = np.arange(0,int(len(switches)))
+            # sw_1 = np.arange(100, 101)
 
+            sw_in_c0 = ['s'+str(i+1) for i in sw_0]
+            sw_in_c1 = ['s'+str(i+1) for i in sw_1]
+            sw_in_c2 = ['s'+str(i+1) for i in sw_2]
+            sw_in_c3 = ['s'+str(i+1) for i in sw_3]
+            # sw_in_c1 = ['s'+str(i+1) for i in sw_1]
+            # print(sw_in_c1)
+            # not_host = ['h8', 'h9', 'h10', 'h11']
+            # not_host = ['h1', 'h3']
+            # switch_not_host = [1,7,6,13]  # day la index khong phai ten switch
+            switch_not_host = []
             for (first,second,node_type) in sorted(self.topology_graph):
                 if node_type == "h":
+                    # if first[1] not in switch_not_host:
                     hosts.append(net.addHost('h'+str(first[1]+1), cls=Host, ip=str(ipaddress.IPv4Address(int(ipaddress.IPv4Address(first_ip))+first[1]+1)), defaultRoute=None))   
-                
+                    # else:
+                        # print("remove host " + str(first[1] + 1))
             info( '*** Add links\n' )
-            # luu lai topo dang matrix
+            # switch_not_host = ['s0', 's1', 's23', 's24']
+            # switch_not_host = ['s0', 's52']
+
+            # switch_not_host = [1,2,6,13]
             n = len(switches)
             Matrix_graph = [[0 for x in range(n)] for y in range(n)] 
 
             filename = '/home/onos/Downloads/flaskSDN/flaskAPI/run/bridge.txt'
-            bridge = set_up_topo['bridge']
+            bridge = [['s11', 's18'], ['s2','s14'], ['s7', 's8'], ['s25', 's26'], ['s20', 's28']]
 
-            # flatten_bridge = sum(bridge, [])
+            switch_bridge = ['s11', 's18', 's2','s14', 's7', 's8', 's25', 's26','s20', 's28']
             
             for (first,second,node_type) in self.topology_graph:
                 try:
                     if node_type=="h":
-                        net.addLink(hosts[first[1]],switches[second[1]])
-                        if ( str(switches[second[1]]) in bridge ):
+                        net.addLink(hosts[first[1]],switches[second[1]], bw=10, delay='0ms', loss=1, use_htb=True)
+                        if ( str(switches[second[1]]) in switch_bridge ):
                             print("HOST Bien ", hosts[first[1]], " - ", first[1])
 
                     elif node_type=="s":
@@ -125,9 +152,9 @@ class Mininet:
                         Matrix_graph[int(second[1])][int(first[1])] = 1
 
                         # Luu cac canh noi vao file
-                        if (str(switches[first[1]]) in bridge) or (str(switches[second[1]]) in bridge):
+                        if [str(switches[first[1]]), str(switches[second[1]])] in bridge:
                             print("BIEN", str(switches[first[1]].dpid), str(switches[second[1]].dpid))
-                            net.addLink(switches[first[1]],switches[second[1]], port1= 10, port2=10)
+                            net.addLink(switches[first[1]],switches[second[1]], port1= 10, port2=10, bw=10, delay='0ms', loss=1, use_htb=True)
 
                             with open(filename, 'a') as outfile:
                                 entry = {"src": {
@@ -152,8 +179,13 @@ class Mininet:
                                 outfile.write("\n")
                                 outfile.close()
                         else:
-                            net.addLink(switches[first[1]],switches[second[1]])
+                            net.addLink(switches[first[1]],switches[second[1]], bw=10, delay='0ms', loss=1, use_htb=True)
 
+
+
+                    # elif node_type=="h":
+                    #     if ( str(switches[second[1]]) not in switch_not_host ):
+                    #         net.addLink(hosts[first[1]],switches[second[1]], bw=10, delay='0ms', loss=1, use_htb=True)
                 except KeyError as e:
                     print("switch or host is unavailable: {}".format(e))
             info ('*** Get Matrix_graph\n')
@@ -168,78 +200,65 @@ class Mininet:
                 controller.start()
 
             info( '*** Starting switches\n')
-
-            # add switch vao controller
-            switch_in_controllers = set_up_topo['switch_in_controllers']
-            for controller in switch_in_controllers:
-                for i_sw in switch_in_controllers[controller]:
-                    self.add_sw_to_controller(list_controllers[int(controller.split('_')[1])], switches.get(i_sw))
             
+            for i_sw in sw_0:
+                if i_sw < len(switches):
+                    print('add controller 0 ' , switches[i_sw] , ' ', switches.get(i_sw).dpid)
+                    switches.get(i_sw).start([list_c[0]])
+            
+            for i_sw in sw_1:
+                if i_sw < len(switches):
+                    print('add controller 1 ' , switches[i_sw] , ' ' ,  switches.get(i_sw).dpid)
+                    switches.get(i_sw).start([list_c[1]])
+            
+            for i_sw in sw_2:
+                if i_sw < len(switches):
+                    print('add controller 2 ' , switches[i_sw] , ' ' ,  switches.get(i_sw).dpid)
+                    switches.get(i_sw).start([list_c[2]])
+            
+            for i_sw in sw_3:
+                if i_sw < len(switches):
+                    print('add controller 3 ' , switches[i_sw] , ' ' ,  switches.get(i_sw).dpid)
+                    switches.get(i_sw).start([list_c[3]])
+
+            info( '*** Post configure switches and hosts\n')
+            # time.sleep(15)
+            # net.pingAll()
+
+            # net.getNodeByName('h1')
 
             ######## ping all cac host voi nhau
-            self.ping_one_to_all(net, hosts)
+            # print(hosts)
+            p=net.get('h1')
+            print(type(p.IP()))
+            print((p.IP()))
+
+            host_1 = hosts[0]
+            for h in range( len(hosts) ):
+                host_i = hosts[h]
+                net.ping( [host_1, host_i] )
+            
+            # time.sleep(15)
+
 
             generate_topo(net)
             CLI(net)
             
-            net.stop()
+            # net.stop()
 
         setLogLevel( 'info' )
         myNetwork()
-    
-    def add_sw_to_controller(self, controller, switch):
-        print('add controller ', controller, ' : ' , switch , ' ' ,  switch.dpid)
-        switch.start( [controller] )
-
-    
-    def ping_one_to_all(self, net, hosts):
-        host_1 = hosts[0]
-        for h in range( len(hosts) ):
-            host_i = hosts[h]
-            net.ping( [host_1, host_i] )
-        time.sleep(15)
-        return
-
-# def generate_topo(net):
-#     host_list, server_list = create_host_server(net)
-
-#     period = 60*10 # random data from 0 to period 
-#     interval = 10 # each host generates data 10 times randomly
-
-#     # khoi tao bang thoi gian cho tung host
-#     starting_table = pd.read_csv('/home/onos/Downloads/flaskSDN/flaskAPI/run/starting_table.csv')
-#     starting_table = starting_table.to_numpy()
-    
-#     # kich hoat server chuan bi lang nghe su dung iperf
-#     start_server(server_list, net)
-    
-#     list_ip_server = [ str(ip_server.IP()) for ip_server in server_list ]
-    
-#     name_host = [ str(ip_host) for ip_host in host_list ]
-
-#     print("list IP server")
-#     print(list_ip_server)
-#     print("list Name host")
-#     print(name_host)
-
-#     # read file server and write to mongo
-#     for ip_server in list_ip_server:
-#         print("Ip server =", ip_server)
-#         cmd_read_log = 'python readlog.py'+' '+ip_server + ' &'
-#         os.system(cmd_read_log)
-#         # print("Read log")
-#         # print(cmd_read_log)
-#         time.sleep(1)
-
-#     print("Cho 4 phut")
-#     time.sleep(60*5)
-
-#     # # lap lich cho host
-#     run_shedule(starting_table, period, interval,net, name_host)
 
 def generate_topo(net):
     host_list, server_list = create_host_server(net)
     num_host = len(host_list) 
+    num_server = len(server_list) 
+    # print("So host =", num_host, " So server=", num_server) 
+    print("HOSTS: ", host_list)
+    print("SERVERS: ", server_list)
+
+    print("Vd 1 host: ", str(host_list[0]))
+    print("Vd 1 host: ", host_list[0].IP())
 
     period = 60*10 # random data from 0 to period 
     interval = 10 # each host generates data 5 times randomly
@@ -274,8 +293,8 @@ def generate_topo(net):
         # print(cmd_read_log)
         time.sleep(1)
 
-    print("Cho 10 phut")
-    time.sleep(60*10)
+    print("Cho 3 phut")
+    time.sleep(60*3)
 
     # # lap lich cho host
     run_shedule(starting_table, period, interval,net, name_host)
@@ -340,13 +359,18 @@ def run_shedule(starting_table, period, interval, net, name_host):
     print("ok, dem = ", dem)
   
 def create_host_server(net):
+    host_list = list()
+    server_list = list()
 
-    index_hosts = set_up_topo['hosts']
-    index_servers = set_up_topo['servers']
+    index_hosts = json.load(open('/home/onos/Downloads/flaskSDN/flaskAPI/set_up/hosts.json'))['hosts']
+    # /home/onos/Downloads/flaskSDN/flaskAPI/set_up/hosts.json
+    index_servers = json.load(open('/home/onos/Downloads/flaskSDN/flaskAPI/set_up/servers.json'))['servers']
 
-    host_list = [ net.hosts[h] for h in index_hosts ]
+    for h in index_hosts:
+        host_list.append(net.hosts[h])
     
-    server_list = [ net.hosts[h] for h in index_servers ]
+    for h in index_servers:
+        server_list.append(net.hosts[h])
 
     return (host_list, server_list)
 
@@ -435,6 +459,14 @@ if __name__=="__main__":
         description='This script is a fast way to run topology\'s that are available in topologyzoo.com on mininet!')
 
     parser.add_argument('--availtopo', dest='avail_topo', help="prints list of all available topologies and exit.",required=False,action="store_true")
+
+    # parser.add_argument('--toponame', dest='topo_name', help="Topology name e.g. AttMpls",required=False,type=str, default='AttMpls')
+    parser.add_argument('--toponame', dest='topo_name', help="Topology name e.g. Darkstrand",required=False,type=str, default='Darkstrand')
+    # parser.add_argument('--toponame', dest='topo_name', help="Topology name e.g. Epoch",required=False,type=str, default='Epoch')
+    parser.add_argument('--cport', dest='controller_port', help="Controller port in mininet, default value is 6653.",required=False,type=int,default=6653)
+
+    parser.add_argument('--controller', dest='controller_type', help="Default controller is mininet controller, other options: remote,ovscontroller",required=False,type=str,default="remote")
+
     args = parser.parse_args()
 
 
@@ -448,12 +480,12 @@ if __name__=="__main__":
     if args.avail_topo:
         print_all_topos(os.path.join(tmp_dir,"topologyzoo"))
         exit(0)
-
-    topo_name = set_up_topo['name_topo']
-    controller_port = set_up_topo['controller_port']
-    controller_type = set_up_topo['controller_type']
+    import sys
+    if  args.topo_name==None:
+        print ("you must specify at least one of the switches, use \"{} -h\" for help.".format(sys.argv[0]))
+        exit(1)
         
-    list_ip = set_up_topo['ip_sdn']
-    tzoo2= TopologyZooXML(os.path.join(tmp_dir,"topologyzoo",topo_name+".graphml"))
-    m = Mininet(tzoo2.get_topology(), list_ip ,controller_port,controller_type)   
-    # sudo python3 -E run_mininet2.py
+    list_ip = json.load(open('/home/onos/Downloads/flaskSDN/flaskAPI/set_up/ip_SDN.json'))['ip_sdn']
+    tzoo2= TopologyZooXML(os.path.join(tmp_dir,"topologyzoo",args.topo_name+".graphml"))
+    m = Mininet(tzoo2.get_topology(), list_ip ,args.controller_port,args.controller_type)   
+    # sudo python3 -E run_5_SDN.py

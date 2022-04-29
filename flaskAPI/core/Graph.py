@@ -4,6 +4,8 @@ import CusHost, CusLink, CusDevice
 import json
 import ast
 
+set_up_topo = json.load(open('/home/onos/Downloads/flaskSDN/flaskAPI/set_up/set_up_topo.json'))
+
 class Graph(object):
     """
     Graph object adds topology network from file Json to Custopo object 
@@ -21,8 +23,8 @@ class Graph(object):
         self.host_path = PATH_CURRENT + host_path
 
         # day la index cua host va server
-        self.index_hosts = [0,2,3,4,5,8,9,11,12]
-        self.index_servers = [14,15,16,18,20,21,22,23,26]
+        self.index_hosts =   set_up_topo['hosts']
+        self.index_servers = set_up_topo['servers']
         self.load_topo()
 
     def load_topo(self):
@@ -44,7 +46,6 @@ class Graph(object):
 
     def add_links(self):
         for link in self.topo_file['links']:
-            # extract data from dictionary
             src = link['src']
             dst = link['dst']
        
@@ -56,18 +57,11 @@ class Graph(object):
             # get device src and dst objects
             d_src = self.find_device(id_src)
             d_dst = self.find_device(id_dst)
-            # print("--------------------------------")
-            # print(src)
-            # print(dst)
-            # print("--------------------------------")
-            # print("src=", d_src.get_id())  
-            # print("dst=", d_dst.get_id())
-            
 
             # add edge between src and dst devices
             # trong so mac dinh la 10^-7
-            edge1 = CusLink.DeviceEdge(d_src, d_dst, 0.0000001, port_in, port_out)
-            edge2 = CusLink.DeviceEdge(d_dst, d_src, 0.0000001, port_out, port_in)
+            edge1 = CusLink.DeviceEdge(d_src, d_dst, 0.1, port_in, port_out)
+            edge2 = CusLink.DeviceEdge(d_dst, d_src, 0.1, port_out, port_in)
             
             # add edges to topo
             self.topo.add_edge(edge1)
@@ -90,10 +84,7 @@ class Graph(object):
 
         hosts = dict()
         servers = dict()
-        temp = []
-
         for host in self.host_file['hosts']:
-            #print("123")
             host_mac = str(host['mac'])
             host_ip = str(host['ipAddresses'])
             port = int(host['port'])
@@ -104,17 +95,12 @@ class Graph(object):
 
             # Tach chuoi va lay so cuoi dia chi ip cua host
             host_ip_split = host_ip.split(".")
-
-            # day la ten cua host
             last_num_ip = int(host_ip_split[-1])
-
             num_ip = last_num_ip - 1
          
-            if  num_ip  in self.index_hosts and host_ip not in hosts:
-                    # print("Number Host IP", host_ip)
-                    hosts[host_ip] = host_object  
+            if  num_ip in self.index_hosts and host_ip not in hosts:
 
-                                
+                    hosts[host_ip] = host_object               
                     self.topo.add_node(host_object)
             
                     edge1 = CusLink.HostEdge(host_object, device, 0.1 , port)
@@ -137,15 +123,6 @@ class Graph(object):
 
         self.topo.set_hosts(hosts= hosts)
         self.topo.set_servers(servers= servers)
-
-        # hien thi server va host
-        print("----------- Tap host----------------")
-        for h in hosts:
-            print(h)
-
-        print("----------- Tap Server----------------")
-        for s in servers:
-            print(s)
         
     def find_device(self, target):
         nodes = self.topo.get_nodes()

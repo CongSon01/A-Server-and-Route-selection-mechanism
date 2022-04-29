@@ -1,7 +1,5 @@
 import sys
 sys.path.append('/home/onos/Downloads/flaskSDN/flaskAPI/model')
-# from flaskAPI.model import model
-import LinkVersion
 
 class Topo(object):
     """Topology network object """
@@ -72,15 +70,13 @@ class Topo(object):
         Return children of any node object
         node: Host or Switch object
         """
-        children = []
-        for child in self.edges[node]:
-            children.append(child)
+        children = [ child for child in self.edges[node] ]
         return children
 
     def has_node(self, node):
         return node in self.nodes
 
-    def get_topo(self):
+    def print_topo(self):
         for src in self.nodes:
             for child in self.edges[src]:
                 print( '{} --> {} has cost {} \n'.format(src.get_id(), child[0].get_id(), child[1]) )
@@ -116,46 +112,41 @@ class Topo(object):
         """
         Read data from update_weights table-Mongo in SDN 248/250 and update new weight in each links
         """
-        # params_248 = model.get_multiple_data()
-        # link_version = LinkVersion.get_multiple_data()
         link_version = link_versions
-
-        # print("+++++++truy + params_248van+++++++++++")
-        # print(new_params)
-        # print("+++++++truy cap+++++++++++")
-        # print(new_params)
-        # print(new_params[0]['src'])
 
         for link in link_version:
             src = link['src']
             dst = link['dst']
             weight = link['weight']
+            # print("from", src, "to", dst, "    =", weight)
 
             src_object = self.find_device(src)
             dest_object = self.find_device(dst)             
-            # edge = self.find_edge(src= src_object, dest= dest_object)
-            
-            # if edge == None:
-            #     print("Not found edge")
-            #     continue
-            # else:
-            #     edge[1] = weight # update new weight in edge list
-            #     edge[2].set_weight(weight= weight) # update new weight in edge object
-
-            ################################
-           
+          
             try:
                 found, edge = self.find_edge_from_mongo(src= src_object, dest= dest_object)
                 
                 # if edge is not used in mongo then update it with small value
                 if not found:
                     weight = 0.0000001 
-                    # print("Not found edge, setup trong so canh mac dinh = ", weight)               
+                   
                 # if edge is used in mongo then update it with real value
                 edge[1] = weight # update new weight in edge list
                 edge[2].set_weight(weight= weight) # update new weight in edge object
             except:
                 print("LOI DOC CANH")
+
+        self.write_topo_file()
+
+    def write_topo_file(self):
+        url = "/home/onos/Downloads/flaskSDN/topo_file.txt"
+
+        with open(url, "a") as file_object:
+            for src in self.nodes:
+                for child in self.edges[src]:
+                    data = str(src.get_id()) + "------>" + str(child[0].get_id()) + "                 =" + str(child[1]) +"\n"       
+                    file_object.write(data)
+            file_object.write("++++++++++++++++++++++++++++++++++++++++++++") 
 
     def find_edge_from_mongo(self, src, dest):
         """

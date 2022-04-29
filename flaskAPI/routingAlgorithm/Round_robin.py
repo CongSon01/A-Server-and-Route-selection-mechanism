@@ -23,7 +23,7 @@ class hostServerConnectionRR(object):
         # khoi tao Queue cua Round robin
         self.queue_rr = queue_rr
         # cap nhap lai trong so cua mang khi co thay doi
-        self.update_topo()
+        # self.update_topo()
 
         # khoi tao thuat toan tim duong
         self.sol = ""
@@ -67,12 +67,22 @@ class hostServerConnectionRR(object):
         self.sol = Dijkstra.Dijkstra( topo=self.topo, start= host_object, end= dest_object)
         self.sol.routing()
 
+        # print("cost server=", dest_object.get_server_cost())
+        self.write_server_cost(dest_object, dest_ip)
+
         # lay path tu diem dau den diem cuoi va add flow vao path
         path = self.sol.get_result()
         self.add_flow(host_object, dest_object, path)
       
         return dest_ip 
       
+    def write_server_cost(self, dest_object, dest_ip):
+        url = "/home/onos/Downloads/flaskSDN/serverCost.txt"
+        with open(url, "a") as file_object:
+            data = "server " + str(dest_ip ) + "       =" + str( dest_object.get_server_cost() ) + "\n"
+            file_object.write(data)
+            file_object.write("++++++++++++++++++++++++++++++++++++++++++++") 
+
     def add_flow(self, host_object, dest_object, path):
 
         # di chieu nguoc

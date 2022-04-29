@@ -4,7 +4,7 @@ class Dijkstra(object):
     """Dijktra shortest path algorithm"""
     def __init__(self, topo, start, end):
        """
-       topo: Custopo object hold network
+       topo: Custopo object holds network
        start: starting node object
        end: ending node object
        nodes: list of node object
@@ -43,7 +43,7 @@ class Dijkstra(object):
         return self.minimum_cost
 
     def routing_preparation(self):
-       # neu tap ket qua khong rong thi reset lai
+       # neu tap ket qua luu lai duong di cu thi reset lai
        if self.result:
             self.reset_route()
 
@@ -70,14 +70,10 @@ class Dijkstra(object):
             if u in visited:
                 continue
             visited.add(u)
-            # print("duong di")
-            # print(u.get_id())
-           
+          
             if u.get_id() == self.end.get_id():
                 self.minimum_cost = current_cost
                 # backtrack to save shortest path
-                # print("dich den", self.end.get_id())
-                # print("dinh u", u.get_id())
                 self.save_result()
                 return 
                 
@@ -91,7 +87,6 @@ class Dijkstra(object):
         return -1
   
     def save_result(self):
-        # print("+++++++++++++++++++++++++++++++++++++++++++++++++++++")
         current = self.end
         
         while current != self.start:

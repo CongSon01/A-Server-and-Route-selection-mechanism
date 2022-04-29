@@ -200,7 +200,7 @@ class flowRule(object):
 
         try:
             # get full ip of SDN
-            list_ip = json.load(open('/home/onos/Downloads/flaskSDN/flaskAPI/set_up/ip_SDN.json'))['ip_sdn']
+            list_ip = json.load(open('/home/onos/Downloads/flaskSDN/flaskAPI/set_up/set_up_topo.json'))['ip_sdn']
 
             for ip in list_ip:
                 response = requests.post('http://'+str(ip)+':8181/onos/v1/flows?appId=onos.onosproject.routing', 

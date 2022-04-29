@@ -1,7 +1,6 @@
 import numpy as np
 class Host(object):
     def __init__(self, id, device, port, ip):
-
         ''' 
         id: id of host (string)
         device: switch object that connects to host 
@@ -13,7 +12,7 @@ class Host(object):
         self.port = port
         self.ip = ip
         self.server_cost_list = list()
-        self.server_cost = 0.0
+        self.server_cost = 0.1
 
     def get_id(self):
         return self.id
@@ -35,15 +34,10 @@ class Host(object):
 
     def calculate_final_cost(self):
         server_cost_vector = np.array( self.server_cost_list, dtype='f')
-        #print("server_cost_vector", server_cost_vector)
-
         self.server_cost = np.mean( self.get_min_max_scale(server_cost_vector) )
         
     def get_min_max_scale(self, x):
         min, max = x.min(), x.max()
         # cong them 10^-7 de tranh mau so bang 0 
         return (x - min) / (max - min + 0.0000001)
-
-    
-
     

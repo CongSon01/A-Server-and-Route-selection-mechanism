@@ -7,7 +7,8 @@ class updateLinkTopo(object):
         self.link_versions = link_verions
         self.link_set = list()
         self.update_link()
-
+        self.count = 0
+        
     def update_link(self):
         # print("Do dai data doc tu R con ", len(self.link_versions))
         for link_params in self.link_versions:
@@ -49,6 +50,8 @@ class updateLinkTopo(object):
         # print("do dai link set")
         # print(len(self.link_set))
         # self.link_version +=1   
+        # self.count +=1 
+        # print("call ", self.count)
         new_link_topo = list()
         for link in self.link_set:
             # print("\n")
@@ -67,6 +70,7 @@ class updateLinkTopo(object):
             # print("link_utilization:", link_utilization)
             # print("packet_loss:", packet_loss)
             # print("linkVersion:", self.link_version)    
+            # print("canh co trong so =", weight)
             
             temp_data = { "src": src, 
                           "dst": dst,
@@ -117,8 +121,8 @@ class WeightLink(object):
             self.link_utilization = 0.0
             self.packet_loss = 0.0
             
-            self.alpha = 0.4
-            self.beta = 0.4
+            self.alpha = 0.3
+            self.beta = 0.5
             self.gamma = 0.2
 
             # self.normalize_cost = 0.0000001
@@ -133,77 +137,46 @@ class WeightLink(object):
             """
             Ham cap nhap trong so lien tuc khi co thay doi tu mang
             """
+            # print("params", params_data)
             self.delay = float( params_data['delay'] )
             self.link_utilization = float( params_data['linkUtilization'] )
             self.packet_loss = float( params_data['packetLoss'] )
             
-            #print("input = ", self.delay, self.link_utilization, self.packet_loss)
             # day cac tham so vao stack
             self.delay_stack.append( self.delay )
             self.link_utilization_stack.append( self.link_utilization ) 
             self.packet_loss_stack.append( self.packet_loss )
 
         def find_link_cost(self):
-
-            # if  not self.delay_stack or not self.link_utilization_stack or not self.packet_loss_stack:
-            #     return self.normalize_cost
-            # else:
-                # convert list to vector with float type
                 delay_vector            = np.array( self.delay_stack, dtype='f')
                 link_utilization_vector = np.array( self.link_utilization_stack, dtype='f')
                 packet_loss_vector      = np.array( self.packet_loss_stack, dtype='f')
-
-                # print("Thay doiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
-                # print(delay_vector)
-                # print(link_utilization_vector)
-                # print(packet_loss_vector)
-
-                link_cost = list()
+ 
                 self.W.append( delay_vector )
                 self.W.append( link_utilization_vector )
                 self.W.append( packet_loss_vector )
-            
-                # print("W =====================")
-                # print(self.W)
-                # print("len W ===================", len(self.W))
-               
-                # if len(self.W) > 3:
-                #     print(len(self.W))
-                #     print(self.id_src, "--------------------------------------------->", self.id_dst)
-                for x in range( len(self.W) ):
-                    x_scale = self.get_min_max_scale(x= self.W[x])
-                    # print("scale")
-                    # print(x_scale)
-
-                    # cong thuc tinh delay
-                    if x == 0:
-                        cost = np.prod( x_scale )
-                        # print("delayyy", cost)         
-                    # cong thuc tinh trong so khac
-                    else:
-                        cost = np.mean( x_scale )
-                        #print("trong so khac", cost)
-
-                    link_cost.append(cost)
+                scaled_params = list()
+                                 
+                for x in self.W:
+                    x = np.mean(x)
+                    scaled_params.append(x)
+                        
+                scaled_params = self.get_min_max_scale(scaled_params)                
+                training_cost = self.get_training_cost(scaled_params)
                 
-                # print("link cost")
-                # print(link_cost)
-                self.normalize_cost = self.get_normalize_cost(link_cost)
-
-                #### giai phong het gia tri thoi gian cu
-                
-                # self.W = list()
-                # del self.delay_stack
-                # del self.link_utilization_stack
-                # del self.packet_loss_stack 
-                return self.normalize_cost
-                # return link_cost
+                      
+                #### giai phong het gia tri cu       
+                self.W = list()
+                del self.delay_stack
+                del self.link_utilization_stack
+                del self.packet_loss_stack 
+                return training_cost
             
-        def get_normalize_cost(self, link_cost):    
-            # print(link_cost) 
+        def get_training_cost(self, link_cost):    
             return self.alpha * link_cost[0] + self.beta * link_cost[1] + self.gamma * link_cost[2]
 
         def get_min_max_scale(self, x):
+            x = np.array(x)
             min, max = x.min(), x.max()
             # cong them 10^-7 de tranh mau so bang 0 
-            return (x - min + 0.0000001) / (max - min + 0.0000001)
+            return (x - min) / (max - min)
