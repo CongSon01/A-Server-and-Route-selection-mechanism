@@ -66,10 +66,10 @@ class updateWeight(object):
         return None
 
     def write_update_link_to_data_base(self):
-        try:
-            LinkVersion.remove_all()
-        except:
-            print("Remove loi .................")
+        # try:
+        #     LinkVersion.remove_all()
+        # except:
+        #     print("Remove loi .................")
 
         self.link_version += 1
         self.count +=1
@@ -110,12 +110,6 @@ class updateWeight(object):
     def write_W_SDN(self, num_W):
         try:
             data = LinkVersion.get_multiple_data()
-
-            # Viet vao DB cua CCDN
-            url_ccdn = "http://" + self.ip_ccdn + ":5000/write_full_data/"
-            requests.post(url_ccdn, data=json.dumps({'link_versions': data}))
-
-
             for ip in random.sample(self.ip_remote, num_W):
                 # print('ghi vao ip: ', ip)
                 url = "http://" + ip + ":5000/write_link_version/"

@@ -26,9 +26,3 @@ def connectRabbitMQ(data):
             delivery_mode=pika.spec.PERSISTENT_DELIVERY_MODE
         ))
     # connection.close()
-
-# while(True):
-#     # quan trong
-#     Links_details = {'src': 1234,'des':3456}
-#     # goi ham connect
-#     connectRabbitMQ(Links_details)

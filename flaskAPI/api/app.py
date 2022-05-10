@@ -10,12 +10,13 @@ import updateWeight  # import from routingAlgorithm
 import pub
 import time
 import json
-
+import requests
 
 # Init app
 app = Flask(__name__)
 
 # init W object included link version of each link
+ip_ccdn = str(json.load(open('/home/onos/Downloads/flask_SDN/Flask-SDN/config.json'))['ip_ccdn'])
 update = updateWeight.updateWeight()
 starttime = time.time()
 
@@ -54,8 +55,20 @@ def write_data():
             update.write_update_link_to_data_base()
 
             starttime = time.time()
+        
+        try:
+            write_ccdn()
+        except:
+            print("GHI VAO CCDN LOI")
 
         return content
+
+def write_ccdn():
+    data = LinkVersion.get_multiple_data()
+    # Viet vao DB cua CCDN
+    url_ccdn = "http://" + ip_ccdn + ":5000/write_full_data/"
+    requests.post(url_ccdn, data=json.dumps({'link_versions': data}))
+    return 
 
 # viet trong so ra nhieu SDN khac
 @app.route('/write_W_SDN/',  methods=['GET', 'POST'])
