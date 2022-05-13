@@ -15,7 +15,7 @@ sys.path.append(PATH_ABSOLUTE+'q_learning')
 
 import custom_env
 
-
+import numpy as np
 # import from handledata/models 
 import CusTopo
 
@@ -42,8 +42,9 @@ list_ip = json.load(open('/home/onos/Downloads/flaskSDN/flaskAPI/set_up/set_up_t
 apiSDN.call_topo_api_sdn(list_ip)
 apiSDN.call_host_api_sdn(list_ip)
 
-topo_files = [PATH_ABSOLUTE + 'topos/topo_' + str(index_path) + '.json' for index_path in range(1, 5)]
-host_files = [PATH_ABSOLUTE + 'hosts/host_' + str(index_path) + '.json' for index_path in range(1, 5)]
+number_ip = 5
+topo_files = [PATH_ABSOLUTE + 'topos/topo_' + str(index_path) + '.json' for index_path in range(1, number_ip)]
+host_files = [PATH_ABSOLUTE + 'hosts/host_' + str(index_path) + '.json' for index_path in range(1, number_ip)]
 
 # sinh ra file hop nhat giua cac mang: topo.json va host.json 
 connectGraph.connectGraph(topo_files, host_files)
@@ -118,8 +119,8 @@ def flask_ngu():
   app.run(host='10.20.0.201',debug=True, use_reloader=False, threaded=True)
 
 def get_x(x):
-    if (x >= 4):
-        return 4
+    if (x >= number_ip-1):
+        return number_ip-1
     elif (x <= 0):
         return 1
     else:
@@ -139,15 +140,18 @@ def change_acction(x, r, w):
         8: (get_x(r + 1), get_x(w + 1)),
     }[x]
 
+
+
+
 # threading ccdn
 # def ccdn():
 #     global starttime
 #     env = custom_env.Custom_env()
-#     R = 4
+#     R = 18
 #     W = 1
 #     while True:
 #         # print("123")
-#         if time.time() - ", last_device_idstarttime > 10:
+#         if time.time() - starttime > 60:
 #             state = env.reset(R, W)
 #             qtable_new = np.load('/home/onos/Downloads/flaskSDN/flaskAPI/api/qtable.npy')
 #             print(state)
@@ -162,6 +166,9 @@ def change_acction(x, r, w):
 #                 action = np.argmax(qtable_new[state,:])
 
 #             R, W = change_acction(action, R, W)
+#             if R + W > 18:
+#                   R = random.randint(4, 7)
+#                   W = random.randint(4, 7)
 #             RD, WD, V_staleness = update_weight.load_CCDN(R, W)
             
 #             new_state, reward, done = env.step(RD, WD, V_staleness)
@@ -177,11 +184,12 @@ def change_acction(x, r, w):
 ## fix cung R, W
 def ccdn():
     global starttime
-    R = 4
+    R = number_ip-1
     W = 1
     while True:
         if time.time() - starttime > 60:
             RD, WD, V_staleness = update_weight.load_CCDN(R, W)
+            update_weight.calculate_link_weight()
             # cap nhap trong so cho server
             update_server.update_server_cost()
             starttime = time.time()

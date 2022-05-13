@@ -7,7 +7,8 @@ connection = MongoClient(mongo_uri)
 # CREATE DATABASE
 database = connection['SDN_data']
 # CREATE COLLECTION
-collection = database['LinkVersion']
+collection = database['LinkCost']
+# print("Database connected")
 
 def insert_n_data(list_data):
     if len(list_data) == 0:

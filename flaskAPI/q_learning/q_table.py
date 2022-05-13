@@ -14,7 +14,7 @@ class Q_table(object):
         self.qtable = np.zeros((state_size, action_size))
 
         self.learning_rate = 0.8           # Learning rate
-        self.max_steps = 9               # Max steps per episode
+        self.iteration = 100               # Max steps per episode
         self.gamma = 0.95                  # Discounting rate
 
         # Exploration parameters
@@ -36,7 +36,7 @@ class Q_table(object):
         done = False
         total_rewards = 0
         
-        for step in range(self.max_steps):
+        for step in range(self.iteration):
             # 3. Choose an action a in the current world state (s)
             ## First we randomize a number
             exp_exp_tradeoff = random.uniform(0, 1)

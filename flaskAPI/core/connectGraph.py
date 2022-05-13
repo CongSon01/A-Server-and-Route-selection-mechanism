@@ -67,21 +67,25 @@ class connectGraph(object):
                     location = locations[0]        
                     port = int(location['port'])              
                     device_id = str(location['elementId'])
+
+                    ####################### cau
                     bridges = open('/home/onos/Downloads/flaskSDN/flaskAPI/run/bridge.txt', 'r').readlines()
                     list_bridges = [ json.loads(host)['src']['id'] for host in bridges ]
 
-                    if  str(device_id) in list_bridges:
-                        continue
-                    else:
+                    # if  str(device_id) in list_bridges:
+                    #     # print("XOA HOST ", host_ip)
+                    #     # print("DEVICE :", device_id)
+                    #     continue
+                    # else:
 
                         # add host data to Host file
-                        host_value = {
-                                'port': port,
-                                'mac': host_mac, 
-                                'deviceId': device_id,
-                                'ipAddresses': host_ip
-                        }
-                        result_host['hosts'].append(host_value)
+                    host_value = {
+                                    'port': port,
+                                    'mac': host_mac, 
+                                    'deviceId': device_id,
+                                    'ipAddresses': host_ip
+                            }
+                    result_host['hosts'].append(host_value)
 
         # ghi ra file host cuoi cung       
         file_host_done =  '/home/onos/Downloads/flaskSDN/flaskAPI/host.json'

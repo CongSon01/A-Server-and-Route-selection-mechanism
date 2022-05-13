@@ -1,5 +1,7 @@
 import numpy as np
 import sys
+sys.path.append("/home/onos/Downloads/flaskSDN/flaskAPI/model")
+import LinkCost
 
 class updateLinkTopo(object):
 
@@ -36,76 +38,24 @@ class updateLinkTopo(object):
         return None
 
     def get_link_weight(self):
-    # def write_update_link_to_data_base(self):
-        
-        # print(Link_Versions)
-        # xoa het trong so cu o Mongo
-        # model_250.remove_all()
-        # LinkVersion.remove_all()
-        # model_1.remove_all()
-
-        #print("-------------------Write update link weight to MONGO------------- ...")  
-        # self.count +=1
-        # print("-------------------------------------goi lan thu", self.count)
-        # print("do dai link set")
-        # print(len(self.link_set))
-        # self.link_version +=1   
-        # self.count +=1 
-        # print("call ", self.count)
-        new_link_topo = list()
-        for link in self.link_set:
-            # print("\n")
-            #print( link.get_id_src(), "----------------->",link.get_id_dst() )
+    
+        LinkCost.remove_all()
+        for link in self.link_set:  
             src = link.get_id_src()
             dst = link.get_id_dst()
-            # weight = link.get_normalize_data()
-          
-            weight = link.find_link_cost()
-            # delay = weight[0]
-            # link_utilization = weight[1]
-            # packet_loss = weight[2]
-            # print("src", src)
-            # print("dst", dst)
-            # print("delay:", delay)
-            # print("link_utilization:", link_utilization)
-            # print("packet_loss:", packet_loss)
-            # print("linkVersion:", self.link_version)    
-            # print("canh co trong so =", weight)
-            
+           
+            weight = link.find_link_cost()       
             temp_data = { "src": src, 
                           "dst": dst,
-                          "weight": weight
-                        } 
-            new_link_topo.append(temp_data)
-           
-            # print("Weight cua link =", weight)
-            
-            # temp_data = {'src': 'of:0000000000000010', 'packetLoss': 1.0, 'dst': 'of:000000000000000d'{'src': 'of:0000000000000010', 'packetLoss', : 'linkVersion': 17, 'delay': 251.0, 'linkUtilization': 0.000112} 
-            #         {'src': ''of:00000d0e00la0y0'000011', 'packetLoss': : 0.16666667169650.0, , 'dst''linkUtilization': 0.000112}: 'of:0000000000000012', 'linkVersion': 32, 'delay': 6237021600000000.0, 'linkUtilization': 0.000112}
-            # print(temp_data)
-            # save into update weight database mongoDB
-            # model_250.insert_data(temp_data)
-
-            # # temp_data = { "src": src, "dst": dst, "LU": str(link_utilization)}
-            # try:
-            #      LinkVersion.insert_data(temp_data)
-            #     #  print("+++++++++++++++ Link version update Thanh cong")
-            # except:
-            #      print("--------------- Link version update loi")
+                          "weight": float(weight)
+                        }     
+            try:
+                 LinkCost.insert_data(temp_data)            
+            except:
+                 print("--------------- Write Link Cost loi")
                 
-            # model_1.insert_data(temp_data)
-            # history_weights.insert_data(temp_data)
-        
-        # LinkVersion.insert_n_data(Link_Versions)
-        # reset link set
         self.link_set = list()
-        return new_link_topo
-        # self.write_update_link_to_topo()
-        #print("lennn cua set", len(self.link_set))
-
-    # def write_update_link_to_topo(self, link_versions):
-    #     self.topo.read_update_weight(link_versions)
-        
+           
 class WeightLink(object):
         def __init__(self, id_src, id_dst):
             self.id_src = id_src
@@ -121,9 +71,9 @@ class WeightLink(object):
             self.link_utilization = 0.0
             self.packet_loss = 0.0
             
-            self.alpha = 0.3
-            self.beta = 0.5
-            self.gamma = 0.2
+            self.alpha = 0.4
+            self.beta = 0.4
+            self.gamma = 0.4
 
             # self.normalize_cost = 0.0000001
 
@@ -142,6 +92,7 @@ class WeightLink(object):
             self.link_utilization = float( params_data['linkUtilization'] )
             self.packet_loss = float( params_data['packetLoss'] )
             
+            #print("input = ", self.delay, self.link_utilization, self.packet_loss)
             # day cac tham so vao stack
             self.delay_stack.append( self.delay )
             self.link_utilization_stack.append( self.link_utilization ) 
@@ -155,15 +106,14 @@ class WeightLink(object):
                 self.W.append( delay_vector )
                 self.W.append( link_utilization_vector )
                 self.W.append( packet_loss_vector )
-                scaled_params = list()
-                                 
-                for x in self.W:
+                scaled_params = list()       
+             
+                for x in self.W:                  
                     x = np.mean(x)
                     scaled_params.append(x)
                         
-                scaled_params = self.get_min_max_scale(scaled_params)                
-                training_cost = self.get_training_cost(scaled_params)
-                
+                scaled_params = self.get_min_max_scale(scaled_params)                    
+                training_cost = self.get_training_cost(scaled_params)            
                       
                 #### giai phong het gia tri cu       
                 self.W = list()

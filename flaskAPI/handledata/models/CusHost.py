@@ -12,7 +12,7 @@ class Host(object):
         self.port = port
         self.ip = ip
         self.server_cost_list = list()
-        self.server_cost = 0.1
+        self.server_cost = 0.2
 
     def get_id(self):
         return self.id
@@ -39,5 +39,5 @@ class Host(object):
     def get_min_max_scale(self, x):
         min, max = x.min(), x.max()
         # cong them 10^-7 de tranh mau so bang 0 
-        return (x - min) / (max - min + 0.0000001)
+        return (x - min) / (max - min)
     

@@ -3,6 +3,10 @@ import requests
 import json
 from requests.auth import HTTPBasicAuth
 
+"""
+  Lay topo tu onos 
+"""
+
 def call_topo_api_sdn(list_ip):
   
     for ip in range(len(list_ip)):

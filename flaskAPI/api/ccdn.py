@@ -1,7 +1,7 @@
 import sys
 import time
 
-from importlib_metadata import version
+# from importlib_metadata import version
 sys.path.append('/home/onos/Downloads/flaskSDN/flaskAPI/model')
 sys.path.append('/home/onos/Downloads/flaskSDN/flaskAPI/routingAlgorithm')
 sys.path.append('/home/onos/Downloads/flaskSDN/flaskAPI/q_learning')
@@ -12,7 +12,6 @@ import random
 # import CCDN_update
 import CCDN, Version
 import updateLinkTopo
-import LinkVersion
 import q_table
 import numpy as np
 
@@ -26,8 +25,10 @@ class Update_weight_ccdn(object):
         self.update_server = update_server
         self.list_ip = list_ip
         self.q_table = q_table.Q_table()
-        self.time_run = 60*15 # 15ph
+        self.time_run = 60*60*1 # 60ph
         self.start_run = time.time()
+        # du lieu doc duoc tu R con
+        self.learning_params = ""
 
     def write_log_parameter(self,R, W,  read_delay, write_delay, time_staleness, version_staleness, avg_overhead):
         self.count += 1
@@ -37,15 +38,14 @@ class Update_weight_ccdn(object):
                 'write_delay':write_delay, 'time_staleness':time_staleness, 'version_staleness':version_staleness, 'time': time_current
                 ,'overhead': avg_overhead}
 
-        if ( time_current > self.time_run ):
-            print("STOP WRITE Q Table")
-            np.save('qtable.npy',np.array(self.q_table.qtable))
-        else:
-            self.q_table.get_q_table(read_delay, write_delay, version_staleness, self.count)
+        # if ( time_current > self.time_run ):
+        #     print("STOP WRITE Q Table")
+        #     np.save('qtable.npy',np.array(self.q_table.qtable))
+        # else:
+        #     self.q_table.get_q_table(read_delay, write_delay, version_staleness, self.count)
         # print("-----Q Table-----")
 
         if ( avg_overhead != NaN ):
-            print('Du lieu chua doc duoc')
             CCDN.insert_data(data_insert)
 
     def calculate_version_staleness(self, link_versions, version_mongo_max):
@@ -64,9 +64,14 @@ class Update_weight_ccdn(object):
         
     def calculate_avg_overhead(self, link_versions):
         overheads = [version['overhead'] for version in link_versions]
-        print('AVG', average(overheads))
-        print('MEAN',np.mean(overheads))
-        return np.mean(overheads)
+        # print('AVG', average(overheads))
+        # neu overheads ma rong 
+        if not overheads:
+            return 0
+        else: 
+            return np.mean(overheads)
+        # print('MEAN',np.mean(overheads))
+        # return np.mean(overheads)
 
     def read_R_SDN(self, R):
         for ip in random.sample(self.list_ip, R):
@@ -93,7 +98,6 @@ class Update_weight_ccdn(object):
             time_start_write = time.time()
         return int(average(list_time_write) * 1000)
         
-
 
     def load_CCDN(self, R, W):
             print("call lan thu", self.count)
@@ -146,15 +150,12 @@ class Update_weight_ccdn(object):
         #     print("Flask Doc nhieu SDN loi")
 
         # tinh toan trong so theo thuat toan
-            self.calculate_link_weight(link_versions)
+            # self.calculate_link_weight(link_versions)
+            self.learning_params = link_versions
             return (read_delay, write_delay, version_staleness)
 
-    def calculate_link_weight(self, link_versions):
-        link_weight = updateLinkTopo.updateLinkTopo(link_verions=link_versions)
-        new_link_topo = link_weight.get_link_weight()
-
-        # viet trong so da cap nhap vao mang Topo
-        self.write_update_link_to_topo(new_link_topo)
-
-    def write_update_link_to_topo(self, new_link_topo):
-        self.topo.read_update_weight(new_link_topo)
+    def calculate_link_weight(self):
+        link_weight = updateLinkTopo.updateLinkTopo(link_verions= self.learning_params)
+        link_weight.get_link_weight()
+        self.topo.read_update_weight()
+      

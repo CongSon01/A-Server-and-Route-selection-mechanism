@@ -72,7 +72,7 @@ class hostServerConnection(object):
             #     dest_object = self.servers[server]
             #     path = self.sol.get_result()
 
-            current_cost = 0.4 * self.sol.get_minimum_cost() + 0.6 * self.servers[server].get_server_cost()
+            current_cost = 0.5 * self.sol.get_minimum_cost() + 0.5 * self.servers[server].get_server_cost()
             # print("cost duong di=", self.sol.get_minimum_cost())
             # print("cost server=", self.servers[server].get_server_cost())
             # print("Current cost hien tai=", current_cost, "VOI DEST=", str(server) )

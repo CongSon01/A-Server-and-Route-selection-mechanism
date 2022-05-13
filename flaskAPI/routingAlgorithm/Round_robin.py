@@ -68,7 +68,7 @@ class hostServerConnectionRR(object):
         self.sol.routing()
 
         # print("cost server=", dest_object.get_server_cost())
-        self.write_server_cost(dest_object, dest_ip)
+        # self.write_server_cost(dest_object, dest_ip)
 
         # lay path tu diem dau den diem cuoi va add flow vao path
         path = self.sol.get_result()

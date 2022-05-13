@@ -60,8 +60,8 @@ class Graph(object):
 
             # add edge between src and dst devices
             # trong so mac dinh la 10^-7
-            edge1 = CusLink.DeviceEdge(d_src, d_dst, 0.1, port_in, port_out)
-            edge2 = CusLink.DeviceEdge(d_dst, d_src, 0.1, port_out, port_in)
+            edge1 = CusLink.DeviceEdge(d_src, d_dst, 0.0000001, port_in, port_out)
+            edge2 = CusLink.DeviceEdge(d_dst, d_src, 0.0000001, port_out, port_in)
             
             # add edges to topo
             self.topo.add_edge(edge1)
@@ -103,8 +103,8 @@ class Graph(object):
                     hosts[host_ip] = host_object               
                     self.topo.add_node(host_object)
             
-                    edge1 = CusLink.HostEdge(host_object, device, 0.1 , port)
-                    edge2 = CusLink.HostEdge(device, host_object, 0.1 , port)
+                    edge1 = CusLink.HostEdge(host_object, device, 0.0000001 , port)
+                    edge2 = CusLink.HostEdge(device, host_object, 0.0000001 , port)
                         
                     self.topo.add_edge(edge1)
                     self.topo.add_edge(edge2)
@@ -115,14 +115,25 @@ class Graph(object):
                                      
                     self.topo.add_node(host_object)
             
-                    edge1 = CusLink.HostEdge(host_object, device, 0.1 , port)
-                    edge2 = CusLink.HostEdge(device, host_object, 0.1 , port)
+                    edge1 = CusLink.HostEdge(host_object, device, 0.0000001 , port)
+                    edge2 = CusLink.HostEdge(device, host_object, 0.0000001 , port)
                         
                     self.topo.add_edge(edge1)
                     self.topo.add_edge(edge2)
 
         self.topo.set_hosts(hosts= hosts)
         self.topo.set_servers(servers= servers)
+        
+
+
+
+        print("TAP HOSTS")
+        for h in hosts:
+            print(h)
+        
+        print("TAP SERVERS")
+        for s in servers:
+            print(s)
         
     def find_device(self, target):
         nodes = self.topo.get_nodes()

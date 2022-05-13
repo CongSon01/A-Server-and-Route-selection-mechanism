@@ -5,10 +5,10 @@ from topozoo_mininet import TopologyZooXML
 from zipfile import ZipFile
 import time
 import pandas as pd
-import random
 import os
 import numpy as np
 import random, json
+import set_up_mininet
 
 os.system('sudo mn -c')
 os.system('sudo mn -c')
@@ -82,14 +82,20 @@ class Mininet:
             info( '*** Add switches\n')
             switches = {}
             added_switches={}
+            hosts_remove = set_up_topo['host_remove']
+            MAX_CAPACITY_BW = set_up_mininet.MAX_CAPACITY_BW
+            LOSS_PER = set_up_mininet.LOSS_PER
+            LINK_DELAY = set_up_mininet.LINK_DELAY
+
             for (first,second,node_type) in self.topology_graph:
                 if node_type == "s":
+                    # if first[1] in hosts_remove or second[1] in hosts_remove:
+                    #     continue
                     if first[1] not in added_switches:
                         switches[first[1]] = net.addSwitch('s'+str(first[1]+1), cls=OVSKernelSwitch)
                         added_switches[first[1]] = True
                     if second[1] not in added_switches:
-                        switches[second[1]] = net.addSwitch('s'+str(second[1]+1), 
-                        cls=OVSKernelSwitch)
+                        switches[second[1]] = net.addSwitch('s'+str(second[1]+1), cls=OVSKernelSwitch)
                         added_switches[second[1]] = True
                     
 
@@ -100,34 +106,42 @@ class Mininet:
 
             for (first,second,node_type) in sorted(self.topology_graph):
                 if node_type == "h":
+                    # if first[1] in hosts_remove:
+                    #     continue
+                    # else:
                     hosts.append(net.addHost('h'+str(first[1]+1), cls=Host, ip=str(ipaddress.IPv4Address(int(ipaddress.IPv4Address(first_ip))+first[1]+1)), defaultRoute=None))   
                 
             info( '*** Add links\n' )
             # luu lai topo dang matrix
-            n = len(switches)
+
+            n = len(hosts)
+            print(n)
             Matrix_graph = [[0 for x in range(n)] for y in range(n)] 
 
             filename = '/home/onos/Downloads/flaskSDN/flaskAPI/run/bridge.txt'
-            bridge = set_up_topo['bridge']
+            bridges = set_up_topo['bridge']
 
             # flatten_bridge = sum(bridge, [])
             
             for (first,second,node_type) in self.topology_graph:
                 try:
                     if node_type=="h":
-                        net.addLink(hosts[first[1]],switches[second[1]])
-                        if ( str(switches[second[1]]) in bridge ):
+                        # print(hosts[first[1]].ipBase,switches[second[1]].dpid)
+                        net.addLink(hosts[first[1]],switches[second[1]], delay=LINK_DELAY, loss=LOSS_PER, bw=MAX_CAPACITY_BW, use_htb=True)
+                        if ( str(switches[second[1]]) in bridges ):
                             print("HOST Bien ", hosts[first[1]], " - ", first[1])
 
                     elif node_type=="s":
                         # Tao matrix de cat canh
+                        # print(int(first[1]), int(second[1]))
                         Matrix_graph[int(first[1])][int(second[1])] = 1
-                        Matrix_graph[int(second[1])][int(first[1])] = 1
+
+                        # print("CANH: " , int(str(switches[first[1]]).replace('s', ''))," --> ", int(str(switches[second[1]]).replace('s', '')))
 
                         # Luu cac canh noi vao file
-                        if (str(switches[first[1]]) in bridge) or (str(switches[second[1]]) in bridge):
+                        if [int(str(switches[first[1]]).replace('s', '')), int(str(switches[second[1]]).replace('s', ''))] in bridges:
                             print("BIEN", str(switches[first[1]].dpid), str(switches[second[1]].dpid))
-                            net.addLink(switches[first[1]],switches[second[1]], port1= 10, port2=10)
+                            net.addLink(switches[first[1]],switches[second[1]], port1= 10, port2=10, delay=LINK_DELAY, loss=LOSS_PER, bw=MAX_CAPACITY_BW, use_htb=True)
 
                             with open(filename, 'a') as outfile:
                                 entry = {"src": {
@@ -152,16 +166,17 @@ class Mininet:
                                 outfile.write("\n")
                                 outfile.close()
                         else:
-                            net.addLink(switches[first[1]],switches[second[1]])
+                            net.addLink(switches[first[1]],switches[second[1]], delay=LINK_DELAY, loss=LOSS_PER, bw=MAX_CAPACITY_BW, use_htb=True)
 
                 except KeyError as e:
                     print("switch or host is unavailable: {}".format(e))
+
             info ('*** Get Matrix_graph\n')
             # https://graphonline.ru/en/ vẽ rồi cắt
             np.savetxt('graph_matrix.txt',Matrix_graph, fmt='%s')
             
             info( '*** Starting network\n' )
-            net.build()
+            net.build()   # sinh ip cho cac host
 
             info( '*** Starting controllers\n' )
             for controller in net.controllers:
@@ -173,80 +188,58 @@ class Mininet:
             switch_in_controllers = set_up_topo['switch_in_controllers']
             for controller in switch_in_controllers:
                 for i_sw in switch_in_controllers[controller]:
-                    self.add_sw_to_controller(list_controllers[int(controller.split('_')[1])], switches.get(i_sw))
+                    self.add_sw_to_controller(list_controllers[int(controller.split('_')[1])], switches.get(i_sw), hosts[i_sw])
             
 
             ######## ping all cac host voi nhau
-            self.ping_one_to_all(net, hosts)
+            # self.ping_one_to_all(net, hosts, hosts_remove)
+            self.ping_host_in_sdn(net,hosts, switch_in_controllers)
+            # net.pingAll()
 
-            generate_topo(net)
-            CLI(net)
+            kq = input("Nhap index host and serer:")
+
+            if kq == 'ok':
+                generate_topo(net)
+                CLI(net)
             
             net.stop()
 
         setLogLevel( 'info' )
         myNetwork()
     
-    def add_sw_to_controller(self, controller, switch):
-        print('add controller ', controller, ' : ' , switch , ' ' ,  switch.dpid)
+    def add_sw_to_controller(self, controller, switch, host):
+        print('add controller ', controller, ' : ' , switch , ' ' ,  switch.dpid, host)
         switch.start( [controller] )
 
     
-    def ping_one_to_all(self, net, hosts):
-        host_1 = hosts[0]
-        for h in range( len(hosts) ):
-            host_i = hosts[h]
-            net.ping( [host_1, host_i] )
-        time.sleep(15)
-        return
-
-# def generate_topo(net):
-#     host_list, server_list = create_host_server(net)
-
-#     period = 60*10 # random data from 0 to period 
-#     interval = 10 # each host generates data 10 times randomly
-
-#     # khoi tao bang thoi gian cho tung host
-#     starting_table = pd.read_csv('/home/onos/Downloads/flaskSDN/flaskAPI/run/starting_table.csv')
-#     starting_table = starting_table.to_numpy()
-    
-#     # kich hoat server chuan bi lang nghe su dung iperf
-#     start_server(server_list, net)
-    
-#     list_ip_server = [ str(ip_server.IP()) for ip_server in server_list ]
-    
-#     name_host = [ str(ip_host) for ip_host in host_list ]
-
-#     print("list IP server")
-#     print(list_ip_server)
-#     print("list Name host")
-#     print(name_host)
-
-#     # read file server and write to mongo
-#     for ip_server in list_ip_server:
-#         print("Ip server =", ip_server)
-#         cmd_read_log = 'python readlog.py'+' '+ip_server + ' &'
-#         os.system(cmd_read_log)
-#         # print("Read log")
-#         # print(cmd_read_log)
-#         time.sleep(1)
-
-#     print("Cho 4 phut")
-#     time.sleep(60*5)
-
-#     # # lap lich cho host
-#     run_shedule(starting_table, period, interval,net, name_host)
+    def ping_host_in_sdn(self, net,hosts, switch_in_controllers):
+        for key in switch_in_controllers:
+            for i in switch_in_controllers[key]:
+                net.ping( [hosts[switch_in_controllers[key][0]], hosts[i]] )
+        return 
 
 def generate_topo(net):
     host_list, server_list = create_host_server(net)
-    num_host = len(host_list) 
 
-    period = 60*10 # random data from 0 to period 
-    interval = 10 # each host generates data 5 times randomly
+    print("HOST")
+    for host in host_list:
+        print(host.IP())
+    
+    print("SERVER")
+    for server in server_list:
+        print(server.IP())
+    
+    name_host = list()
+    for ip_host in host_list:
+        name_host.append(str(ip_host))
+
+    period = set_up_mininet.PERIOD # random data from 0 to period 
+    interval = set_up_mininet.INTERVAL # each host generates data 5 times randomly
+    life_time = set_up_mininet.LIFE_TIME
 
     # khoi tao bang thoi gian cho tung host
-    starting_table = create_starting_table(num_host, period, interval)
-    write_table_to_file(starting_table, 'starting_table.csv')
+    starting_table = create_starting_table( name_host, period, interval, life_time )
+    write_table_to_file(starting_table, 'starting_table.json')
     
     # kich hoat server chuan bi lang nghe su dung iperf
     start_server(server_list, net)
@@ -254,90 +247,73 @@ def generate_topo(net):
     list_ip_server = list()
     for ip_server in server_list:
         list_ip_server.append(str(ip_server.IP()))
-    
-    name_host = list()
-    for ip_host in host_list:
-        name_host.append(str(ip_host))
-        
-
-    print("list IP server")
-    print(list_ip_server)
-    print("list Name host")
-    print(name_host)
 
     # read file server and write to mongo
     for ip_server in list_ip_server:
         print("Ip server =", ip_server)
         cmd_read_log = 'python readlog.py'+' '+ip_server + ' &'
         os.system(cmd_read_log)
-        # print("Read log")
-        # print(cmd_read_log)
-        time.sleep(1)
+        time.sleep(2)
 
-    print("Cho 10 phut")
-    time.sleep(60*10)
+    # print("Cho 10 phut")
+    # time.sleep(60*10)
+    next = input("Enter continues: ")
+    if next == 'ok':
+        run_shedule(starting_table,net,life_time)
 
-    # # lap lich cho host
-    run_shedule(starting_table, period, interval,net, name_host)
+def create_starting_table(host_list, period, interval, life_time):
+    generate_flow = {}
+    # generate_flow = {0: {'h2': 569, 'h1': 441}, 1: {'h2': 358, 'h1': 366}, 2: {'h2': 302, 'h1': 315}}
+    for i in range(interval):
+        temp = {}
+        if i == 0:
+            for h_i in host_list:
+                temp[h_i] = random.randint(1, period)
+        else:
+            for h_i in host_list:
+                temp[h_i] =  generate_flow[i-1][h_i] + life_time + random.randint(0, 3)
+        generate_flow[i] = temp
+    return generate_flow
 
-def create_starting_table(num_host, period, interval):
-    starting_table =  np.zeros( (num_host, interval) )
-    s = 0 # random starting time
 
-    for h in range( len(starting_table) ):
-        for t in range( len(starting_table[h]) ):
-            s = random.uniform(0, period) # do t = 0 to 100
+# lay host tuong ung vs thoi gian
+def get_host_affter_time(full_values, run_time):
+    for cluster_host in full_values:
+        for host in cluster_host:
+            if cluster_host[host] == run_time:
+                return str(host)
 
-            starting_table[h][t] = s
-        starting_table[h].sort()
+def run_shedule(generate_flow, net, life_time):
+    print("generate_flow--------")
+    print(list(generate_flow.values()))
+    
+    full_times = sum([ list(start_host.values()) for start_host in list(generate_flow.values()) ], [])
+    full_values = [ start_host for start_host in generate_flow.values() ]
 
-    #print(starting_table)
-    return starting_table
-   
+    start_time = time.time()
+    stop_time = max(full_times)
+    while True:
+        current_time = int(time.time() - start_time)
+        if ( current_time in  full_times):
+            p = net.get(get_host_affter_time(full_values, current_time))
+            print("HOST: ", p, " Chay luc ", current_time)
+            des = call_routing_api_flask( p.IP() )
+            # des = "10.0.0.4"
+            print("TRUYEN DU LIEU ", p.IP(), "--->", des)
+            
 
-def run_shedule(starting_table, period, interval, net, name_host):
-    visited = np.full( ( len(starting_table), interval), False, dtype=bool )
-    dem = 0
-    begin= time.time()
-    # ban dau current la moc 0
-    current= float(time.time() - begin) # giay hien tai - giay goc = giay current tai moc 0
-    #counter time
-    counter=float(period+3) # theo doi trong n giay period
-    print("print ok after "+str(counter)+"s")
+                      
+            # rate = random.randint(20000000, 60000000) #20^6 - 60*10^6 = 20Mb -> 60Mb
+            # phan tram chiem dung bang thong
+            rate = np.random.uniform(set_up_mininet.MIN_IPERF, set_up_mininet.MAX_IPERF) #20^6 - 60*10^6 = 20Mb -> 60Mb
+            print("------------- gui du lieu-----------", rate)
+            plc_cmd =  'iperf -c %s -b %d -u -p 1337 -t %d &' %(des, rate, life_time)
+            p.cmd(plc_cmd)   
 
-    while(counter-float(current)>0.001): #quan sat trong 10s
-        current = time.time() - begin
-        #print("current = ", current)
-        for host in range ( len(starting_table) ):
-            for t in range ( len(starting_table[host])):
-                # sai so be hon 0.001
-                if  abs (starting_table[host][t] - current ) < 0.001 and visited[host][t] == False:
-                    
-                        # get doi tuong host i
-                        # p=net.get('h%s' %(host+1))
-                        print("HOST = ", str(name_host[host]))
-                        p = net.get(str(name_host[host]))
-                    
-                    # # neu object hien tai la host thi tien hanh goi iperf
-                    # if p in host_list:
-                        # get dich den server cua host i
-                        # print(type(p.IP()))
-                        des = call_routing_api_flask( p.IP() )
-                    
-                        #plc_cmd = 'iperf -c %s -p 1337 -t 1000 &' %des
-                        # truyen data den ip cua dest voi duration = 60s
-                        print("TRUYEN DU LIEU ", p.IP(), "--->", des)
-
-                        # phan tram chiem dung bang thong
-                        rate = random.randint(1000000, 8000000) #10^6 - 8*10^6
-                        print("------------- gui du lieu-----------", rate)
-                        plc_cmd =  'iperf -c %s -b %d -u -p 1337 -t 600 &' %(des, rate)
-                        p.cmd(plc_cmd)   
-                        #print(plc_cmd)
-                        #print("host", host + 1, " --> ", des, "tai giay thu", starting_table[host][t])
-                        dem += 1
-                        visited[host][t] = True
-    print("ok, dem = ", dem)
+        if ( current_time == stop_time ):
+            print("DONE")
+            break
+    print("OK")
   
 def create_host_server(net):
 
@@ -374,8 +350,8 @@ def start_server(set_server, net):
 
 
 def write_table_to_file(table, name_file):
-    df = pd.DataFrame(table)
-    df.to_csv(name_file)
+    with open(name_file, "w") as outfile:
+        json.dump(table, outfile)
     
 
 def download_file(filename, url):
