@@ -66,10 +66,10 @@ class updateWeight(object):
         return None
 
     def write_update_link_to_data_base(self):
-        # try:
-        #     LinkVersion.remove_all()
-        # except:
-        #     print("Remove loi .................")
+        try:
+            LinkVersion.remove_all()
+        except:
+            print("Remove loi .................")
 
         self.link_version += 1
         self.count +=1
