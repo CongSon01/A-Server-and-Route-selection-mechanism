@@ -10,6 +10,12 @@ database = connection['SDN_data']
 collection = database['LinkVersion']
 # print("Database connected")
 
+def is_data_exit(data_search):
+    return collection.count_documents({ 'src': data_search['src'] , 'dst': data_search['dst'] }, limit = 1)
+
+def update_many(data_search, data_update):
+    collection.update_many(data_search, {'$set':data_update})
+    return
 
 def insert_n_data(list_data):
     if len(list_data) == 0:

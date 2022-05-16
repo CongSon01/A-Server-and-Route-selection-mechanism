@@ -42,8 +42,11 @@ def write_data():
 
         #  Khong chon data mac dinh
         if float(dicdata['byteSent']) > 600 and float(dicdata['byteReceived']) > 600:
+            # day data vao rabbit
             pub.connectRabbitMQ(data=dicdata)
+            # doc lai data tu rabbit
             update.read_params_from_rabbit()
+            # day data vao Mongo DB
             Params.insert_data(dicdata)
 
         # Sau 60s se lan truyen DB den cac SDN khac
@@ -83,7 +86,10 @@ def write_link_version():
     if request.method == 'POST':
         # app.logger.info("Da nhan dc POST")
         content = request.data
-        LinkVersion.insert_n_data(json.loads(content)['link_versions'])
+        for data in json.loads(content)['link_versions']:
+            data_search = { 'src': data['src'], 'dst': data['dst'] }
+            if LinkVersion.is_data_exit(data_search=data_search):
+                LinkVersion.update_many(data_search, data)
         # print("Ghi vao local SDN tu SDN khac thanh cong")
         # time.sleep(1)
         return content
