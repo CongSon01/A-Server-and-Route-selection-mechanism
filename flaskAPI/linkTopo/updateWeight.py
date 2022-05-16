@@ -100,7 +100,11 @@ class updateWeight(object):
                          "byteReceived": float(byte_received)
                          }
             try:
-                LinkVersion.insert_data(temp_data)
+                data_search = { 'src': temp_data['src'], 'dst': temp_data['dst'] }
+                if LinkVersion.is_data_exit(data_search=data_search):
+                    LinkVersion.update_many(data_search, temp_data)
+                else:
+                    LinkVersion.insert_data(data=temp_data)
                 # print("Ghi vao local may nay thanh cong")
             except:
                 print("--------------- Write Local Link version loi")
