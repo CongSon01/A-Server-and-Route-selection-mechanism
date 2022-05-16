@@ -90,6 +90,8 @@ def write_link_version():
             data_search = { 'src': data['src'], 'dst': data['dst'] }
             if LinkVersion.is_data_exit(data_search=data_search):
                 LinkVersion.update_many(data_search, data)
+            else:
+                LinkVersion.insert_data(data=data)
         # print("Ghi vao local SDN tu SDN khac thanh cong")
         # time.sleep(1)
         return content
