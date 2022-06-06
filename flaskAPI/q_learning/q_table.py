@@ -13,7 +13,7 @@ class Q_table(object):
         # khoi tao q ban dau full 0
         self.qtable = np.zeros((state_size, action_size))
 
-        self.learning_rate = 0.8           # Learning rate
+        self.learning_rate = 0.08           # Learning rate
         self.iteration = 100               # Max steps per episode
         self.gamma = 0.95                  # Discounting rate
 
@@ -43,7 +43,7 @@ class Q_table(object):
             
             ## If this number > greater than epsilon --> exploitation (taking the biggest Q value for this state)
             if exp_exp_tradeoff > self.epsilon:
-                if state <= 1000:
+                if state <= 10000:
                     action = np.argmax(self.qtable[state,:])
 
             # Else doing a random choice --> exploration
@@ -57,7 +57,7 @@ class Q_table(object):
             # qtable[new_state,:] : all the actions we can take from new state
             # print(f(action, R, W))
             # R, W = f(action, R, W)
-            if ( new_state <= 1000 ):
+            if ( new_state <= 10000 ):
                 self.qtable[state, action] = self.qtable[state, action] + self.learning_rate * (reward + self.gamma * np.max(self.qtable[new_state, :]) - self.qtable[state, action])
             
             total_rewards =total_rewards + reward

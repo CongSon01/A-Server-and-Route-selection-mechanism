@@ -64,9 +64,10 @@ from numpy import full
 
 # generate_flow = {0: {'h1': 4, 'h2': 8, 'h3': 7}, 1: {'h1': 26, 'h2': 29, 'h3': 29}, 2: {'h1': 46, 'h2': 51, 'h3': 52}, 3: {'h1': 67, 'h2': 72, 'h3': 75}, 4: {'h1': 90, 'h2': 95, 'h3': 98}}
 # print(generate_flow.values())
-# full_times = sum([start_host.values() for start_host in generate_flow.values()], [])
+# full_times = sum([ list(start_host.values()) for start_host in list(generate_flow.values()) ], [])
 # full_values = [ start_host for start_host in generate_flow.values() ]
-
+# full_times = []
+# print(min(full_times))
 # print(full_times)
 
 # def get_host_affter_time(full_values, run_time):
@@ -91,11 +92,64 @@ from numpy import full
 # sys.path.append('/home/onos/Downloads/flaskSDN/flaskAPI/run/')
 
 
-start_time  = time.time()
-i = 0
-while True:
-    current = int(time.time() - start_time)
-    print(current)
-    if current > 10:
-        break
-    
+# start_time  = time.time()
+# i = 0
+# while True:
+#     current = int(time.time() - start_time)
+#     print(current)
+#     if current > 10:
+#         break
+
+import json, requests
+from requests.auth import HTTPBasicAuth
+# switch_in_controllers = json.load(open('/home/onos/Downloads/flaskSDN/flaskAPI/set_up/set_up_topo.json'))['switch_in_controllers']
+
+# for key in switch_in_controllers:
+#     for i in switch_in_controllers[key]:
+#         for j in range(len(switch_in_controllers[key])):
+#             print(switch_in_controllers[key][j] , i)
+
+# response = requests.get('http://' + '10.20.0.210' + ':8181/onos/v1/hosts', auth=HTTPBasicAuth('onos', 'rocks'))
+
+
+# response_1 = requests.get('http://' + '10.20.0.209' + ':8080/onos/test/localTopogy/getTopo')
+
+# print(response.text)
+
+# print("-----")
+
+# print({"hosts": json.loads(response_1.content)['hosts']})
+
+# def call_routing_api_flask(host):
+#     print("call flask")
+#     response = requests.post("http://10.20.0.201:5000/getIpServer", data= host)  
+#     dest_ip = response.text
+#     return str(dest_ip)
+
+# des = call_routing_api_flask( '10.0.0.16' )
+# print("TRUYEN DU LIEU ", '10.0.0.16', "--->", des)
+
+
+
+# controllers = [ 
+#       {"ip":"10.20.0.200", "controller": "onos","controller_port": 6653, "rest_port": 8181, "switches" : ["s85","s84","s86","s63","s87","s88"]},
+#       {"ip":"10.20.0.209", "controller": "ryu" ,"controller_port": 6633, "rest_port": 8080, "switches" : ["s89","s90","s38","s39","s37"]},
+#       {"ip":"10.20.0.210", "controller": "onos" ,"controller_port": 6653, "rest_port": 8181, "switches" : ["s19","s31","s30","s18","s33","s1"]},
+#       {"ip":"10.20.0.211", "controller": "ryu" ,"controller_port": 6633, "rest_port": 8080, "switches" : ["s34","s55","s36","s91","s82"]}
+#   ]
+# switch_in_controllers = {
+#         "sw_0":[10,11,12,15,16,17,13],
+#         "sw_1":[4,5,7,8,9],
+#         "sw_2":[0,1,2,3,6,14,19,25,26],
+#         "sw_3":[18,20,21,22,23,24,27]
+# }
+# new = {}
+# for b in switch_in_controllers:
+#     lists_tmp = []
+#     for sw in switch_in_controllers[b]:
+#         lists_tmp.append("s" + str(sw + 1))
+#     print(lists_tmp)
+
+import run_final
+net = run_final.get_net()
+hosts_save = run_final.get_hosts_save()

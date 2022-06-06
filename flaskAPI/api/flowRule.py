@@ -74,7 +74,7 @@ class flowRule(object):
                             port_in = self.shortest_path[link-1].get_port_in()
 
                     # priority +=1
-                    flow = Flow.Flow(priority = priority, timeout = 0, isPermanent = True, deviceId = device.get_id()  )
+                    flow = Flow.Flow(priority = priority, timeout = 600, isPermanent = True, deviceId = device.get_id()  )
                     treatment = Treatment.Treatment()
                     selector = Selector.Selector()
 
@@ -179,6 +179,50 @@ class flowRule(object):
             json.dump( json_rule_path, json_file)
 
         self.call_routing_api()
+    
+    def add_flow_ryu(self, data, ip_sdn):
+        # flows_dict = { (str(int(dpid["deviceId"][-3:], 16))):list() for dpid in data["flows"] }
+        for flow in data["flows"]:
+            flow_value = {}
+            dpid = flow["deviceId"][-3:]
+            criteria = flow["selector"]["criteria"]
+            for i in range(len(flow["selector"]["criteria"])):
+                if criteria[i]["type"] == "IN_PORT":
+                    in_port = criteria[i]["port"]
+                if criteria[i]["type"] == "ETH_SRC":
+                    dl_src = criteria[i]["mac"]
+                if criteria[i]["type"] == "ETH_DST":
+                    dl_dst = criteria[i]["mac"]
+            # convert hex => int
+            # flows_dict[str(int(dpid, 16))].append({
+            flow_value = {
+                "dpid": int(dpid, 16),
+                "priority": int(flow["priority"]),
+                "hard_timeout": int(flow["timeout"]),
+                "actions": [
+                    {
+                        "type": flow["treatment"]["instructions"][0]["type"],
+                        "port": int(flow["treatment"]["instructions"][0]["port"])
+                    }
+                ],
+            
+                "match": {
+                    "in_port": int(in_port),
+                    "dl_src": str(dl_src),
+                    "dl_dst": str(dl_dst),
+                }
+            }
+            print("add flow cho swich ",  int(dpid, 16))
+
+            print(requests.post("http://"+ip_sdn+":8080/stats/flowentry/add", data=str(flow_value), headers={'Content-type': 'text/plain'}))
+    
+    def get_flow_of_controller(self, data, list_sw):
+        flows = {"flows": []}
+        for flow in data["flows"]:
+            if ("s"+str(int(flow["deviceId"][-3:], 16) ))in list_sw:
+                flows["flows"].append(flow)
+        return flows
+
 
     def call_routing_api(self):
         """
@@ -186,29 +230,37 @@ class flowRule(object):
         return 200 if successul routing
         """
         with open("/home/onos/Downloads/flaskSDN/flaskAPI/jsonRulePath.json") as json_file:
-                data = json.load(json_file)
+                data_raw = json.load(json_file)
 
         headers = {
                     "Content-Type": "application/json",
                     "Accept": "application/json",
                     "Authorization": "Basic a2FyYWY6a2FyYWY="
                     }
-        data=json.dumps(data)
-        
-        # id of flow
-        query = {'appID': "tuanSonDepTrai"}
 
-        try:
+        # try:
             # get full ip of SDN
-            list_ip = json.load(open('/home/onos/Downloads/flaskSDN/flaskAPI/set_up/set_up_topo.json'))['ip_sdn']
+        set_up_topo = json.load(open('/home/onos/Downloads/flaskSDN/flaskAPI/set_up/set_up_topo.json'))
+        controllers = [controller for controller in set_up_topo["controllers"]]
+    
+        for i in range(len(controllers)):
+            # id of flow
+            query = {'appID': "test" + str(i)}
+            list_sw = controllers[i]['switches']
+            flows_value = self.get_flow_of_controller(data_raw, list_sw)
+            if controllers[i]['controller'] == "onos":
+                print("Add flow cho onos")
+                print(flows_value)
+                url_post = "http://"+ controllers[i]["ip"] + ":8181/onos/v1/flows?appId=onos.onosproject.routing"
+                response = requests.post(url_post, params=query,auth=HTTPBasicAuth('onos', 'rocks'), data = json.dumps(flows_value), headers=  headers )
+                print("Add flow may "+str(controllers[i]['ip']) +" : "+ str(response))
 
-            for ip in list_ip:
-                response = requests.post('http://'+str(ip)+':8181/onos/v1/flows?appId=onos.onosproject.routing', 
-                params=query,auth=HTTPBasicAuth('onos', 'rocks'), data = data, headers=  headers )
-                # print("Add flow may ", str(ip), " : ", response)
+            elif controllers[i]['controller'] == "ryu":
+                print("Add flow cho ryu")
+                self.add_flow_ryu(flows_value, str(controllers[i]['ip']))
 
-        except:
-            print("add flow xitttttttt")
+        # except:
+        #     print("add flow xitttttttt")
         
         
     

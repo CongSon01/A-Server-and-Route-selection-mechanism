@@ -25,25 +25,22 @@ class Update_weight_ccdn(object):
         self.update_server = update_server
         self.list_ip = list_ip
         self.q_table = q_table.Q_table()
-        self.time_run = 60*60*1 # 60ph
+        self.time_run = 60*60*5 # 60ph
         self.start_run = time.time()
-        # du lieu doc duoc tu R con
-        self.learning_params = ""
 
     def write_log_parameter(self,R, W,  read_delay, write_delay, time_staleness, version_staleness, avg_overhead):
         self.count += 1
         time_current = int(time.time() - self.start_run)
         print("GHI tai gay thu : ", time_current)
-        data_insert = {'R':R, 'W':W,  'read_delay':read_delay, 
+        data_insert = {'R':18, 'W':1,  'read_delay':read_delay, 
                 'write_delay':write_delay, 'time_staleness':time_staleness, 'version_staleness':version_staleness, 'time': time_current
                 ,'overhead': avg_overhead}
 
-        # if ( time_current > self.time_run ):
-        #     print("STOP WRITE Q Table")
-        #     np.save('qtable.npy',np.array(self.q_table.qtable))
-        # else:
-        #     self.q_table.get_q_table(read_delay, write_delay, version_staleness, self.count)
-        # print("-----Q Table-----")
+        if ( time_current > self.time_run ):
+            print("STOP WRITE Q Table")
+            np.save('qtable.npy',np.array(self.q_table.qtable))
+        else:
+            self.q_table.get_q_table(read_delay, write_delay, version_staleness, self.count)
 
         if ( avg_overhead != NaN ):
             CCDN.insert_data(data_insert)
@@ -150,12 +147,11 @@ class Update_weight_ccdn(object):
         #     print("Flask Doc nhieu SDN loi")
 
         # tinh toan trong so theo thuat toan
-            # self.calculate_link_weight(link_versions)
-            self.learning_params = link_versions
+            self.calculate_link_weight(link_versions)
             return (read_delay, write_delay, version_staleness)
 
-    def calculate_link_weight(self):
-        link_weight = updateLinkTopo.updateLinkTopo(link_verions= self.learning_params)
+    def calculate_link_weight(self, link_versions):
+        link_weight = updateLinkTopo.updateLinkTopo(link_verions= link_versions)
         link_weight.get_link_weight()
         self.topo.read_update_weight()
       

@@ -22,9 +22,9 @@ class Graph(object):
         self.topo_path = PATH_CURRENT + topo_path
         self.host_path = PATH_CURRENT + host_path
 
-        # day la index cua host va server
-        self.index_hosts =   set_up_topo['hosts']
-        self.index_servers = set_up_topo['servers']
+        # day la name cua host va server
+        self.name_hosts =   set_up_topo['hosts']
+        self.name_servers = set_up_topo['servers']
         self.load_topo()
 
     def load_topo(self):
@@ -95,10 +95,10 @@ class Graph(object):
 
             # Tach chuoi va lay so cuoi dia chi ip cua host
             host_ip_split = host_ip.split(".")
-            last_num_ip = int(host_ip_split[-1])
-            num_ip = last_num_ip - 1
+            name_host_tmp = "h"+str(host_ip_split[-1])
+            print(name_host_tmp)
          
-            if  num_ip in self.index_hosts and host_ip not in hosts:
+            if  name_host_tmp in self.name_hosts and host_ip not in hosts:
 
                     hosts[host_ip] = host_object               
                     self.topo.add_node(host_object)
@@ -109,7 +109,7 @@ class Graph(object):
                     self.topo.add_edge(edge1)
                     self.topo.add_edge(edge2)
 
-            elif num_ip  in self.index_servers and host_ip not in servers:
+            elif name_host_tmp  in self.name_servers and host_ip not in servers:
                     # print("Number Server IP", host_ip)
                     servers[host_ip] = host_object
                                      
@@ -123,10 +123,7 @@ class Graph(object):
 
         self.topo.set_hosts(hosts= hosts)
         self.topo.set_servers(servers= servers)
-        
-
-
-
+    
         print("TAP HOSTS")
         for h in hosts:
             print(h)

@@ -21,12 +21,14 @@ class connectGraph(object):
                     object = ast.literal_eval( object )
             except:
                 print("Loi khi doc topo")
-           
+
             devices = object['devices']
+
             links = object['links']
             # add links to Topo file
-            result_topo['links'] = [ link for link in links ]
-
+            for link in links:
+                result_topo['links'].append(link)
+            
             # add bridges to Topo file
             bridges = open('/home/onos/Downloads/flaskSDN/flaskAPI/run/bridge.txt', 'r').readlines()
             # result_topo['links'] = [ json.loads(line) for line in bridges ]
@@ -38,7 +40,7 @@ class connectGraph(object):
             # result_topo['devices'] = [ switch for switch in devices ]
             for switch in devices:
                 result_topo['devices'].append( switch )
-     
+
         # ghi ra file topo hop nhat mang
         file_topo_done =  '/home/onos/Downloads/flaskSDN/flaskAPI/topo.json'
         with open(file_topo_done, 'w') as output_file:
@@ -62,9 +64,11 @@ class connectGraph(object):
                         host_ip = str(host['ipAddresses'][0]) 
                     except:
                         print("----------------------------------------rong host ip")
+
+                    
                         
                     locations = host['locations']                 
-                    location = locations[0]        
+                    location = locations[0]     
                     port = int(location['port'])              
                     device_id = str(location['elementId'])
 
@@ -72,20 +76,22 @@ class connectGraph(object):
                     bridges = open('/home/onos/Downloads/flaskSDN/flaskAPI/run/bridge.txt', 'r').readlines()
                     list_bridges = [ json.loads(host)['src']['id'] for host in bridges ]
 
-                    # if  str(device_id) in list_bridges:
-                    #     # print("XOA HOST ", host_ip)
-                    #     # print("DEVICE :", device_id)
-                    #     continue
-                    # else:
+                    print(device_id)
 
-                        # add host data to Host file
-                    host_value = {
-                                    'port': port,
-                                    'mac': host_mac, 
-                                    'deviceId': device_id,
-                                    'ipAddresses': host_ip
-                            }
-                    result_host['hosts'].append(host_value)
+                    if  str(device_id) in list_bridges:
+                        print("XOA HOST ", host_ip, "TU THIET BI", device_id)
+                        continue
+
+                    else:
+
+                         # add host data to Host file
+                        host_value = {
+                                        'port': port,
+                                        'mac': host_mac, 
+                                        'deviceId': device_id,
+                                        'ipAddresses': host_ip
+                                }
+                        result_host['hosts'].append(host_value)
 
         # ghi ra file host cuoi cung       
         file_host_done =  '/home/onos/Downloads/flaskSDN/flaskAPI/host.json'

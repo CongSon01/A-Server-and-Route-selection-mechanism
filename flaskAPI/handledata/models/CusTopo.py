@@ -143,7 +143,9 @@ class Topo(object):
                 if found:
                     edge[1] = weight
                     edge[2].set_weight(weight= weight)
-              
+                elif not found:
+                    print("edge not found")
+                    
             except:
                 print("LOI DOC CANH")
         # f.write("+++++++++++++++++++++++++++++++++\n")

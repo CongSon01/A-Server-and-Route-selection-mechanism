@@ -1,0 +1,21 @@
+{ 
+    "hosts": ["h1", "h2"],  
+  
+    "servers": ["h3", "h4"],
+  
+    "name_topo":"VtlWavenet2011",
+  
+    "controller_type": "remote",
+  
+    "bridges": [["s90", "s91"], ["s47", "s87"], ["s39", "s93"], ["s3", "s34"], ["s35", "s36"], ["s37", "s84"], ["s22", "s23"], 
+                ["s74", "s75"], ["s48", "s80"], ["s28", "s81"], ["s8", "s9"], ["s64", "s67"], ["s10", "s11"], ["s68", "s71"], 
+                ["s54", "s55"], ["s60", "s61"], ["s29", "s49"], ["s51", "s83"], ["s17", "s53"], ["s26", "s30"], ["s15", "s79"], 
+                ["s46", "s77"]],
+  
+    "controllers": [ 
+        {"ip":"10.20.0.200", "controller": "onos","controller_port": 6653, "rest_port": 8181, "switches" : ["s86", "s85", "s87", "s64", "s88", "s89"]},
+        {"ip":"10.20.0.209", "controller": "ryu" ,"controller_port": 6633, "rest_port": 8080, "switches" : ["s90", "s91", "s39", "s40", "s38"]},
+        {"ip":"10.20.0.210", "controller": "onos" ,"controller_port": 6653, "rest_port": 8181, "switches" : ["s20", "s32", "s31", "s19", "s34", "s2"]},
+        {"ip":"10.20.0.211", "controller": "ryu" ,"controller_port": 6633, "rest_port": 8080, "switches" : ["s35", "s56", "s37", "s92", "s83"]}
+    ]
+  }

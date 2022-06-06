@@ -73,7 +73,7 @@ class WeightLink(object):
             
             self.alpha = 0.4
             self.beta = 0.4
-            self.gamma = 0.4
+            self.gamma = 0.2
 
             # self.normalize_cost = 0.0000001
 

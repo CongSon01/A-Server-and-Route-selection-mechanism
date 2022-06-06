@@ -10,23 +10,22 @@ IS_RUN_QLEARNING = True
 sys.path.append(PATH_ABSOLUTE+'model')
 sys.path.append(PATH_ABSOLUTE+'handledata/models')
 sys.path.append(PATH_ABSOLUTE+'core')
+sys.path.append(PATH_ABSOLUTE+'run')
 sys.path.append(PATH_ABSOLUTE+'routingAlgorithm')
 sys.path.append(PATH_ABSOLUTE+'q_learning')
 
-import custom_env
 
 import numpy as np
 # import from handledata/models 
-import CusTopo
 
 # import from core
-import connectGraph, Graph
+import generate_topo
 
 # import from routingAlgorithm
 import destQueueRabbit, DijkstraLearning, Round_robin, updateServerCost
 # import inside folder
 import ccdn
-import apiSDN, Full_Data
+import Full_Data
 import time
 import threading
 import logging
@@ -36,28 +35,24 @@ log.setLevel(logging.ERROR)
 app = Flask(__name__)
 
 # get full ip of SDN
-list_ip = json.load(open('/home/onos/Downloads/flaskSDN/flaskAPI/set_up/set_up_topo.json'))['ip_sdn']
+list_ip = json.load(open('/home/onos/Downloads/flaskSDN/flaskAPI/set_up/set_up_topo.json'))["controllers"]
 
-# # goi api tu cac SDN 
-apiSDN.call_topo_api_sdn(list_ip)
-apiSDN.call_host_api_sdn(list_ip)
+number_ip = len(list_ip) + 1
 
-number_ip = 5
-topo_files = [PATH_ABSOLUTE + 'topos/topo_' + str(index_path) + '.json' for index_path in range(1, number_ip)]
-host_files = [PATH_ABSOLUTE + 'hosts/host_' + str(index_path) + '.json' for index_path in range(1, number_ip)]
+generate_topo_info = generate_topo.generate_topo_info()
+generate_topo_info.get_api()
 
-# sinh ra file hop nhat giua cac mang: topo.json va host.json 
-connectGraph.connectGraph(topo_files, host_files)
-
-# khoi tao topo rong
-topo_network = CusTopo.Topo()
+topo_network = generate_topo_info.get_topo_from_api()
 # add do thi topo.json va host.json vao topo
-graph = Graph.Graph(topo_network, 'topo.json', 'host.json')
+graph = generate_topo_info.get_graph_from_api()
 
 # get tap host va server tronng topo
-hosts   = topo_network.get_hosts()
-servers = topo_network.get_servers()
+hosts   = generate_topo_info.get_host_from_api()
+servers = generate_topo_info.get_server_from_api()
 
+print("HOSTS: ", hosts)
+
+print("SERVER: ", servers)
 ############################ CCDN ###############################
 update_server = updateServerCost.updateServerCost(servers)
 update_weight = ccdn.Update_weight_ccdn(topo= topo_network, update_server= update_server, list_ip=list_ip)
@@ -75,7 +70,7 @@ if IS_RUN_RRBIN:
 # khoi tao bien CAP NHAP SERVER COST
 # update_server = updateServerCost.updateServerCost(servers)
 
-priority = 200
+priority = 350
 starttime = time.time()
       
 @app.route('/getIpServer', methods=['POST'])
@@ -89,7 +84,7 @@ def get_ip_server():
     host_ip = request.data
     # print(host_ip)
     global priority 
-    priority +=1
+    priority +=10
 
     # chay thuat toan Round Robin 
     if IS_RUN_RRBIN:
@@ -100,6 +95,7 @@ def get_ip_server():
 
     # truyen ip xuat phat va lay ra ip server dich den
     object.set_host_ip(host_ip= str(host_ip))
+    # print("123")
     dest_ip = object.find_shortest_path()
 
   return str(dest_ip)
@@ -184,14 +180,14 @@ def change_acction(x, r, w):
 ## fix cung R, W
 def ccdn():
     global starttime
-    R = number_ip-1
+    R = 4
     W = 1
     while True:
         if time.time() - starttime > 60:
             RD, WD, V_staleness = update_weight.load_CCDN(R, W)
-            update_weight.calculate_link_weight()
+            # update_weight.calculate_link_weight()
             # cap nhap trong so cho server
-            update_server.update_server_cost()
+            # update_server.update_server_cost()
             starttime = time.time()
           
             
@@ -199,3 +195,5 @@ def ccdn():
 if __name__ == '__main__':
     threading.Thread(target=flask_ngu).start()
     threading.Thread(target=ccdn).start()
+
+# cmt dong 192 va 194 de chay round robin

@@ -12,7 +12,7 @@ class Host(object):
         self.port = port
         self.ip = ip
         self.server_cost_list = list()
-        self.server_cost = 0.2
+        self.server_cost = 0.1
 
     def get_id(self):
         return self.id

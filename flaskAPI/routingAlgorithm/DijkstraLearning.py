@@ -49,7 +49,7 @@ class hostServerConnection(object):
     def find_shortest_path(self):
 
         ##### alpha * path cost + beta * server cost
-        
+        # print("123")
         min_cost = 0
         host_object = self.find_src()
         dest_object = ""
@@ -59,6 +59,8 @@ class hostServerConnection(object):
         for server in self.servers:       
             # chay thuat toan
             self.sol = Dijkstra.Dijkstra( topo=self.topo, start= host_object, end= self.servers[server])
+
+            # reset routing
             self.sol.routing()
 
             # chon server co cost be nhat
@@ -73,6 +75,7 @@ class hostServerConnection(object):
             #     path = self.sol.get_result()
 
             current_cost = 0.5 * self.sol.get_minimum_cost() + 0.5 * self.servers[server].get_server_cost()
+            # print("current=", current_cost)
             # print("cost duong di=", self.sol.get_minimum_cost())
             # print("cost server=", self.servers[server].get_server_cost())
             # print("Current cost hien tai=", current_cost, "VOI DEST=", str(server) )
@@ -87,8 +90,9 @@ class hostServerConnection(object):
                 dest_object = self.servers[server]
                 path = self.sol.get_result()
 
-        #print("----------------------------Duong tot nhat----------------------------", self.sol.display_result() )
+        print("----------------------------Duong tot nhat----------------------------", self.sol.display_result() )
         # bat dau goi flow rule 
+        # print(path)
         self.add_flow(host_object, dest_object, path)
       
         return dest_object.get_ip()
