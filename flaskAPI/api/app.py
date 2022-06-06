@@ -24,7 +24,8 @@ starttime = time.time()
 def write_data_ryu():
     content = request.data
     data = json.loads(content)
-    Params.insert_n_data(data)
+    if float(data['byteSent']) > 600 and float(data['byteReceived']) > 600:
+        Params.insert_n_data(data)
     return 'Sondzai'
 
 
