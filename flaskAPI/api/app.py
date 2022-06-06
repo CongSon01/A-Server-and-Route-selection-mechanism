@@ -20,6 +20,15 @@ ip_ccdn = str(json.load(open('/home/onos/Downloads/flask_SDN/Flask-SDN/config.js
 update = updateWeight.updateWeight()
 starttime = time.time()
 
+@app.route('/write_data_ryu/',  methods=['GET', 'POST'])
+def write_data_ryu():
+    content = request.data
+    data = json.loads(content)
+    Params.insert_n_data(data)
+    return 'Sondzai'
+
+
+
 @app.route('/write_data/',  methods=['GET', 'POST'])
 def write_data():
     if request.method == 'GET':
