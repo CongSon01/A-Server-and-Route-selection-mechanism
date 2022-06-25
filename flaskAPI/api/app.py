@@ -29,7 +29,8 @@ def write_data_ryu():
     content = request.data
     data = json.loads(content)
     if float(data['byteSent']) > 600 and float(data['byteReceived']) > 600:
-        Params.insert_n_data(data)
+        # Params.insert_n_data(data)
+        pub.connectRabbitMQ(data=data)
     return 'Sondzai'
 
 
@@ -54,7 +55,9 @@ def write_data():
             else:
                 dicdata[d[0]] = d[1]
         #  Khong chon data mac dinh
-        if float(dicdata['byteSent']) > 600 and float(dicdata['byteReceived']) > 600:
+        check_overhead = (float(dicdata['byteSent']) + float(dicdata['byteReceived'])) / 20
+        
+        if check_overhead > 10000000:
             # day data vao rabbit
             pub.connectRabbitMQ(data=dicdata)
             # doc lai data tu rabbit
@@ -73,8 +76,6 @@ def write_data():
             update.write_update_link_to_data_base()
 
             starttime = time.time()
-            
-
         try:
             write_ccdn()
             write_lstm_data()
