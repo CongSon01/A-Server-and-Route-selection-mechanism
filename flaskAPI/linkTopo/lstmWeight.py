@@ -24,11 +24,10 @@ class lstmWeight():
 
     def get_label(self, delay, linkUtilization, packetLoss, overhead):
         p_delay = self.convert_delay(delay=delay, delay_min=90, delay_max=200)
-        p_linkUtilization = self.convert_linkUtilization(linkUtilization=linkUtilization, linkUtilization_min=0, linkUtilization_max=0.6)
+        p_linkUtilization = self.convert_linkUtilization(linkUtilization=linkUtilization, linkUtilization_min=0.2, linkUtilization_max=0.6)
         p_packetLoss = self.convert_packetLoss(packetLoss=packetLoss, packetLoss_min=0.0, packetLoss_max=0.22)
         # p_linkVersion = self.convert_linkVersion(linkVersion=linkVersion, linkVersion_min=0, linkVersion_max=1)
-        p_overhead = self.convert_overhead(overhead=overhead, overhead_min=0, overhead_max=10000000)
-
+        p_overhead = self.convert_overhead(overhead=overhead, overhead_min=0, overhead_max=38000000)
         kq = p_delay + p_linkUtilization + p_packetLoss  + p_overhead
         return 1 if kq >= 3 else 0
 
@@ -36,10 +35,10 @@ class lstmWeight():
         src = dicdata['src']
         dst = dicdata['dst']
         delay = dicdata['delay']
-        linkUtilization = float(dicdata['linkUtilization']) * 10000
-        packetLoss = float(dicdata['packetLoss']) + random.uniform(0.02, 0.30)
-        byteSent = float(dicdata['byteSent'])
-        byteReceived = float(dicdata['byteReceived'])
+        linkUtilization = float(dicdata['linkUtilization']) if float(dicdata['linkUtilization']) == 1.0 else random.uniform(0, 0.7)
+        packetLoss = float(dicdata['packetLoss']) + random.uniform(0.02, 0.26)
+        byteSent = float(dicdata['byteSent']) / 10
+        byteReceived = float(dicdata['byteReceived']) / 10
         overhead = (byteSent + byteReceived) / 2
         label = self.get_label(delay, linkUtilization, packetLoss, overhead)
 

@@ -82,10 +82,10 @@ class updateWeight(object):
             weight = link.find_link_cost()
 
             delay = weight[0]
-            link_utilization = weight[1] * 10000
-            packet_loss = weight[2] + random.uniform(0.02, 0.30)
-            byte_sent = weight[3]
-            byte_received = weight[4]
+            link_utilization = weight[1] if weight[1] == 1.0 else random.uniform(0, 0.7)
+            packet_loss = weight[2] + random.uniform(0.02, 0.26)
+            byte_sent = weight[3] / 10
+            byte_received = weight[4] / 10
             overhead = (byte_sent + byte_received) / 2
 
             temp_data = {"src": src,

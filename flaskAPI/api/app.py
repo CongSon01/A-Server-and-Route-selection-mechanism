@@ -6,7 +6,7 @@ sys.path.append(PATH_ABSOLUTE+'flaskAPI/dataBaseMongo')
 sys.path.append(PATH_ABSOLUTE+'flaskAPI/linkTopo')
 
 from flask import Flask, request, jsonify
-import Params  # import from model
+# import Params  # import from model
 import LinkVersion, lstmWeight
 import updateWeight, Lstm
 import pub
@@ -60,7 +60,7 @@ def write_data():
             # doc lai data tu rabbit
             update.read_params_from_rabbit()
             # day data vao Mongo DB
-            Params.insert_data(dicdata)
+            # Params.insert_data(dicdata)
             # Tao du lieu cho lstm
             lstmWeight.lstmWeight().create_lstm_data(dicdata)
 
