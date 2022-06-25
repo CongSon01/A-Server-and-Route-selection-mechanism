@@ -70,3 +70,5 @@ class linkWeight(object):
             link_cost.append(cost)
 
         return link_cost
+
+    

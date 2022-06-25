@@ -2,12 +2,12 @@ import sys
 sys.path.append('/home/onos/Downloads/flask_SDN/Flask-SDN/flaskAPI/dataBaseMongo')
 sys.path.append('/home/onos/Downloads/flask_SDN/Flask-SDN/flaskAPI/api')
 
-import json
+import json, time
 import requests
 import random
 import LinkVersion
 import sub
-import linkWeight 
+import linkWeight
 
 class updateWeight(object):
 
@@ -82,8 +82,8 @@ class updateWeight(object):
             weight = link.find_link_cost()
 
             delay = weight[0]
-            link_utilization = weight[1]
-            packet_loss = weight[2]
+            link_utilization = weight[1] * 10000
+            packet_loss = weight[2] + random.uniform(0.02, 0.30)
             byte_sent = weight[3]
             byte_received = weight[4]
             overhead = (byte_sent + byte_received) / 2
@@ -101,6 +101,7 @@ class updateWeight(object):
                          }
             try:
                 data_search = { 'src': temp_data['src'], 'dst': temp_data['dst'] }
+                print("INSERT LINK VERSION")
                 if LinkVersion.is_data_exit(data_search=data_search):
                     LinkVersion.update_many(data_search, temp_data)
                 else:
@@ -121,4 +122,3 @@ class updateWeight(object):
                 # print("Thanh cong")
         except:
             print("flask Goi nhieu SDN loiiiiiiiiiiiiiiiiiiiii")
-

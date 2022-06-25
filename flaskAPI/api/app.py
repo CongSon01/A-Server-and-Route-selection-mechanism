@@ -1,16 +1,20 @@
+import logging
 import sys
+
 PATH_ABSOLUTE = "/home/onos/Downloads/flask_SDN/Flask-SDN/"
 sys.path.append(PATH_ABSOLUTE+'flaskAPI/dataBaseMongo')
 sys.path.append(PATH_ABSOLUTE+'flaskAPI/linkTopo')
 
 from flask import Flask, request, jsonify
 import Params  # import from model
-import LinkVersion
-import updateWeight  # import from routingAlgorithm
+import LinkVersion, lstmWeight
+import updateWeight, Lstm
 import pub
 import time
 import json
 import requests
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
 
 # Init app
 app = Flask(__name__)
@@ -48,7 +52,6 @@ def write_data():
                 dicdata[d[0]] = ":".join(temp)
             else:
                 dicdata[d[0]] = d[1]
-
         #  Khong chon data mac dinh
         if float(dicdata['byteSent']) > 600 and float(dicdata['byteReceived']) > 600:
             # day data vao rabbit
@@ -57,19 +60,23 @@ def write_data():
             update.read_params_from_rabbit()
             # day data vao Mongo DB
             Params.insert_data(dicdata)
+            # Tao du lieu cho lstm
+            lstmWeight.lstmWeight().create_lstm_data(dicdata)
 
         # Sau 60s se lan truyen DB den cac SDN khac
         global starttime, WD_SDN
-        
-        if time.time() - starttime > 30:
+
+        if time.time() - starttime > 45:
             # write_time = time.time() - starttime
             # viet trong so ra local SDN
             update.write_update_link_to_data_base()
 
             starttime = time.time()
-        
+            
+
         try:
             write_ccdn()
+            write_lstm_data()
         except:
             print("GHI VAO CCDN LOI")
 
@@ -80,6 +87,13 @@ def write_ccdn():
     # Viet vao DB cua CCDN
     url_ccdn = "http://" + ip_ccdn + ":5000/write_full_data/"
     requests.post(url_ccdn, data=json.dumps({'link_versions': data}))
+    return 
+
+def write_lstm_data():
+    data = Lstm.get_multiple_data()
+    # Viet vao DB cua LSTM
+    url_ccdn = "http://" + ip_ccdn + ":5000/write_lstm_data/"
+    requests.post(url_ccdn, data=json.dumps({'link_data': data}))
     return 
 
 # viet trong so ra nhieu SDN khac
