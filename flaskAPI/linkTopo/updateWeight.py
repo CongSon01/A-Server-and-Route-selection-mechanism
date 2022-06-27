@@ -85,9 +85,9 @@ class updateWeight(object):
             delay = weight[0]
             link_utilization = weight[1] if weight[1] == 1.0 else random.uniform(0, 0.7)
             packet_loss = weight[2] if weight[1] == 1.0 and weight[1] == 0.0 else random.uniform(0.02, 0.26)
-            byte_sent = weight[3] / 3
-            byte_received = weight[4] / 3
-            overhead = abs((byte_sent + byte_received) / 2 - self.thread_overhead)
+            byte_sent = weight[3]
+            byte_received = weight[4]
+            overhead = abs((byte_sent + byte_received)) / 1000000 + 10# convert to MB
 
             temp_data = {"src": src,
                          "dst": dst,

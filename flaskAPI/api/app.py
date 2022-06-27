@@ -55,7 +55,7 @@ def write_data():
             else:
                 dicdata[d[0]] = d[1]
         #  Khong chon data mac dinh
-        check_overhead = (float(dicdata['byteSent']) + float(dicdata['byteReceived'])) / 20
+        check_overhead = (float(dicdata['byteSent']) + float(dicdata['byteReceived']))
         
         if check_overhead > 15000000:
             print("****************** Cap nhat du lieu ******************")
@@ -77,11 +77,11 @@ def write_data():
             update.write_update_link_to_data_base()
 
             starttime = time.time()
-        try:
-            write_ccdn()
-            write_lstm_data()
-        except:
-            print("GHI VAO CCDN LOI")
+        # try:
+        #     write_ccdn()
+        #     write_lstm_data()
+        # except:
+        #     print("GHI VAO CCDN LOI ~ NHO MONGOD")
 
         return content
 
