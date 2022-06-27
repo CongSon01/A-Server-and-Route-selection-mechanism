@@ -6,6 +6,8 @@ class lstmWeight():
         self.ip_local = str(json.load(open('/home/onos/Downloads/flask_SDN/Flask-SDN/config.json'))['ip_local'])
         self.ip_remote = json.load(open('/home/onos/Downloads/flask_SDN/Flask-SDN/config.json'))['ip_remote']
         self.ip_ccdn =  str(json.load(open('/home/onos/Downloads/flask_SDN/Flask-SDN/config.json'))['ip_ccdn'])
+        self.thread_overhead =  str(json.load(open('/home/onos/Downloads/flask_SDN/Flask-SDN/config.json'))['thread_overhead'])
+
     def convert_delay(self, delay, delay_min, delay_max):
         return 1 if delay_min < delay < delay_max  else 0
     
@@ -18,8 +20,8 @@ class lstmWeight():
     def convert_linkVersion(self, linkVersion, linkVersion_min, linkVersion_max):
         return 1 if linkVersion_min < linkVersion < linkVersion_max  else 0
     
-    def convert_overhead(self, overhead, overhead_min, overhead_max):
-        return 1 if overhead_min < overhead < overhead_max  else 0
+    def convert_overhead(self, overhead, overhead_max):
+        return 1 if overhead < overhead_max  else 0
 
 
     def get_label(self, delay, linkUtilization, packetLoss, overhead):
@@ -27,7 +29,7 @@ class lstmWeight():
         p_linkUtilization = self.convert_linkUtilization(linkUtilization=linkUtilization, linkUtilization_min=0.2, linkUtilization_max=0.6)
         p_packetLoss = self.convert_packetLoss(packetLoss=packetLoss, packetLoss_min=0.0, packetLoss_max=0.22)
         # p_linkVersion = self.convert_linkVersion(linkVersion=linkVersion, linkVersion_min=0, linkVersion_max=1)
-        p_overhead = self.convert_overhead(overhead=overhead, overhead_min=20000000, overhead_max=70000000)
+        p_overhead = self.convert_overhead(overhead=overhead, overhead_max=40000000)
         kq = p_delay + p_linkUtilization + p_packetLoss  + p_overhead
         return 1 if kq >= 3 else 0
 
@@ -36,10 +38,10 @@ class lstmWeight():
         dst = dicdata['dst']
         delay = dicdata['delay']
         linkUtilization = float(dicdata['linkUtilization']) if float(dicdata['linkUtilization']) == 1.0 else random.uniform(0, 0.7)
-        packetLoss = float(dicdata['packetLoss']) + random.uniform(0.02, 0.26)
-        byteSent = float(dicdata['byteSent']) / 10
-        byteReceived = float(dicdata['byteReceived']) / 10
-        overhead = (byteSent + byteReceived) / 2
+        packetLoss = float(dicdata['packetLoss']) if float(dicdata['packetLoss']) == 1.0 and float(dicdata['packetLoss']) == 0.0 else random.uniform(0.02, 0.26)
+        byteSent = float(dicdata['byteSent']) / 3
+        byteReceived = float(dicdata['byteReceived']) / 3
+        overhead = (byteSent + byteReceived) / 2  - self.thread_overhead
         label = self.get_label(delay, linkUtilization, packetLoss, overhead)
 
         temp_data = {"src": src,

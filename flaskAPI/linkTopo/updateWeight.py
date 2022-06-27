@@ -21,6 +21,7 @@ class updateWeight(object):
         self.ip_local = str(json.load(open('/home/onos/Downloads/flask_SDN/Flask-SDN/config.json'))['ip_local'])
         self.ip_remote = json.load(open('/home/onos/Downloads/flask_SDN/Flask-SDN/config.json'))['ip_remote']
         self.ip_ccdn =  str(json.load(open('/home/onos/Downloads/flask_SDN/Flask-SDN/config.json'))['ip_ccdn'])
+        self.thread_overhead =  str(json.load(open('/home/onos/Downloads/flask_SDN/Flask-SDN/config.json'))['thread_overhead'])
         self.count = 0
         # self.ip_sdn = ['10.20.0.251']
 
@@ -83,10 +84,10 @@ class updateWeight(object):
 
             delay = weight[0]
             link_utilization = weight[1] if weight[1] == 1.0 else random.uniform(0, 0.7)
-            packet_loss = weight[2] + random.uniform(0.02, 0.26)
-            byte_sent = weight[3] / 10
-            byte_received = weight[4] / 10
-            overhead = (byte_sent + byte_received) / 2
+            packet_loss = weight[2] if weight[1] == 1.0 and weight[1] == 0.0 else random.uniform(0.02, 0.26)
+            byte_sent = weight[3] / 3
+            byte_received = weight[4] / 3
+            overhead = abs((byte_sent + byte_received) / 2 - self.thread_overhead)
 
             temp_data = {"src": src,
                          "dst": dst,

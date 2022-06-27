@@ -57,7 +57,8 @@ def write_data():
         #  Khong chon data mac dinh
         check_overhead = (float(dicdata['byteSent']) + float(dicdata['byteReceived'])) / 20
         
-        if check_overhead > 10000000:
+        if check_overhead > 15000000:
+            print("****************** Cap nhat du lieu ******************")
             # day data vao rabbit
             pub.connectRabbitMQ(data=dicdata)
             # doc lai data tu rabbit
