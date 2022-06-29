@@ -1,3 +1,4 @@
+
 import sys, json, random
 sys.path.append('/home/onos/Downloads/flask_SDN/Flask-SDN/flaskAPI/dataBaseMongo')
 import Lstm
@@ -8,24 +9,23 @@ class lstmWeight():
         self.ip_ccdn =  str(json.load(open('/home/onos/Downloads/flask_SDN/Flask-SDN/config.json'))['ip_ccdn'])
         self.thread_overhead =  float(json.load(open('/home/onos/Downloads/flask_SDN/Flask-SDN/config.json'))['thread_overhead'])
 
-    def convert_delay(self, delay, delay_min, delay_max):
-        return 1 if delay_min < delay < delay_max  else 0
+    convert_delay = lambda self, delay, delay_min, delay_max: 1 if delay_min < delay < delay_max  else 0
     
-    def convert_linkUtilization(self, linkUtilization, linkUtilization_min, linkUtilization_max):
-        return 1 if linkUtilization_min < linkUtilization < linkUtilization_max  else 0
+    convert_linkUtilization = lambda self, linkUtilization, linkUtilization_min, linkUtilization_max: 1 if linkUtilization_min < linkUtilization < linkUtilization_max  else 0
 
-    def convert_packetLoss(self, packetLoss, packetLoss_min, packetLoss_max):
-        return 1 if packetLoss_min < packetLoss < packetLoss_max  else 0
+    convert_packetLoss = lambda self, packetLoss, packetLoss_min, packetLoss_max: 1 if packetLoss_min < packetLoss < packetLoss_max  else 0
 
-    def convert_linkVersion(self, linkVersion, linkVersion_min, linkVersion_max):
-        return 1 if linkVersion_min < linkVersion < linkVersion_max  else 0
+    convert_linkVersion = lambda self, linkVersion, linkVersion_min, linkVersion_max: 1 if linkVersion_min < linkVersion < linkVersion_max  else 0
     
-    def convert_overhead(self, overhead, overhead_max):
-        return 1 if overhead < overhead_max  else 0
+    convert_overhead = lambda self, overhead, overhead_max: 1 if overhead < overhead_max  else 0
 
 
     def get_label(self, delay, linkUtilization, packetLoss, overhead):
-        p_delay = self.convert_delay(delay=delay, delay_min=10, delay_max=150)
+        # Get label based on conditions
+        # Params: QoS
+        # Return: 1 => good, 0 ==> bad
+
+        p_delay = self.convert_delay(delay=delay, delay_min=10, delay_max=500)
         p_linkUtilization = self.convert_linkUtilization(linkUtilization=linkUtilization, linkUtilization_min=0.2, linkUtilization_max=0.6)
         p_packetLoss = self.convert_packetLoss(packetLoss=packetLoss, packetLoss_min=0.0, packetLoss_max=0.22)
         # p_linkVersion = self.convert_linkVersion(linkVersion=linkVersion, linkVersion_min=0, linkVersion_max=1)
@@ -34,6 +34,7 @@ class lstmWeight():
         return 1 if kq >= 3 else 0
 
     def create_lstm_data(self, dicdata):
+        # update QoS from SINA data and insert into batabase (dataset)
         src = dicdata['src']
         dst = dicdata['dst']
         delay = dicdata['delay']
