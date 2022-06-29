@@ -27,10 +27,11 @@ class lstmWeight():
 
         p_delay = self.convert_delay(delay=delay, delay_min=10, delay_max=500)
         p_linkUtilization = self.convert_linkUtilization(linkUtilization=linkUtilization, linkUtilization_min=0.2, linkUtilization_max=0.6)
-        p_packetLoss = self.convert_packetLoss(packetLoss=packetLoss, packetLoss_min=0.0, packetLoss_max=0.22)
+        # p_packetLoss = self.convert_packetLoss(packetLoss=packetLoss, packetLoss_min=0.0, packetLoss_max=0.22)
+
         # p_linkVersion = self.convert_linkVersion(linkVersion=linkVersion, linkVersion_min=0, linkVersion_max=1)
         p_overhead = self.convert_overhead(overhead=overhead, overhead_max=40)
-        kq = p_delay + p_linkUtilization + p_packetLoss  + p_overhead
+        kq = p_delay + p_linkUtilization + packetLoss  + p_overhead
         return 1 if kq >= 3 else 0
 
     def create_lstm_data(self, dicdata):
@@ -39,7 +40,7 @@ class lstmWeight():
         dst = dicdata['dst']
         delay = dicdata['delay']
         linkUtilization = float(dicdata['linkUtilization']) if float(dicdata['linkUtilization']) == 1.0 else random.uniform(0, 0.7)
-        packetLoss = float(dicdata['packetLoss']) if float(dicdata['packetLoss']) == 1.0 and float(dicdata['packetLoss']) == 0.0 else random.uniform(0.02, 0.26)
+        packetLoss = float(dicdata['packetLoss']) 
         byteSent = float(dicdata['byteSent']) 
         byteReceived = float(dicdata['byteReceived'])
         overhead = (byteSent + byteReceived) / 1000000 + 10 # convert to MB
