@@ -1,21 +1,38 @@
 { 
-    "hosts": ["h1", "h2"],  
-  
-    "servers": ["h3", "h4"],
-  
-    "name_topo":"VtlWavenet2011",
-  
-    "controller_type": "remote",
-  
-    "bridges": [["s90", "s91"], ["s47", "s87"], ["s39", "s93"], ["s3", "s34"], ["s35", "s36"], ["s37", "s84"], ["s22", "s23"], 
-                ["s74", "s75"], ["s48", "s80"], ["s28", "s81"], ["s8", "s9"], ["s64", "s67"], ["s10", "s11"], ["s68", "s71"], 
-                ["s54", "s55"], ["s60", "s61"], ["s29", "s49"], ["s51", "s83"], ["s17", "s53"], ["s26", "s30"], ["s15", "s79"], 
-                ["s46", "s77"]],
-  
-    "controllers": [ 
-        {"ip":"10.20.0.200", "controller": "onos","controller_port": 6653, "rest_port": 8181, "switches" : ["s86", "s85", "s87", "s64", "s88", "s89"]},
-        {"ip":"10.20.0.209", "controller": "ryu" ,"controller_port": 6633, "rest_port": 8080, "switches" : ["s90", "s91", "s39", "s40", "s38"]},
-        {"ip":"10.20.0.210", "controller": "onos" ,"controller_port": 6653, "rest_port": 8181, "switches" : ["s20", "s32", "s31", "s19", "s34", "s2"]},
-        {"ip":"10.20.0.211", "controller": "ryu" ,"controller_port": 6633, "rest_port": 8080, "switches" : ["s35", "s56", "s37", "s92", "s83"]}
-    ]
-  }
+  "hosts": ["h1","h60", "h7", "h61", "h89", "h91", "h68", "h9", "h12", "h53", "h51", 
+          "h15", "h25", "h75", "h77", "h79", "h20", "h32", "h34", "h38", "h86", "h88",
+           "h84", "h49", "h83", "h45", "h43"],  
+
+  "servers": [ "h3", "h4", "h62", "h63", "h92", "h40", "h65", "h13", "h52", "h74", "h76",
+           "h22", "h81", "h33", "h35", "h37", "h57", "h56", "h48", "h44", "h42"],
+
+  "name_topo":"VtlWavenet2011",
+
+  "controller_type": "remote",
+
+  "bridges": [["s5", "s6"], ["s2","s78"], ["s8", "s64"], ["s67", "s90"], ["s39", "s69"], ["s41", "s66"]
+            , ["s10", "s11"], ["s14", "s71"], ["s27", "s70"], ["s29", "s30"], ["s28", "s31"], ["s16", "s72"],
+             ["s26", "s73"], ["s23", "s24"], ["s21", "s87"], ["s19", "s80"], ["s17", "s18"], ["s36", "s85"],
+             ["s58", "s59"], ["s54", "s55"], ["s50", "s82"], ["s46", "s47"]],
+
+  "controllers": [
+      {"ip":"10.20.0.200", "controller": "onos","controller_port": 6653, "rest_port": 8181, "switches" : ["s1", "s2", "s3", "s60", "s4", "s5"]},
+      {"ip":"10.20.0.206", "controller": "onos","controller_port": 6653, "rest_port": 8181, "switches" : ["s6", "s7", "s62", "s61", "s63", "s8"]},
+      {"ip":"10.20.0.207", "controller": "onos","controller_port": 6653, "rest_port": 8181, "switches" : ["s89", "s92", "s91", "s90"]},
+      {"ip":"10.20.0.208", "controller": "onos","controller_port": 6653, "rest_port": 8181, "switches" : ["s39", "s68", "s40", "s67", "s66"]},
+      {"ip":"10.20.0.221", "controller": "onos","controller_port": 6653, "rest_port": 8181, "switches" : ["s41", "s64", "s9", "s65", "s10"]},
+      {"ip":"10.20.0.222", "controller": "onos","controller_port": 6653, "rest_port": 8181, "switches" : ["s11", "s12", "s13", "s14"]},
+      {"ip":"10.20.0.223", "controller": "onos","controller_port": 6653, "rest_port": 8181, "switches" : ["s54", "s53", "s52", "s51", "s82"]},
+      {"ip":"10.20.0.209", "controller": "onos","controller_port": 6653, "rest_port": 8181, "switches" : ["s70", "s71", "s29", "s28"]},
+      {"ip":"10.20.0.211", "controller": "onos","controller_port": 6653, "rest_port": 8181, "switches" : ["s27", "s15", "s72", "s73"]},
+      {"ip":"10.20.0.212", "controller": "onos","controller_port": 6653, "rest_port": 8181, "switches" : ["s26", "s25", "s74", "s75", "s76", "s24"]},
+      {"ip":"10.20.0.213", "controller": "onos","controller_port": 6653, "rest_port": 8181, "switches" : ["s23", "s77", "s22", "s78", "s79", "s21"]},
+      {"ip":"10.20.0.214", "controller": "onos","controller_port": 6653, "rest_port": 8181, "switches" : ["s20", "s80", "s81", "s18"]},
+      {"ip":"10.20.0.215", "controller": "onos","controller_port": 6653, "rest_port": 8181, "switches" : ["s16", "s17", "s19"]},
+      {"ip":"10.20.0.216", "controller": "onos","controller_port": 6653, "rest_port": 8181, "switches" : ["s31", "s32", "s33", "s34", "s35", "s36"]},
+      {"ip":"10.20.0.217", "controller": "onos","controller_port": 6653, "rest_port": 8181, "switches" : ["s69", "s38", "s37", "s85", "s86", "s59"]},
+      {"ip":"10.20.0.218", "controller": "onos","controller_port": 6653, "rest_port": 8181, "switches" : ["s58", "s88", "s57", "s84", "s56", "s55"]},
+      {"ip":"10.20.0.219", "controller": "onos","controller_port": 6653, "rest_port": 8181, "switches" : ["s50", "s49", "s48", "s83", "s47"]},
+      {"ip":"10.20.0.220", "controller": "onos","controller_port": 6653, "rest_port": 8181, "switches" : ["s46", "s45", "s44", "s43", "s42", "s30"]}
+  ]
+}

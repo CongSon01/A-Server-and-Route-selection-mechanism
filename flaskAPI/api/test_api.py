@@ -1,6 +1,6 @@
 
 import sys, json
-PATH_ABSOLUTE = "/home/onos/Downloads/flaskSDN/flaskAPI/"
+PATH_ABSOLUTE = "/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/"
 IS_RUN_RRBIN = False
 IS_RUN_QLEARNING = True
 
@@ -18,7 +18,7 @@ import connectGraph, Graph
 import apiSDN
 
 # get full ip of SDN
-list_ip = json.load(open('/home/onos/Downloads/flaskSDN/flaskAPI/set_up/set_up_topo.json'))["controllers"]
+list_ip = json.load(open('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/set_up/set_up_topo.json'))["controllers"]
 # list_ip = [ controller['ip'] for controller in controllers]
 
 
@@ -51,10 +51,10 @@ name_hosts = [ip_host.replace('10.0.0.', 'h') for ip_host in hosts.keys()]
 name_servers = [ip_server.replace('10.0.0.', 'h') for ip_server in servers.keys()]
 print("HOST: ",name_hosts)
 print("SO HOST: " , len(name_hosts))
-host_can = json.load(open('/home/onos/Downloads/flaskSDN/flaskAPI/set_up/set_up_topo.json'))["hosts"]
+host_can = json.load(open('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/set_up/set_up_topo.json'))["hosts"]
 print("CAN: ", len(host_can))
 
 print("SERVERS: ", name_servers)
 print("SO SERVERS: " , len(name_servers))
-server_can = json.load(open('/home/onos/Downloads/flaskSDN/flaskAPI/set_up/set_up_topo.json'))["servers"]
+server_can = json.load(open('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/set_up/set_up_topo.json'))["servers"]
 print("CAN: ", len(server_can))

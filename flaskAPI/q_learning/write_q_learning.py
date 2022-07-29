@@ -2,7 +2,7 @@
 import random
 import sys
 import numpy as np
-sys.path.append('/home/onos/Downloads/flaskSDN/flaskAPI/q_learning')
+sys.path.append('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/q_learning')
 import q_table
 RD = random.sample(range(0, 5), 5)
 WD = random.sample(range(0, 5), 5)

@@ -1,10 +1,10 @@
 import sys
-sys.path.append('/home/onos/Downloads/flaskSDN/flaskAPI/handledata/models')
+sys.path.append('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/handledata/models')
 import CusHost, CusLink, CusDevice
 import json
-import ast
+import ast, os
 
-set_up_topo = json.load(open('/home/onos/Downloads/flaskSDN/flaskAPI/set_up/set_up_topo.json'))
+set_up_topo = json.load(open('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/set_up/set_up_topo.json'))
 
 class Graph(object):
     """
@@ -18,7 +18,7 @@ class Graph(object):
         self.topo = topo
         self.topo_file = ""
         self.host_file = ""
-        PATH_CURRENT = '/home/onos/Downloads/flaskSDN/flaskAPI/'
+        PATH_CURRENT = '/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/'
         self.topo_path = PATH_CURRENT + topo_path
         self.host_path = PATH_CURRENT + host_path
 
@@ -58,6 +58,8 @@ class Graph(object):
             d_src = self.find_device(id_src)
             d_dst = self.find_device(id_dst)
 
+            # get label of link
+
             # add edge between src and dst devices
             # trong so mac dinh la 10^-7
             edge1 = CusLink.DeviceEdge(d_src, d_dst, 0.0000001, port_in, port_out)
@@ -66,12 +68,15 @@ class Graph(object):
             # add edges to topo
             self.topo.add_edge(edge1)
             self.topo.add_edge(edge2)
+    
 
     def add_devices(self):
         for device in self.topo_file['devices']:
             id = device['id']
             # create device object
             device = CusDevice.Device(id)
+
+            # print("device", device.get_id())
             # add device object to topo object
             self.topo.add_node(device)
 
@@ -96,13 +101,14 @@ class Graph(object):
             # Tach chuoi va lay so cuoi dia chi ip cua host
             host_ip_split = host_ip.split(".")
             name_host_tmp = "h"+str(host_ip_split[-1])
-            print(name_host_tmp)
-         
+            # print(name_host_tmp)
+
             if  name_host_tmp in self.name_hosts and host_ip not in hosts:
 
                     hosts[host_ip] = host_object               
                     self.topo.add_node(host_object)
-            
+                    
+                    
                     edge1 = CusLink.HostEdge(host_object, device, 0.0000001 , port)
                     edge2 = CusLink.HostEdge(device, host_object, 0.0000001 , port)
                         
@@ -130,8 +136,12 @@ class Graph(object):
         
         print("TAP SERVERS")
         for s in servers:
+            file_name = "/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/run/server_info/" + str(s) + ".txt"
+            if os.path.isfile(file_name): 
+                os.remove(file_name) 
+            f= open(file_name,"w+")
             print(s)
-        
+
     def find_device(self, target):
         nodes = self.topo.get_nodes()
         for device in nodes:

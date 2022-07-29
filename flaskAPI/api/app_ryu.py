@@ -16,14 +16,14 @@ def call_host_api_sdn(list_ip):
         auth=HTTPBasicAuth('onos', 'rocks'))
         
         object = json.loads(response.content)
-    #   with open('/home/onos/Downloads/flaskSDN/flaskAPI/hosts/host_'+str(ip+1)+'.json', 'w') as f:
+    #   with open('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/hosts/host_'+str(ip+1)+'.json', 'w') as f:
     #         json.dump(response.content, f)
     result_host = { 
             "hosts": []     
     }
     for host in object['hosts']:
         
-        bridges = open('/home/onos/Downloads/flaskSDN/flaskAPI/run/bridge.txt', 'r').readlines()
+        bridges = open('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/run/bridge.txt', 'r').readlines()
         
         list_bridges = [ json.loads(hosts)['src']['id'] for hosts in bridges ]
 

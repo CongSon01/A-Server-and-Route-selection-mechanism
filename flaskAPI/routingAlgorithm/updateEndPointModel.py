@@ -1,20 +1,21 @@
 import sys
-sys.path.append('/home/onos/Downloads/flaskSDN/flaskAPI/model')
-import ServerCost
+sys.path.append('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/model')
 
-class updateServerCost(object):
+import EndPointModel
+
+class updateEndPointModel(object):
 
     def __init__(self, servers):
         self.servers = servers
 
     def update_server_cost(self):  
         current_server = []
-        server_cost = ServerCost.get_multiple_data()
-        ServerCost.remove_all()
+        server_cost = EndPointModel.get_multiple_data()
+        EndPointModel.remove_all()
   
         for server in server_cost:
-            band_width = server['Bandwidth']
-            server_ip = server['Servername']
+            band_width = server['serverCost']
+            server_ip = server['hostIP']
           
             server_object = self.find_server(server_ip)
 

@@ -1,6 +1,6 @@
 import numpy as np
 import sys
-sys.path.append("/home/onos/Downloads/flaskSDN/flaskAPI/model")
+sys.path.append("/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/model")
 import LinkCost
 
 class updateLinkTopo(object):
@@ -72,8 +72,8 @@ class WeightLink(object):
             self.packet_loss = 0.0
             
             self.alpha = 0.4
-            self.beta = 0.4
-            self.gamma = 0.2
+            self.beta = 0.3
+            self.gamma = 0.3
 
             # self.normalize_cost = 0.0000001
 

@@ -89,7 +89,7 @@ from numpy import full
 # print("OK")
 
 # import sys
-# sys.path.append('/home/onos/Downloads/flaskSDN/flaskAPI/run/')
+# sys.path.append('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/run/')
 
 
 # start_time  = time.time()
@@ -102,7 +102,7 @@ from numpy import full
 
 import json, requests
 from requests.auth import HTTPBasicAuth
-# switch_in_controllers = json.load(open('/home/onos/Downloads/flaskSDN/flaskAPI/set_up/set_up_topo.json'))['switch_in_controllers']
+# switch_in_controllers = json.load(open('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/set_up/set_up_topo.json'))['switch_in_controllers']
 
 # for key in switch_in_controllers:
 #     for i in switch_in_controllers[key]:
@@ -150,6 +150,12 @@ from requests.auth import HTTPBasicAuth
 #         lists_tmp.append("s" + str(sw + 1))
 #     print(lists_tmp)
 
-import run_final
-net = run_final.get_net()
-hosts_save = run_final.get_hosts_save()
+# import run_final
+# net = run_final.get_net()
+# hosts_save = run_final.get_hosts_save()
+
+while True:
+    stime1 = time.time()
+    stime2 = time.time()
+    ctime = time.time()
+    

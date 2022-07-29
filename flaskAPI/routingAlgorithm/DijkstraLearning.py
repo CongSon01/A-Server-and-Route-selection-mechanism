@@ -20,6 +20,7 @@ class hostServerConnection(object):
         self.servers = servers
         self.priority = priority
 
+        # cap nhap trong so do thi
         # self.update_topo()
 
         # khoi tao thuat toan tim duong
@@ -52,7 +53,8 @@ class hostServerConnection(object):
         # print("123")
         min_cost = 0
         host_object = self.find_src()
-        dest_object = ""
+        the_first_key = list(self.servers)[0]
+        dest_object = self.servers[the_first_key]
         path = ""
 
         # duyet qua tat ca server chieu xuoi
@@ -63,36 +65,32 @@ class hostServerConnection(object):
             # reset routing
             self.sol.routing()
 
-            # chon server co cost be nhat
-            # current_cost = self.sol.get_minimum_cost()  
-            # if min_cost == 0:
-            #     min_cost = current_cost
-
-            # if min_cost >= current_cost:
-            #     min_cost = current_cost
-            #     # get server co cost be nhat va path den server do
-            #     dest_object = self.servers[server]
-            #     path = self.sol.get_result()
-
-            current_cost = 0.5 * self.sol.get_minimum_cost() + 0.5 * self.servers[server].get_server_cost()
+            current_cost = 0.55 * self.sol.get_minimum_cost() + 0.45 * self.servers[server].get_server_cost()
+            # print("2 ong chau")
+            # print( self.sol.get_minimum_cost(), self.servers[server].get_server_cost())
             # print("current=", current_cost)
             # print("cost duong di=", self.sol.get_minimum_cost())
             # print("cost server=", self.servers[server].get_server_cost())
             # print("Current cost hien tai=", current_cost, "VOI DEST=", str(server) )
             # print("tap canh trong so tim thay")
             # print(self.sol.display_result())
+
+            # print(min_cost, current_cost)
             if min_cost == 0:
                 min_cost = current_cost
 
-            if min_cost >= current_cost:
+            if min_cost >= current_cost: 
                 min_cost = current_cost
                 # get server co cost be nhat va path den server do
                 dest_object = self.servers[server]
+                # print("SON TUAN DANG TEST: ", self.servers[server])
                 path = self.sol.get_result()
 
-        print("----------------------------Duong tot nhat----------------------------", self.sol.display_result() )
+        print("-------Duong tot nhat ok------", self.sol.display_result() )
         # bat dau goi flow rule 
         # print(path)
+        print("Server cost cua path =", dest_object.get_server_cost())
+
         self.add_flow(host_object, dest_object, path)
       
         return dest_object.get_ip()

@@ -23,7 +23,7 @@ def call_topo_api_sdn(list_ip):
         elif list_ip[i]['controller'] == "ryu":
             response = requests.get(
                 'http://' + list_ip[i]['ip'] + ':8080/onos/test/localTopology/getTopo')
-        with open('/home/onos/Downloads/flaskSDN/flaskAPI/topos/topo_'+str(i+1)+'.json', 'w') as f:
+        with open('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/topos/topo_'+str(i+1)+'.json', 'w') as f:
             json.dump(response.content, f, cls=BytesEncoder)
         # print(response)
 
@@ -38,7 +38,7 @@ def call_host_api_sdn(list_ip):
         elif list_ip[i]['controller'] == "ryu":
             response = requests.get(
                 'http://' + list_ip[i]['ip'] + ':8080/onos/test/localTopology/getTopo')
-        with open('/home/onos/Downloads/flaskSDN/flaskAPI/hosts/host_'+str(i+1)+'.json', 'w') as f:
+        with open('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/hosts/host_'+str(i+1)+'.json', 'w') as f:
             json.dump(response.content, f, cls=BytesEncoder)
         # print(response)
 

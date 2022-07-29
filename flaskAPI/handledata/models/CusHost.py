@@ -39,5 +39,5 @@ class Host(object):
     def get_min_max_scale(self, x):
         min, max = x.min(), x.max()
         # cong them 10^-7 de tranh mau so bang 0 
-        return (x - min) / (max - min)
+        return (x - min + 10**-7) / (max - min + 10**-7)
     

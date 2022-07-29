@@ -1,5 +1,5 @@
 import sys
-sys.path.append('/home/onos/Downloads/flaskSDN/flaskAPI/model')
+sys.path.append('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/model')
 import ServerCost
 
 import time
@@ -45,5 +45,5 @@ def get_BW_from_server(file_name, name_host):
     logfile.close()
     
 print("GHI FILE BW")
-path = '/home/onos/Downloads/flaskSDN/flaskAPI/run/BW_server/' + sys.argv[1] + '.txt'
+path = '/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/run/BW_server/' + sys.argv[1] + '.txt'
 list_BW = get_BW_from_server(path, sys.argv[1])

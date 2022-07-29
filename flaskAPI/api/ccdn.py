@@ -2,9 +2,9 @@ import sys
 import time
 
 # from importlib_metadata import version
-sys.path.append('/home/onos/Downloads/flaskSDN/flaskAPI/model')
-sys.path.append('/home/onos/Downloads/flaskSDN/flaskAPI/routingAlgorithm')
-sys.path.append('/home/onos/Downloads/flaskSDN/flaskAPI/q_learning')
+sys.path.append('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/model')
+sys.path.append('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/routingAlgorithm')
+sys.path.append('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/q_learning')
 import json
 from numpy import NaN, average
 import requests
@@ -71,10 +71,10 @@ class Update_weight_ccdn(object):
         # return np.mean(overheads)
 
     def read_R_SDN(self, R):
+        link_versions = []
         for ip in random.sample(self.list_ip, R):
-            link_versions = []
             try:
-                url = "http://" + ip + ":5000/read_link_version/"
+                url = "http://" + ip['ip'] + ":5000/read_link_version/"
                 response = requests.get(url)
                 link_object = json.loads(response.text)
                 link_versions.extend(link_object['link_versions'])
@@ -87,7 +87,7 @@ class Update_weight_ccdn(object):
         for ip in self.list_ip:
             time_start_write = time.time()
             try:
-                url = "http://" + ip + ":5000/write_W_SDN/"
+                url = "http://" + ip['ip'] + ":5000/write_W_SDN/"
                 repo = requests.post(url, data=str(W))
             except:
                 print("GOI API W LOI")
@@ -151,6 +151,7 @@ class Update_weight_ccdn(object):
             return (read_delay, write_delay, version_staleness)
 
     def calculate_link_weight(self, link_versions):
+        print('Tinh trong so')
         link_weight = updateLinkTopo.updateLinkTopo(link_verions= link_versions)
         link_weight.get_link_weight()
         self.topo.read_update_weight()

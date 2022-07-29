@@ -1,6 +1,6 @@
 import sys
-sys.path.append('/home/onos/Downloads/flaskSDN/flaskAPI/core')
-sys.path.append('/home/onos/Downloads/flaskSDN/flaskAPI/handledata/models')
+sys.path.append('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/core')
+sys.path.append('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/handledata/models')
 
 import CusHost, Flow, Flows, Instruction, Selector, Treatment, Criteria
 import json
@@ -175,7 +175,7 @@ class flowRule(object):
         self.jsonRulePath = json_rule_path
         #self.call_routing_api()
         
-        with open('/home/onos/Downloads/flaskSDN/flaskAPI/jsonRulePath.json', 'w') as json_file:
+        with open('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/jsonRulePath.json', 'w') as json_file:
             json.dump( json_rule_path, json_file)
 
         self.call_routing_api()
@@ -229,7 +229,7 @@ class flowRule(object):
         Automatically POST rulePath to API
         return 200 if successul routing
         """
-        with open("/home/onos/Downloads/flaskSDN/flaskAPI/jsonRulePath.json") as json_file:
+        with open("/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/jsonRulePath.json") as json_file:
                 data_raw = json.load(json_file)
 
         headers = {
@@ -240,7 +240,7 @@ class flowRule(object):
 
         # try:
             # get full ip of SDN
-        set_up_topo = json.load(open('/home/onos/Downloads/flaskSDN/flaskAPI/set_up/set_up_topo.json'))
+        set_up_topo = json.load(open('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/set_up/set_up_topo.json'))
         controllers = [controller for controller in set_up_topo["controllers"]]
     
         for i in range(len(controllers)):
@@ -249,11 +249,11 @@ class flowRule(object):
             list_sw = controllers[i]['switches']
             flows_value = self.get_flow_of_controller(data_raw, list_sw)
             if controllers[i]['controller'] == "onos":
-                print("Add flow cho onos")
-                print(flows_value)
+                # print("Add flow cho onos")
+                # print(flows_value)
                 url_post = "http://"+ controllers[i]["ip"] + ":8181/onos/v1/flows?appId=onos.onosproject.routing"
                 response = requests.post(url_post, params=query,auth=HTTPBasicAuth('onos', 'rocks'), data = json.dumps(flows_value), headers=  headers )
-                print("Add flow may "+str(controllers[i]['ip']) +" : "+ str(response))
+                # print("Add flow may "+str(controllers[i]['ip']) +" : "+ str(response))
 
             elif controllers[i]['controller'] == "ryu":
                 print("Add flow cho ryu")

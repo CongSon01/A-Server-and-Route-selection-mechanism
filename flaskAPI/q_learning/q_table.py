@@ -1,7 +1,7 @@
 import sys, random
 import numpy as np
-sys.path.append('/home/onos/Downloads/flaskSDN/flaskAPI/q_learning')
-sys.path.append('/home/onos/Downloads/flaskSDN/flaskAPI/handledata/models')
+sys.path.append('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/q_learning')
+sys.path.append('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/handledata/models')
 
 import custom_env
 

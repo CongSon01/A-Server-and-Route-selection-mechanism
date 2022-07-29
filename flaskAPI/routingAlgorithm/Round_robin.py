@@ -77,7 +77,7 @@ class hostServerConnectionRR(object):
         return dest_ip 
       
     def write_server_cost(self, dest_object, dest_ip):
-        url = "/home/onos/Downloads/flaskSDN/serverCost.txt"
+        url = "/home/onos/Downloads/A-Server-and-Route-selection-mechanism/serverCost.txt"
         with open(url, "a") as file_object:
             data = "server " + str(dest_ip ) + "       =" + str( dest_object.get_server_cost() ) + "\n"
             file_object.write(data)

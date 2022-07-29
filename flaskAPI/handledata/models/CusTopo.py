@@ -1,5 +1,5 @@
 import sys
-sys.path.append('/home/onos/Downloads/flaskSDN/flaskAPI/model')
+sys.path.append('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/model')
 import LinkCost
 
 class Topo(object):
@@ -137,7 +137,7 @@ class Topo(object):
                 #     # if edge is used in mongo then update it with real value
                 #     edge[1] = weight # update new weight in edge list
                 #     edge[2].set_weight(weight= weight) # update new weight in edge object
-                #     # url = "/home/onos/Downloads/flaskSDN/topo2.txt"
+                #     # url = "/home/onos/Downloads/A-Server-and-Route-selection-mechanism/topo2.txt"
                 #     # with open(url, "a") as f:
                 #     #     f.write( str(edge) + "\n")
                 if found:
@@ -152,7 +152,7 @@ class Topo(object):
         # self.write_topo_file()
 
     def write_topo_file(self):
-        url = "/home/onos/Downloads/flaskSDN/topo_file.txt"
+        url = "/home/onos/Downloads/A-Server-and-Route-selection-mechanism/topo_file.txt"
 
         with open(url, "a") as file_object:
             for src in self.nodes:
