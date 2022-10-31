@@ -11,7 +11,7 @@
 import logging
 import sys
 
-PATH_ABSOLUTE = "/home/onos/Downloads/flask_SDN/Flask-SDN/"
+PATH_ABSOLUTE = "/home/onos/Desktop/paper1/paper1/"
 sys.path.append(PATH_ABSOLUTE+'flaskAPI/dataBaseMongo')
 sys.path.append(PATH_ABSOLUTE+'flaskAPI/linkTopo')
 
@@ -32,10 +32,10 @@ log.setLevel(logging.ERROR)
 # Init app
 app = Flask(__name__)
 
-ip_ccdn = str(json.load(open('/home/onos/Downloads/flask_SDN/Flask-SDN/config.json'))['ip_ccdn'])
+ip_ccdn = str(json.load(open('/home/onos/Desktop/paper1/paper1/config.json'))['ip_ccdn'])
 update = updateWeight.updateWeight()
 
-_learnWeight = learnWeight.learnWeight()
+# _learnWeight = learnWeight.learnWeight()
 
 # set start time of program
 starttime = time.time()

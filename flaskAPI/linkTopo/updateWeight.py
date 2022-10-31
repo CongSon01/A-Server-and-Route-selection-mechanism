@@ -1,6 +1,6 @@
 import sys
-sys.path.append('/home/onos/Downloads/flask_SDN/Flask-SDN/flaskAPI/dataBaseMongo')
-sys.path.append('/home/onos/Downloads/flask_SDN/Flask-SDN/flaskAPI/api')
+sys.path.append('/home/onos/Desktop/paper1/paper1/dataBaseMongo')
+sys.path.append('/home/onos/Desktop/paper1/paper1/api')
 
 import json, time
 import requests
@@ -18,10 +18,10 @@ class updateWeight(object):
         self.link_version = 0
 
         # So lan write ra nhieu SDN
-        self.ip_local = str(json.load(open('/home/onos/Downloads/flask_SDN/Flask-SDN/config.json'))['ip_local'])
-        self.ip_remote = json.load(open('/home/onos/Downloads/flask_SDN/Flask-SDN/config.json'))['ip_remote']
-        self.ip_ccdn =  str(json.load(open('/home/onos/Downloads/flask_SDN/Flask-SDN/config.json'))['ip_ccdn'])
-        self.thread_overhead =  float(json.load(open('/home/onos/Downloads/flask_SDN/Flask-SDN/config.json'))['thread_overhead'])
+        self.ip_local = str(json.load(open('/home/onos/Desktop/paper1/paper1/config.json'))['ip_local'])
+        self.ip_remote = json.load(open('/home/onos/Desktop/paper1/paper1/config.json'))['ip_remote']
+        self.ip_ccdn =  str(json.load(open('/home/onos/Desktop/paper1/paper1/config.json'))['ip_ccdn'])
+        self.thread_overhead =  float(json.load(open('/home/onos/Desktop/paper1/paper1/config.json'))['thread_overhead'])
         self.count = 0
         # self.ip_sdn = ['10.20.0.251']
 
