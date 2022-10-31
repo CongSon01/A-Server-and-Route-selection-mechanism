@@ -80,22 +80,15 @@ def write_data():
             # push data to rabbit (mechanism pub/sub)
             pub.connectRabbitMQ(data=dicdata)
             # consume data from rabbit
-            # update.read_params_from_rabbit()
+            update.read_params_from_rabbit()
             # Update QoS parameter and save to local database   (using linkcost)
-            # update.write_update_link_to_data_base()
+            update.write_update_link_to_data_base()
 
-            # update label (good/bad) from QoS parameters (using lstm)
-            _learnWeight.get_learn_weight(dicdata=dicdata)
-
-            # Tao dataset
-            # lstmWeight.lstmWeight().create_lstm_data(dicdata)
             try:
                 # upload link learn to ccdn database
-                # write_ccdn()
-                write_learn_weights_ccdn()
+                write_ccdn()
             except:
                 print("GHI VAO CCDN LOI ~ NHO MONGOD")
-
         return content
 
 def write_ccdn():
@@ -104,22 +97,6 @@ def write_ccdn():
     url_ccdn = "http://" + ip_ccdn + ":5000/write_full_data/"
     requests.post(url_ccdn, data=json.dumps({'link_versions': data}))
     return 
-
-def write_learn_weights_ccdn():
-    # Get data from local and upload to ccdn database
-    data = LinkVersion.get_multiple_data()
-    url_ccdn = "http://" + ip_ccdn + ":5000/write_learn_weights/"
-    requests.post(url_ccdn, data=json.dumps({'learn_weight': data}))
-    return 
-
-# @app.route('/write_W_SDN/',  methods=['GET', 'POST'])
-# def write_W_SDN():
-#     # API: Get N_w parameter from CCDN and write to local data of N_w SDNs
-#     if request.method == 'POST':
-#         W_contant = request.data
-#         update.write_W_SDN(int(W_contant))
-#         return W_contant
-
 
 @app.route('/write_link_version/',  methods=['GET', 'POST'])
 def write_link_version():

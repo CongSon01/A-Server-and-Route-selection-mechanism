@@ -1,3 +1,3 @@
 #!/bin/sh
 source ~/Downloads/flask_SDN/Flask-SDN/venv/bin/activate
-python /home/onos/Downloads/flask_SDN/Flask-SDN/flaskAPI/api/app.py
+python /home/onos/Desktop/paper1/paper1/flaskAPI/api/app.py
