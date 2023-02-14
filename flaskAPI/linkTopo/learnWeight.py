@@ -1,7 +1,7 @@
 
 import sys, json, random
-sys.path.append('/home/onos/Desktop/paper1/paper1/flaskAPI/dataBaseMongo')
-sys.path.append('/home/onos/Desktop/paper1/paper1/flaskAPI/model')
+sys.path.append('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/dataBaseMongo')
+sys.path.append('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/model')
 import LearnWeightModel
 import lstm_model
 import requests

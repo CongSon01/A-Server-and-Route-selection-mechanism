@@ -11,7 +11,7 @@
 import logging
 import sys
 
-PATH_ABSOLUTE = "/home/onos/Desktop/paper1/paper1/"
+PATH_ABSOLUTE = "/home/onos/Downloads/A-Server-and-Route-selection-mechanism/"
 sys.path.append(PATH_ABSOLUTE+'flaskAPI/dataBaseMongo')
 sys.path.append(PATH_ABSOLUTE+'flaskAPI/linkTopo')
 
@@ -32,7 +32,8 @@ log.setLevel(logging.ERROR)
 # Init app
 app = Flask(__name__)
 
-ip_ccdn = str(json.load(open('/home/onos/Desktop/paper1/paper1/config.json'))['ip_ccdn'])
+PATH_ABSOLUTE = "/home/onos/Downloads/A-Server-and-Route-selection-mechanism/"
+ip_ccdn = str(json.load(open(PATH_ABSOLUTE+'config.json'))['ip_ccdn'])
 update = updateWeight.updateWeight()
 
 # _learnWeight = learnWeight.learnWeight()
