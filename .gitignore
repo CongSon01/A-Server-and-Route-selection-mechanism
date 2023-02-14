@@ -1,3 +1,4 @@
 ./history
-config/config-' + suffix + '.json
 ./flaskAPI/linkTopo/lstm_python
+
+/flaskAPI/**/__pycache__

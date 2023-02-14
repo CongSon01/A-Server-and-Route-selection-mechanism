@@ -155,4 +155,4 @@ def read_learn_link():
 
 if __name__ == '__main__':
     ip_local = str(json.load(open(PATH_ABSOLUTE+'config/config-' + suffix + '.json'))['ip_local'])
-    app.run(host=ip_local, debug=True, use_reloader=False)
+    app.run(host="0.0.0.0", debug=True, use_reloader=False)
