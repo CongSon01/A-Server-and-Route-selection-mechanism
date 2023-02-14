@@ -12,6 +12,10 @@ import LinkVersion
 import sub
 import linkWeight
 
+sys.path.append(PATH_ABSOLUTE + 'utils')
+from get_local_ip import get_local_ip
+suffix = get_local_ip("ens33").split(".")[-1]
+
 class updateWeight(object):
 
     def __init__(self):
@@ -21,10 +25,10 @@ class updateWeight(object):
         self.link_version = 0
 
         # So lan write ra nhieu SDN
-        self.ip_local = str(json.load(open(PATH_ABSOLUTE + 'config.json'))['ip_local'])
-        self.ip_remote = json.load(open(PATH_ABSOLUTE + 'config.json'))['ip_remote']
-        self.ip_ccdn =  str(json.load(open(PATH_ABSOLUTE + 'config.json'))['ip_ccdn'])
-        self.thread_overhead =  float(json.load(open(PATH_ABSOLUTE + 'config.json'))['thread_overhead'])
+        self.ip_local = str(json.load(open(PATH_ABSOLUTE + 'config-' + suffix + '.json'))['ip_local'])
+        self.ip_remote = json.load(open(PATH_ABSOLUTE + 'config-' + suffix + '.json'))['ip_remote']
+        self.ip_ccdn =  str(json.load(open(PATH_ABSOLUTE + 'config-' + suffix + '.json'))['ip_ccdn'])
+        self.thread_overhead =  float(json.load(open(PATH_ABSOLUTE + 'config-' + suffix + '.json'))['thread_overhead'])
         self.count = 0
         # self.ip_sdn = ['10.20.0.251']
 

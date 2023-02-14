@@ -4,12 +4,16 @@ PATH_ABSOLUTE = "/home/onos/Downloads/A-Server-and-Route-selection-mechanism/"
 
 sys.path.append(PATH_ABSOLUTE + 'dataBaseMongo')
 import Lstm
+
+sys.path.append(PATH_ABSOLUTE + 'utils')
+from get_local_ip import get_local_ip
+suffix = get_local_ip("ens33").split(".")[-1]
 class lstmWeight():
     def __init__(self):
-        self.ip_local = str(json.load(open(PATH_ABSOLUTE +'config.json'))['ip_local'])
-        self.ip_remote = json.load(open(PATH_ABSOLUTE +'config.json'))['ip_remote']
-        self.ip_ccdn =  str(json.load(open(PATH_ABSOLUTE +'config.json'))['ip_ccdn'])
-        self.thread_overhead =  float(json.load(open(PATH_ABSOLUTE +'config.json'))['thread_overhead'])
+        self.ip_local = str(json.load(open(PATH_ABSOLUTE +'config-' + suffix + '.json'))['ip_local'])
+        self.ip_remote = json.load(open(PATH_ABSOLUTE +'config-' + suffix + '.json'))['ip_remote']
+        self.ip_ccdn =  str(json.load(open(PATH_ABSOLUTE +'config-' + suffix + '.json'))['ip_ccdn'])
+        self.thread_overhead =  float(json.load(open(PATH_ABSOLUTE +'config-' + suffix + '.json'))['thread_overhead'])
 
     convert_delay = lambda self, delay, delay_min, delay_max: 1 if delay_min < delay < delay_max  else 0
     

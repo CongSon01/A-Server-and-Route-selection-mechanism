@@ -33,7 +33,12 @@ log.setLevel(logging.ERROR)
 app = Flask(__name__)
 
 PATH_ABSOLUTE = "/home/onos/Downloads/A-Server-and-Route-selection-mechanism/"
-ip_ccdn = str(json.load(open(PATH_ABSOLUTE+'config.json'))['ip_ccdn'])
+
+sys.path.append(PATH_ABSOLUTE + 'utils')
+from get_local_ip import get_local_ip
+suffix = get_local_ip("ens33").split(".")[-1]
+
+ip_ccdn = str(json.load(open(PATH_ABSOLUTE + 'config-' + suffix + '.json'))['ip_ccdn'])
 update = updateWeight.updateWeight()
 
 # _learnWeight = learnWeight.learnWeight()
@@ -149,5 +154,5 @@ def read_learn_link():
 
 
 if __name__ == '__main__':
-    ip_local = str(json.load(open(PATH_ABSOLUTE+'/config.json'))['ip_local'])
+    ip_local = str(json.load(open(PATH_ABSOLUTE+'config-' + suffix + '.json'))['ip_local'])
     app.run(host=ip_local, debug=True, use_reloader=False)
