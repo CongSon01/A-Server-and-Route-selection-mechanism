@@ -27,7 +27,7 @@ import requests
 
 # ignore log in flask
 log = logging.getLogger('werkzeug')
-log.setLevel(logging.ERROR)
+log.setLevel(logging.INFO)
 
 # Init app
 app = Flask(__name__)
@@ -65,7 +65,7 @@ def write_data():
 
     if request.method == 'POST':
         # app.logger.info("Da nhan dc POST")
-        content = request.data
+        content = request.data.decode()
         dicdata = {}
         datas = content.split("&")
 
