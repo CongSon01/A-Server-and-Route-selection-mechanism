@@ -1,17 +1,20 @@
 
 import sys, json, random
-sys.path.append('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/dataBaseMongo')
-sys.path.append('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/model')
+
+PATH_ABSOLUTE = "/home/onos/Downloads/A-Server-and-Route-selection-mechanism/"
+
+sys.path.append(PATH_ABSOLUTE + 'flaskAPI/dataBaseMongo')
+sys.path.append(PATH_ABSOLUTE + 'flaskAPI/model')
 import LearnWeightModel
 import lstm_model
 import requests
 
 class learnWeight():
     def __init__(self):
-        self.ip_local = str(json.load(open('/home/onos/Desktop/paper1/paper1/config.json'))['ip_local'])
-        self.ip_remote = json.load(open('/home/onos/Desktop/paper1/paper1/config.json'))['ip_remote']
-        self.ip_ccdn =  str(json.load(open('/home/onos/Desktop/paper1/paper1/config.json'))['ip_ccdn'])
-        self.thread_overhead =  float(json.load(open('/home/onos/Desktop/paper1/paper1/config.json'))['thread_overhead'])
+        self.ip_local = str(json.load(open(PATH_ABSOLUTE +'config.json'))['ip_local'])
+        self.ip_remote = json.load(open(PATH_ABSOLUTE +'config.json'))['ip_remote']
+        self.ip_ccdn =  str(json.load(open(PATH_ABSOLUTE +'config.json'))['ip_ccdn'])
+        self.thread_overhead =  float(json.load(open(PATH_ABSOLUTE +'config.json'))['thread_overhead'])
         self.lstm_model = lstm_model.lstm_model()
 
     # Predict label based on local model

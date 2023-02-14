@@ -1,6 +1,9 @@
 import sys
-sys.path.append('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/dataBaseMongo')
-sys.path.append('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/api')
+
+PATH_ABSOLUTE = "/home/onos/Downloads/A-Server-and-Route-selection-mechanism/"
+
+sys.path.append(PATH_ABSOLUTE + 'dataBaseMongo')
+sys.path.append(PATH_ABSOLUTE + 'api')
 
 import json, time
 import requests
@@ -18,10 +21,10 @@ class updateWeight(object):
         self.link_version = 0
 
         # So lan write ra nhieu SDN
-        self.ip_local = str(json.load(open('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/config.json'))['ip_local'])
-        self.ip_remote = json.load(open('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/config.json'))['ip_remote']
-        self.ip_ccdn =  str(json.load(open('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/config.json'))['ip_ccdn'])
-        self.thread_overhead =  float(json.load(open('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/config.json'))['thread_overhead'])
+        self.ip_local = str(json.load(open(PATH_ABSOLUTE + 'config.json'))['ip_local'])
+        self.ip_remote = json.load(open(PATH_ABSOLUTE + 'config.json'))['ip_remote']
+        self.ip_ccdn =  str(json.load(open(PATH_ABSOLUTE + 'config.json'))['ip_ccdn'])
+        self.thread_overhead =  float(json.load(open(PATH_ABSOLUTE + 'config.json'))['thread_overhead'])
         self.count = 0
         # self.ip_sdn = ['10.20.0.251']
 
