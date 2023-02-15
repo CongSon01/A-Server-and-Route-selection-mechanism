@@ -8,8 +8,27 @@ connection = MongoClient(mongo_uri)
 database = connection['SDN_data']
 # CREATE COLLECTION
 collection = database['LinkVersion']
-# print("Database connected")
+print("Database connected")
 
+
+def update_data(query: dict, update: dict):
+        """
+        Update documents in the collection
+        :param query: dictionary (query) to find the documents to be updated
+        :param update: dictionary (update) containing the fields to be updated
+        :return: None
+        """
+        collection.update_many(query, update)
+        return "Update successfully"
+
+
+def find_data(query: dict):
+        result = collection.find_one(query)
+        if result:
+            return result
+        else:
+            return False
+        
 def is_data_exit(data_search):
     return collection.count_documents({ 'src': data_search['src'] , 'dst': data_search['dst'] }, limit = 1)
 
@@ -53,4 +72,4 @@ def remove_all():
 
 
 # CLOSE DATABASE
-connection.close()
+# connection.close()

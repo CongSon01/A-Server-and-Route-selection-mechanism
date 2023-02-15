@@ -42,8 +42,8 @@ suffix = get_local_ip("ens33").split(".")[-1]
 
 ip_ccdn = str(json.load(open(PATH_ABSOLUTE + 'config/config-' + suffix + '.json'))['ip_ccdn'])
 
-# update = updateWeight.updateWeight()
-update = RouteCost()
+update = updateWeight.updateWeight()
+# update = RouteCost()
 
 # _learnWeight = learnWeight.learnWeight()
 
@@ -86,26 +86,28 @@ def write_data():
         check_overhead = (float(dicdata['byteSent']) + float(dicdata['byteReceived']))
         
         # if check_overhead > 15000000:
-        if check_overhead > 0:
+        if check_overhead > 600:
             print("****************** Cap nhat du lieu ******************")
             # push data to rabbit (mechanism pub/sub)
             # pub.connectRabbitMQ(data=dicdata)
 
-            # consume data from rabbit
+            # # consume data from rabbit
             # update.read_params_from_rabbit()
 
-            # Update QoS parameter and save to local database   (using linkcost)
-            # update.write_update_link_to_data_base()
+            # Update QoS parameter and save to local database (using linkcost)
+            update.write_update_link_to_data_base(link_data= dicdata)
 
-            # update link cost to DB
-            update.update_route_cost(link_data= dicdata)
+            # # update link cost to DB
+            # update.update_route_cost(link_data= dicdata)
 
             # ghi mac dinh vao ccdn de thong ke ve sau
-            # try:
-            #     # upload link learn to ccdn database
-            #     write_ccdn()
-            # except:
-            #     print("GHI VAO CCDN LOI ~ NHO MONGOD")
+            try:
+                # upload link learn to ccdn database
+                # lan truyen local data cho node khac
+                write_ccdn()
+            except:
+                # neu thang nay loi thi kha nang do DB cac may khac chua bat
+                print("GHI VAO CCDN LOI ~ NHO MONGOD")
         return content
 
 def write_ccdn():
@@ -130,6 +132,7 @@ def write_link_version():
 
 @app.route('/read_link_version/',  methods=['GET', 'POST'])
 def read_link_version():
+    # CCDN se doc api nay de get du lieu R may
     # API: get data from load send to CCDN when there is a request to read N_r SDNs
     if request.method == 'GET':
         data = LinkVersion.get_multiple_data()

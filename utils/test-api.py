@@ -1,4 +1,5 @@
 import requests
+import json
 
 url = "http://localhost:5000/write_data/"
 
@@ -11,7 +12,7 @@ data = {
     "byteSent": 100,
     "byteReceived": 200
 }
-response = requests.post(url, data)
+response = requests.post(url, json.dumps(data))
 
-# print(response.json())
+# print(response)
 

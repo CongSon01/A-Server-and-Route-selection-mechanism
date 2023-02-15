@@ -5,6 +5,8 @@ PATH_ABSOLUTE = "/home/onos/Downloads/A-Server-and-Route-selection-mechanism/"
 sys.path.append(PATH_ABSOLUTE + 'dataBaseMongo')
 sys.path.append(PATH_ABSOLUTE + 'api')
 
+from mongoDBHandler import MongoDbHandler
+
 import json, time
 import requests
 import random
@@ -31,6 +33,8 @@ class updateWeight(object):
         self.thread_overhead =  float(json.load(open(PATH_ABSOLUTE + 'config/config-' + suffix + '.json'))['thread_overhead'])
         self.count = 0
         # self.ip_sdn = ['10.20.0.251']
+
+        self.db = MongoDbHandler(database="SDN_data", collection="LinkVersion")
 
     def get_link_set(self):
         return self.link_set
@@ -73,52 +77,60 @@ class updateWeight(object):
                 return link
         return None
 
-    def write_update_link_to_data_base(self):
+    def write_update_link_to_data_base(self, link_data):
+        # try:
+        #     LinkVersion.remove_all()
+        # except:
+        #     print("Remove loi .................")
+
+        # self.link_version += 1
+        # self.count +=1
+        src = link_data["src"]
+        dst = link_data["dst"]
+        delay = float(link_data["delay"])
+        packet_loss = float(link_data["packetLossRate"])
+        link_utilization = float(link_data["linkUtilization"])
+        byte_sent = float(link_data["byteSent"])
+        byte_received = float(link_data["byteReceived"])
+        overhead = abs((byte_sent + byte_received)) / 1000000 + 10 # convert to MB
+        
         try:
-            LinkVersion.remove_all()
+            data_search = { 'src': src, 'dst': dst }
+            result_link = LinkVersion.find_data(query= data_search)
+            
+            # neu link ko co trong DB thi chen vao DB
+            if result_link == False:  
+                        # neu da chua ton tai thi chen vao
+                        temp_data = {"src": src,
+                                "dst": dst,
+                                "delay": delay,
+                                "linkUtilization": link_utilization,
+                                "packetLoss": packet_loss,
+                                "linkVersion": 1,
+                                "IpSDN": self.ip_local,
+                                "overhead": float(overhead),
+                                "byteSent": byte_sent,
+                                "byteReceived": byte_received
+                                }
+                        self.db.insert_one_data(temp_data) 
+            else: 
+                        # neu link da ton tai trong Db thi update version va QoS params 
+                        current_link_version = result_link['linkVersion']
+                        # cap nhap new Qos parameters cua link vao vao DB
+                        update = {
+                            "$set": {"delay": delay, 
+                                    "linkUtilization": link_utilization,
+                                    "packetLoss": packet_loss,
+                                    "linkVersion": current_link_version+1,
+                                    "IpSDN": self.ip_local,
+                                    "overhead": float(overhead),
+                                    "byteSent": byte_sent,
+                                    "byteReceived": byte_received         
+                                    }}   
+                        self.db.update_data(data_search, update)                                  
         except:
-            print("Remove loi .................")
-
-        self.link_version += 1
-        self.count +=1
-
-        # start_time = time.time()
-        for link in self.link_set:
-            src = link.get_id_src()
-            dst = link.get_id_dst()
-            # print("chay lan thu", self.count)
-            weight = link.find_link_cost()
-
-            delay = weight[0]
-            link_utilization = weight[1] if weight[1] == 1.0 else random.uniform(0, 0.7)
-            packet_loss = weight[2] if weight[1] == 1.0 and weight[1] == 0.0 else random.uniform(0.02, 0.26)
-            byte_sent = weight[3]
-            byte_received = weight[4]
-            overhead = abs((byte_sent + byte_received)) / 1000000 + 10# convert to MB
-
-            temp_data = {"src": src,
-                         "dst": dst,
-                         "delay": float(delay),
-                         "linkUtilization": float(link_utilization),
-                         "packetLoss": float(packet_loss),
-                         "linkVersion": self.link_version,
-                         "IpSDN": self.ip_local,
-                         "overhead": float(overhead),
-                         "byteSent": float(byte_sent),
-                         "byteReceived": float(byte_received)
-                         }
-            try:
-                data_search = { 'src': temp_data['src'], 'dst': temp_data['dst'] }
-                print("INSERT LINK VERSION")
-                if LinkVersion.is_data_exit(data_search=data_search):
-                    LinkVersion.update_many(data_search, temp_data)
-                else:
-                    LinkVersion.insert_data(data=temp_data)
-                # print("Ghi vao local may nay thanh cong")
-            except:
-                print("--------------- Write Local Link version loi")
-            self.reset_link_set()
-            # time.sleep(1)
+            print("--------------- Write Local Link version loi")
+        
 
     def write_W_SDN(self, num_W):
         try:
