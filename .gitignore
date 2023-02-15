@@ -2,3 +2,4 @@
 ./flaskAPI/linkTopo/lstm_python
 
 /flaskAPI/**/__pycache__
+/flaskAPI/**/*.pyc

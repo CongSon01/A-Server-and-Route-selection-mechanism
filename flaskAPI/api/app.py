@@ -25,6 +25,8 @@ import time
 import json
 import requests
 
+from updateRouteCost import RouteCost
+
 # ignore log in flask
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.INFO)
@@ -39,7 +41,9 @@ from get_local_ip import get_local_ip
 suffix = get_local_ip("ens33").split(".")[-1]
 
 ip_ccdn = str(json.load(open(PATH_ABSOLUTE + 'config/config-' + suffix + '.json'))['ip_ccdn'])
-update = updateWeight.updateWeight()
+
+# update = updateWeight.updateWeight()
+update = RouteCost()
 
 # _learnWeight = learnWeight.learnWeight()
 
@@ -81,20 +85,27 @@ def write_data():
         #  remove default data
         check_overhead = (float(dicdata['byteSent']) + float(dicdata['byteReceived']))
         
-        if check_overhead > 15000000:
+        # if check_overhead > 15000000:
+        if check_overhead > 0:
             print("****************** Cap nhat du lieu ******************")
             # push data to rabbit (mechanism pub/sub)
-            pub.connectRabbitMQ(data=dicdata)
-            # consume data from rabbit
-            update.read_params_from_rabbit()
-            # Update QoS parameter and save to local database   (using linkcost)
-            update.write_update_link_to_data_base()
+            # pub.connectRabbitMQ(data=dicdata)
 
-            try:
-                # upload link learn to ccdn database
-                write_ccdn()
-            except:
-                print("GHI VAO CCDN LOI ~ NHO MONGOD")
+            # consume data from rabbit
+            # update.read_params_from_rabbit()
+
+            # Update QoS parameter and save to local database   (using linkcost)
+            # update.write_update_link_to_data_base()
+
+            # update link cost to DB
+            update.update_route_cost(link_data= dicdata)
+
+            # ghi mac dinh vao ccdn de thong ke ve sau
+            # try:
+            #     # upload link learn to ccdn database
+            #     write_ccdn()
+            # except:
+            #     print("GHI VAO CCDN LOI ~ NHO MONGOD")
         return content
 
 def write_ccdn():
