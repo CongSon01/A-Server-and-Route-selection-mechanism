@@ -29,7 +29,9 @@ from updateRouteCost import RouteCost
 
 # ignore log in flask
 log = logging.getLogger('werkzeug')
-log.setLevel(logging.INFO)
+# log.setLevel(logging.INFO)
+log.setLevel(logging.ERROR)
+
 
 # Init app
 app = Flask(__name__)
