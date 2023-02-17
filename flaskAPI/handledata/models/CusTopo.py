@@ -120,7 +120,7 @@ class Topo(object):
         for link in link_cost:
             src = link['src']
             dst = link['dst']
-            weight = link['weight']
+            weight = link['link_cost']
             # print("from", src, "to", dst, "    =", weight)
 
             src_object = self.find_device(src)

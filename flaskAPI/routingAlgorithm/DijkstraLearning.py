@@ -115,8 +115,3 @@ class hostServerConnection(object):
         
         flow.write_json_rule_to_file(json_rule_path = flow_rule, 
                                  json_rule_reversing_path= reverse_flow_rule)
-
-    
-
-
-
