@@ -1,0 +1,1 @@
+sudo python3 -E /home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/run/run_final.py

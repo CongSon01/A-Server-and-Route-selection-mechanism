@@ -10,7 +10,8 @@ sys.path.append(PATH_ABSOLUTE+'core')
 sys.path.append(PATH_ABSOLUTE+'run')
 sys.path.append(PATH_ABSOLUTE+'api')
 
-import CusTopo
+# import CusTopo
+from CusTopo import Topo
 
 # import from core
 import connectGraph, Graph
@@ -42,7 +43,7 @@ class generate_topo_info:
         connectGraph.connectGraph(topo_files, host_files)
 
         # khoi tao topo rong
-        self.topo_network = CusTopo.Topo()
+        self.topo_network = Topo()
         # add do thi topo.json va host.json vao topo
         self.graph = Graph.Graph(self.topo_network, 'topo.json', 'host.json')
 
@@ -193,8 +194,8 @@ def run_shedule(generate_flow, net, life_time):
                 p.cmd(plc_cmd)  
 
                 full_times.remove(min(full_times))
-            except:
-                print("LOI KHI PING")
+            except Exception as ex:
+                print("LOI KHI PING", ex)
 
         if ( current_time > stop_time ):
             print("DONE")
@@ -222,10 +223,8 @@ def start_server(set_server, net):
         p=net.get(str(server))
         
         # chay background nhan http server
-        background_get_http_cmd = 'source /home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/get_reponding_time/venv/bin/activate;python /home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/get_reponding_time/http-fastapi-server.py &'
+        background_get_http_cmd = 'source /home/onos/Downloads/flaskSDN/flaskAPI/get_reponding_time/venv/bin/activate;python /home/onos/Downloads/flaskSDN/flaskAPI/get_reponding_time/http-fastapi-server.py &'
         p.cmd(background_get_http_cmd)
-
-
 
 def write_table_to_file(table, name_file):
     with open(name_file, "w") as outfile:

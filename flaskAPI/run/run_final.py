@@ -26,6 +26,7 @@ nodes_graph = graph.nodes()
 edges = [[ "s"+str(int(edge[0].replace("n", ""))+1),  "s"+str(int(edge[1].replace("n", ""))+1)] for edge in graph.edges()] 
 hosts_graph = ['h'+str(n+1) for n in range(len(nodes_graph))]
 switches_graph = ['s'+str(n+1) for n in range(len(nodes_graph))]
+print("=== ", switches_graph)
 
 # print("hosts ", hosts_graph)
 # print("num hosts ", len(hosts_graph))
@@ -137,7 +138,6 @@ for key in controllers_save.keys():
 
 
 map_switch_controller = {"c"+str(i): controllers[i]['switches'] for i in range(len(controllers))}
-
 for c in controllers_save:
     for switch in map_switch_controller[c]:
         net.get(switch).start([controllers_save[c]])
@@ -151,7 +151,7 @@ def ping_host_in_sdn(net, controllers, not_host):
 
 ping_host_in_sdn(net, controllers, not_host)
 # change_network_condition_loss.main_change(net)
-CLI(net)
+# CLI(net)
 kq = input("Chay luon nhe:")
 if kq == 'ok':
     generate_topo.generate_topo(net, hosts_save)

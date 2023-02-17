@@ -110,6 +110,7 @@ class Update_weight_ccdn(object):
 
             # version max in mongo
             version_mongo_max = Version.get_version_max()
+            print("versionnnnnnnnnn", version_mongo_max)
             # version_staleness: Do ben cua tung version canh
             # version_staleness = Trung binh version cua moi canh
             version_staleness, max_version = self.calculate_version_staleness(link_versions, version_mongo_max)
@@ -147,6 +148,7 @@ class Update_weight_ccdn(object):
         #     print("Flask Doc nhieu SDN loi")
 
         # tinh toan trong so theo thuat toan
+        # link versions la tap cac data doc duoc tu may phu
             self.calculate_link_weight(link_versions)
             return (read_delay, write_delay, version_staleness)
 
