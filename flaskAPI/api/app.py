@@ -147,6 +147,14 @@ def write_EndPoint():
         EndPointModel.insert_data(end_point)
     return content
 
+# Lay BW
+@app.route('/update_cost_base_on_service/',  methods=['GET', 'POST'])
+def update_cost():
+  if request.method == 'POST':
+    content = request.data
+    
+    return content
+
 # @app.route('/write_learn_weights/',  methods=['GET', 'POST'])
 # def write_learn_weights():
 #   if request.method == 'POST':
