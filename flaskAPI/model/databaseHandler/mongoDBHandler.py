@@ -16,7 +16,7 @@ class MongoDbHandler:
         # string name of collection
         self.collection = self.database[collection]
 
-    def insert_many_data(self, list_data: list):
+    def insert_many_data(self, list_data):
         """
         Insert many documents in the collection
         :param list_data: list of dictionaries (documents) to be inserted
@@ -27,7 +27,7 @@ class MongoDbHandler:
         else:
             self.collection.insert_many(list_data)
 
-    def insert_one_data(self, data: dict):
+    def insert_one_data(self, data):
         """
         Insert one document in the collection
         :param data: a dictionary (document) to be inserted
@@ -37,7 +37,7 @@ class MongoDbHandler:
         print("Insert successfully")
         return
 
-    def update_data(self, query: dict, update: dict):
+    def update_data(self, query, update):
         """
         Update documents in the collection
         :param query: dictionary (query) to find the documents to be updated
@@ -47,7 +47,7 @@ class MongoDbHandler:
         self.collection.update_many(query, update)
         return "Update successfully"
 
-    def remove_data(self, query: dict):
+    def remove_data(self, query):
         """
         Remove documents from the collection
         :param query: dictionary (query) to find the documents to be removed
@@ -63,7 +63,7 @@ class MongoDbHandler:
         self.collection.delete_many({})
         print("All data has been removed from the collection.")
 
-    def find_data(self, query: dict):
+    def find_data(self, query):
         result = self.collection.find_one(query)
         if result:
             return result

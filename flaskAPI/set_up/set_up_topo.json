@@ -3,6 +3,9 @@
   
     "servers": [ "h11", "h12", "h14", "h16", "h17", "h20"],
 
+    "servers_label": [{"server_name": "h11", "label": 0}, {"server_name": "h12", "label": 1}, {"server_name": "h14", "label": 2},
+                      {"server_name": "h16", "label": 3}, {"server_name": "h17", "label": 0}, {"server_name": "h20", "label": 1}],
+
     "name_topo":"Darkstrand",
   
     "controller_type": "remote",

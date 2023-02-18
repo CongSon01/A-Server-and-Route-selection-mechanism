@@ -104,7 +104,8 @@ def generate_topo(net, hosts_save):
     for ip_server in list_ip_server:
         print("Ip server =", ip_server)
         # cmd_read_log = 'python readlog.py'+' '+ip_server + ' &'
-        cmd_read_log = 'python readServerLog.py'+' '+ip_server + ' &'
+        # cmd_read_log = 'python ./readServerLog.py'+' '+ip_server + ' &'
+        cmd_read_log = 'python ./readServerLog.py'+' '+ip_server + ' &'
         os.system(cmd_read_log)
         time.sleep(2)
 

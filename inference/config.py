@@ -1,5 +1,5 @@
 # package capture
-RABBIT_URL="10.20.0.201"
+RABBIT_URL="localhost"
 
 CONSUMER_QUEUE= 'raw_data'
 CONSUMER_ROUTING_KEY = 'raw_data'
@@ -13,7 +13,7 @@ MONGO_URL = 'mongodb://10.20.0.201:27017'
 
 # tensorflow worker
 EXCHANGE = 'events'
-THREADS = 4
+THREADS = 1
 PREFETCH_COUNT = 2 * THREADS
 PADDING = 1640
 BYTES_PER_PACKET = 256

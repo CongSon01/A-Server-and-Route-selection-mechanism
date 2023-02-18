@@ -5,16 +5,18 @@ import sys, json
 from bson import json_util
 import ast
 
-PATH_ABSOLUTE = "/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/"
+PATH_ABSOLUTE = "/home/onos/Downloads/A-Server-and-Route-selection-mechanism/"
 IS_RUN_RRBIN = False
 # IS_RUN_QLEARNING = True
 
-sys.path.append(PATH_ABSOLUTE+'model')
-sys.path.append(PATH_ABSOLUTE+'handledata/models')
-sys.path.append(PATH_ABSOLUTE+'core')
-sys.path.append(PATH_ABSOLUTE+'run')
-sys.path.append(PATH_ABSOLUTE+'routingAlgorithm')
-sys.path.append(PATH_ABSOLUTE+'q_learning')
+sys.path.append(PATH_ABSOLUTE+'flaskAPI/model')
+sys.path.append(PATH_ABSOLUTE+'flaskAPI/handledata/models')
+sys.path.append(PATH_ABSOLUTE+'flaskAPI/core')
+sys.path.append(PATH_ABSOLUTE+'flaskAPI/run')
+sys.path.append(PATH_ABSOLUTE+'flaskAPI/routingAlgorithm')
+sys.path.append(PATH_ABSOLUTE+'flaskAPI/routingAlgorithm/updateRoute')
+
+sys.path.append(PATH_ABSOLUTE+'flaskAPI/q_learning')
 
 
 import numpy as np
@@ -32,7 +34,7 @@ app = Flask(__name__)
 
 # get full ip of SDN
 list_ip = json.load(open(
-    '/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/set_up/set_up_topo.json'))["controllers"]
+    PATH_ABSOLUTE + 'flaskAPI/set_up/set_up_topo.json'))["controllers"]
 
 number_ip = len(list_ip) + 1
 
@@ -99,6 +101,7 @@ def get_ip_server():
         # chay thuat toan Dijkstra
         else:
             host_ip = request.data
+            
             object = DijkstraLearning.hostServerConnection(topo_network, hosts, servers, priority)
             # object = LSTM_Learning.hostServerConnection(
             #     topo_network, hosts, servers, priority)
@@ -147,12 +150,18 @@ def write_EndPoint():
         EndPointModel.insert_data(end_point)
     return content
 
+from updateRouteCost import RouteCost
+route_cost = RouteCost(topo=topo_network, list_ip=list_ip)
+
 # Lay BW
-@app.route('/update_cost_base_on_service/',  methods=['GET', 'POST'])
+@app.route('/update_cost_base_on_service',  methods=['GET', 'POST'])
 def update_cost():
   if request.method == 'POST':
+    print("hello world ===============")
     content = request.data
-    
+    route_cost.read_R_links_data_from_other_domains(3)
+    route_cost.update_route_cost_in_data_base(int(content))
+    route_cost.pull_new_cost_to_topology()
     return content
 
 # @app.route('/write_learn_weights/',  methods=['GET', 'POST'])
@@ -251,9 +260,8 @@ def ccdn():
             # update_server.update_server_cost()
             starttime = time.time()
 
-
 if __name__ == '__main__':
     threading.Thread(target=flask_ngu).start()
-    threading.Thread(target=ccdn).start()
+    # threading.Thread(target=ccdn).start()
 
 # cmt dong 192 va 194 de chay round robin
