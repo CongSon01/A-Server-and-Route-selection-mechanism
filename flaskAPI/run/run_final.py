@@ -31,8 +31,8 @@ print("=== ", switches_graph)
 # print("hosts ", hosts_graph)
 # print("num hosts ", len(hosts_graph))
 # print("nodes ", nodes_graph)
-# print("edge ", edges)
-
+print("edge ", edges)
+# CLI(net)
 controllers_save = {}
 switches_save = {} #luu theo loai cu the
 hosts_save = {}
@@ -53,9 +53,21 @@ for switch_name in switches_graph:
 
 
 info( '*** Adding hosts\n' )
+count_hosts = len(set_up_topo['hosts']) + len(set_up_topo['servers'])
+print("num hosts and servers = ", count_hosts)
+# CLI(net)
 for host_name in hosts_graph:
     if host_name not in not_host:
-        ipv4 = "10.0.0." + str(int(host_name.replace("h", "")))
+        suffix_ip = str(int(host_name.replace("h", "")))
+        ipv4 = "10.0.0." + suffix_ip
+        print("iP HOST LA", ipv4)
+
+        ################# cau hinh ip mac thu cong
+        prefix_mac = "00:00:00:00:00:" 
+        suffix_mac_list = range(1, count_hosts + 1)
+        mac = prefix_mac + format(int(suffix_ip), "02d")
+        print("mac host la la = ", mac)
+
         host_net = net.addHost(host_name,cls=Host, ip=ipv4, defaultRoute=None)
         hosts_save[host_name] = host_net
 
@@ -70,7 +82,10 @@ open(filename, "w").close()
 for edge in edges:
     print("CANH: ", edge)
     LOSS_PER = random.choice(ARR_LOSS)
+    ######################## add cau
+    print("edge dang ket noi", edge)
     if edge in set_up_topo["bridges"]:
+        print("edge in bridge")
         net.addLink(switches_save[edge[0]], switches_save[edge[1]], port1= 10, port2=10, delay=LINK_DELAY, loss=LOSS_PER, bw=MAX_CAPACITY_BW, use_htb=True)
         with open(filename, 'a') as outfile:
             entry = {"src": {

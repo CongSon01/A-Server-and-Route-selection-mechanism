@@ -12,6 +12,8 @@ class Host(object):
         self.port = port
         self.ip = ip
         self.server_cost_list = list()
+        ############### khoi tao ban dau trong so max la 0.1
+        ############ ve sau trong so duoc dieu chinh
         self.server_cost = 0.1
 
     def get_id(self):

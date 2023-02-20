@@ -45,6 +45,9 @@ class Graph(object):
         self.add_hosts()
 
     def add_links(self):
+        """
+        connects links between device A and device B
+        """
         for link in self.topo_file['links']:
             src = link['src']
             dst = link['dst']
@@ -62,8 +65,10 @@ class Graph(object):
 
             # add edge between src and dst devices
             # trong so mac dinh la 10^-7
-            edge1 = CusLink.DeviceEdge(d_src, d_dst, 0.0000001, port_in, port_out)
-            edge2 = CusLink.DeviceEdge(d_dst, d_src, 0.0000001, port_out, port_in)
+            ###### trong so ban dau la 1
+            ######### ve sau trong so thay doi tu 0 den 1
+            edge1 = CusLink.DeviceEdge(d_src, d_dst, 1, port_in, port_out)
+            edge2 = CusLink.DeviceEdge(d_dst, d_src, 1, port_out, port_in)
             
             # add edges to topo
             self.topo.add_edge(edge1)
@@ -81,6 +86,9 @@ class Graph(object):
             self.topo.add_node(device)
 
     def add_hosts(self):
+        """
+        connect links between hosts/servers and devices
+        """
         with open(self.host_path) as handle:
             self.host_file = json.loads(handle.read())
             # self.host_file = "\'" + self.host_file + "\'"
@@ -108,9 +116,10 @@ class Graph(object):
                     hosts[host_ip] = host_object               
                     self.topo.add_node(host_object)
                     
-                    
-                    edge1 = CusLink.HostEdge(host_object, device, 0.0000001 , port)
-                    edge2 = CusLink.HostEdge(device, host_object, 0.0000001 , port)
+                    ######### trong so ban dau la 1
+                    ######### ve sau trong so thay doi tu 0 den 1
+                    edge1 = CusLink.HostEdge(host_object, device, 1 , port)
+                    edge2 = CusLink.HostEdge(device, host_object, 1 , port)
                         
                     self.topo.add_edge(edge1)
                     self.topo.add_edge(edge2)
@@ -120,9 +129,11 @@ class Graph(object):
                     servers[host_ip] = host_object
                                      
                     self.topo.add_node(host_object)
-            
-                    edge1 = CusLink.HostEdge(host_object, device, 0.0000001 , port)
-                    edge2 = CusLink.HostEdge(device, host_object, 0.0000001 , port)
+
+                    ######### trong so ban dau la 1
+                    ######### ve sau trong so thay doi tu 0 den 1
+                    edge1 = CusLink.HostEdge(host_object, device, 1 , port)
+                    edge2 = CusLink.HostEdge(device, host_object, 1 , port)
                         
                     self.topo.add_edge(edge1)
                     self.topo.add_edge(edge2)

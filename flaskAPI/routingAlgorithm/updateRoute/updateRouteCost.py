@@ -6,6 +6,8 @@ PATH_ABSOLUTE = "/home/onos/Downloads/A-Server-and-Route-selection-mechanism/fla
 
 sys.path.append(PATH_ABSOLUTE + 'model')
 sys.path.append(PATH_ABSOLUTE + 'model/databaseHandler')
+from QoS_metrics_config import *
+
 
 # sys.path.append(PATH_ABSOLUTE + 'api')
 
@@ -53,8 +55,21 @@ class RouteCost:
             packet_loss = float(link_data["packetLoss"])
             link_utilization = float(link_data["linkUtilization"])   
 
+            delay_normalized = self.normalize_QoS_metric(QoS_metric=delay, 
+                                                         min_range= MIN_DELAY, 
+                                                         max_range= MAX_DELAY)
+            
+            packet_loss_normalized = self.normalize_QoS_metric(QoS_metric=packet_loss, 
+                                                         min_range= MIN_PACKET_LOSS_RATE, 
+                                                         max_range= MAX_PACKET_LOSS_RATE)
+            
+            link_utilization_normalized = self.normalize_QoS_metric(QoS_metric=link_utilization, 
+                                                         min_range= MIN_LINK_UTILZATION, 
+                                                         max_range= MAX_LINK_UTILZATION)
+            
             ### tinh toan link cost 
-            link_cost = self.calculate_link_cost_serivce(delay, packet_loss, link_utilization, service_type)
+            link_cost = self.calculate_link_cost_serivce(delay_normalized, packet_loss_normalized, 
+                                                         link_utilization_normalized, service_type)
            
             # Define the filter to find the document with the matching "src" and "dst" values
             filter_route = {"src": src, "dst": dst}
@@ -91,16 +106,21 @@ class RouteCost:
     def calculate_link_cost_serivce(self, link_delay, link_loss, link_utilization, service_type):
         """
         formula of calculating link cost value based on service type
+        ALPHA * PACKET LOSS + BETA * DELAY + GAMMA * LINK UTILIZATION
         """
-        if  service_type == 1:
-            return 0.4 * link_delay + 0.3 * link_loss + 0.3 * link_utilization
-        elif service_type ==2:
-            return 0.1 * link_delay + 0.7 * link_loss + 0.2 * link_utilization
-        elif service_type ==3:
-            return 0.2 * link_delay + 0.5 * link_loss + 0.3 * link_utilization
-        elif service_type ==4:
-            return 0.6 * link_delay + 0.2 * link_loss + 0.2 * link_utilization
-
+        if  service_type == 0:
+            return ALPHA_FILE_TRANSFER * link_loss + BETA_FILE_TRANSFER * link_delay + GAMMA_FILE_TRANSFER * link_utilization
+        elif service_type == 1:
+            return ALPHA_GOOGLE_MUSIC * link_loss + BETA_GOOGLE_MUSIC * link_delay + GAMMA_GOOGLE_MUSIC * link_utilization
+        elif service_type == 2:
+            return ALPHA_GOOGLEHANGOUT_VOIP * link_loss + BETA_GOOGLEHANGOUT_VOIP * link_delay + GAMMA_GOOGLEHANGOUT_VOIP * link_utilization
+        elif service_type == 3:
+            return ALPHA_YOUTUBE * link_loss + BETA_YOUTUBE * link_delay + GAMMA_YOUTUBE * link_utilization
+        
+    def normalize_QoS_metric(self, QoS_metric, min_range, max_range):
+        ###### cong them 1 luong 10^-7 de tranh mau so bang 0 
+        return (QoS_metric - min_range) / (max_range - min_range + pow(10, -7))
+        
     # def update_link_cost_through_time(self, current_link_cost, 
     #                                   culmulative_link_cost):
         

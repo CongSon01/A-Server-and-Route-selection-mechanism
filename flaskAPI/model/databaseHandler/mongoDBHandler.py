@@ -34,8 +34,8 @@ class MongoDbHandler:
         :return: None
         """
         self.collection.insert_one(data)
-        print("Insert successfully")
-        return
+        # print("Insert successfully")
+        return 
 
     def update_data(self, query, update):
         """

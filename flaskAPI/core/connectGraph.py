@@ -76,10 +76,10 @@ class connectGraph(object):
                     bridges = open('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/run/bridge.txt', 'r').readlines()
                     list_bridges = [ json.loads(host)['src']['id'] for host in bridges ]
 
-                    print(device_id)
+                    # print(device_id)
 
                     if  str(device_id) in list_bridges:
-                        print("XOA HOST ", host_ip, "TU THIET BI", device_id)
+                        print("XOA HOST ", host_ip, "TU SWITCH CAU ", device_id)
                         continue
 
                     else:

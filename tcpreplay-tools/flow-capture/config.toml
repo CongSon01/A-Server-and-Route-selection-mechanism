@@ -1,0 +1,22 @@
+[packet-capture]
+# cmd = '''tshark -i h1 -Y "gquic.payload" \
+#         -T fields \
+#         -e frame.time_epoch -e ip.src -e udp.srcport -e ip.dst -e udp.dstport -e ip.proto \
+#         -e _ws.col.Info -e qgquic.payload \
+#         -E header=n -E separator=, -E quote=d -E occurrence=f \
+#         -a duration:30'''
+
+producer-q = 'packet-capture'
+producer-con = 'localhost'
+
+[packet-decoder]
+consumer-q = 'packet-capture'
+consumer-con = 'localhost'
+producer-q = 'packet-decoder'
+producer-con = 'localhost'
+number-of-packet = 20
+
+[tensor-worker]
+consumer-q = 'packet-decoder'
+consumer-con = 'localhost'
+worker = 4

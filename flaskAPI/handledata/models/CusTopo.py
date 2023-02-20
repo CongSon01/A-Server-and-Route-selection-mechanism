@@ -7,13 +7,20 @@ class Topo(object):
     def __init__(self):
         """
         nodes: array holds each Node object (Host or Switch)
-        edges: dictionary has key:Source object and value: [Dest object, weight, Edge between]
+        edges: dictionary has key:Source object and 
+                value: [Dest object, weight, Edge object between src and dst]
         """
         self.nodes = []
         self.edges = {}
         # dicttionary has key = ip and value = host/server object
         self.hosts = dict() 
         self.servers = dict()
+
+    def get_server_object(self, server_ip):
+        """
+        server_ip: string of ip of server
+        """
+        return self.servers[server_ip]
 
     def set_hosts(self, hosts):
         self.hosts = hosts
@@ -149,12 +156,12 @@ class Topo(object):
             except:
                 print("LOI DOC CANH")
         # f.write("+++++++++++++++++++++++++++++++++\n")
-        # self.write_topo_file()
+        self.write_topo_file()
 
     def write_topo_file(self):
         url = "/home/onos/Downloads/A-Server-and-Route-selection-mechanism/topo_file.txt"
 
-        with open(url, "a") as file_object:
+        with open(url, "w") as file_object:
             for src in self.nodes:
                 for child in self.edges[src]:
                     data = str(src.get_id()) + "------>" + str(child[0].get_id()) + "                 =" + str(child[1]) +"\n"       

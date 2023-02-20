@@ -26,6 +26,8 @@ class generate_topo_info:
         self.servers  = ''
         self.graph = ''
         
+    def display_topo_infor(self):
+        return self.topo_network.get_topo()
         
     def get_api(self):
         # get full ip of SDN
@@ -100,14 +102,15 @@ def generate_topo(net, hosts_save):
     for ip_server in server_list:
         list_ip_server.append(str(ip_server.IP()))
 
-    # read file server and write to mongo
-    for ip_server in list_ip_server:
-        print("Ip server =", ip_server)
-        # cmd_read_log = 'python readlog.py'+' '+ip_server + ' &'
-        # cmd_read_log = 'python ./readServerLog.py'+' '+ip_server + ' &'
-        cmd_read_log = 'python ./readServerLog.py'+' '+ip_server + ' &'
-        os.system(cmd_read_log)
-        time.sleep(2)
+    # # read file server and write to mongo
+    # # read log cho iperf
+    # for ip_server in list_ip_server:
+    #     print("Ip server =", ip_server)
+    #     # cmd_read_log = 'python readlog.py'+' '+ip_server + ' &'
+    #     # cmd_read_log = 'python ./readServerLog.py'+' '+ip_server + ' &'
+    #     cmd_read_log = 'python ' + PATH_ABSOLUTE + "run/readServerLog.py" +' '+ ip_server + ' &'
+    #     os.system(cmd_read_log)
+    #     time.sleep(2)
 
     # print("Cho 10 phut")
     # time.sleep(60*10)
@@ -224,7 +227,7 @@ def start_server(set_server, net):
         p=net.get(str(server))
         
         # chay background nhan http server
-        background_get_http_cmd = 'source /home/onos/Downloads/flaskSDN/flaskAPI/get_reponding_time/venv/bin/activate;python /home/onos/Downloads/flaskSDN/flaskAPI/get_reponding_time/http-fastapi-server.py &'
+        background_get_http_cmd = 'source home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/get_reponding_time/venv/bin/activate;python /home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/get_reponding_time/http-fastapi-server.py &'
         p.cmd(background_get_http_cmd)
 
 def write_table_to_file(table, name_file):

@@ -1,21 +1,23 @@
 { 
-    "hosts": ["h1","h3", "h4", "h5", "h8", "h18", "h19"],  
+    "hosts": ["h1","h3", "h4", "h5", "h8"],  
   
-    "servers": [ "h11", "h12", "h14", "h16", "h17", "h20"],
-
-    "servers_label": [{"server_name": "h11", "label": 0}, {"server_name": "h12", "label": 1}, {"server_name": "h14", "label": 2},
-                      {"server_name": "h16", "label": 3}, {"server_name": "h17", "label": 0}, {"server_name": "h20", "label": 1}],
-
+    "servers": [ "h11", "h12", "h14", "h16", "h17", "h18", "h19", "h20"],
+    "service-server": {
+        "0": ["h11", "h12"],
+        "1": ["h14", "h16"],
+        "2": ["h17", "h18"],
+        "3": ["h19", "h20"]
+    },
     "name_topo":"Darkstrand",
   
     "controller_type": "remote",
   
-    "bridges": [["s2", "s13"], ["s6","s7"], ["s9", "s21"], ["s10", "s15"]],
+    "bridges": [["s8", "s10"], ["s7","s28"], ["s6", "s14"], ["s10", "s15"], ["s15", "s16"], ["s26", "s27"], ["s25", "s24"]],
   
     "controllers": [
-        {"ip":"10.20.0.202", "controller": "onos","controller_port": 6653, "rest_port": 8181, "switches" : ["s1", "s2", "s3", "s4", "s5", "s6"]},
-        {"ip":"10.20.0.203", "controller": "onos","controller_port": 6653, "rest_port": 8181,  "switches" : ["s7", "s8", "s9", "s10", "s11", "s12", "s13"]},
-        {"ip":"10.20.0.204", "controller": "onos" ,"controller_port": 6653, "rest_port": 8181, "switches" : ["s14", "s15", "s16", "s17"]},
-        {"ip":"10.20.0.205", "controller": "onos","controller_port": 6653, "rest_port": 8181,  "switches" : ["s18", "s19",  "s20", "s21"]}
+        {"ip":"10.20.0.202", "controller": "onos","controller_port": 6653, "rest_port": 8181, "switches" : ["s8", "s9", "s3", "s2", "s1", "s4", "s6", "s28"]},
+        {"ip":"10.20.0.203", "controller": "onos","controller_port": 6653, "rest_port": 8181,  "switches" : ["s7", "s10", "s11", "s15", "s12", "s13", "s14"]},
+        {"ip":"10.20.0.204", "controller": "onos" ,"controller_port": 6653, "rest_port": 8181, "switches" : ["s16", "s17", "s18", "s19", "s20", "s26", "s25"]},
+        {"ip":"10.20.0.205", "controller": "onos","controller_port": 6653, "rest_port": 8181,  "switches" : ["s27", "s22",  "s21", "s23", "s24"]}
     ]
   }

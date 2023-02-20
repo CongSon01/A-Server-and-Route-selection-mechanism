@@ -1,13 +1,12 @@
 import pika
 import threading, sys, os
 import json, csv
-import pymongo
 csv.field_size_limit(sys.maxsize)
 
 from io import StringIO
 import config
 
-MAX_PACKET_PER_FLOW = 10
+MAX_PACKET_PER_FLOW = 20
 
 def string_hex_to_int(hex_string):
     return [int(hex_string[i:i+2], 16) for i in range(0, len(hex_string), 3)]
@@ -20,16 +19,6 @@ def main():
     producer_con = pika.BlockingConnection(pika.ConnectionParameters(host=config.RABBIT_URL))
     producer_channel = producer_con.channel()
     producer_channel.queue_declare(queue=config.PRODUCER_QUEUE)
-
-    if config.DEBUG:
-        # set a 5-second connection timeout    
-        client = pymongo.MongoClient(config.MONGO_URL, serverSelectionTimeoutMS=5000)
-        try:
-            # clear db for new run
-            client['DEV']['flow'].drop()
-        except Exception:
-            print("Unable to connect to the server.")
-            return
 
     flows = {}
 
@@ -51,7 +40,7 @@ def main():
             flow_dict = {}
             if flow_key in flows and not flows[flow_key]['stop']:
                 print("=== aloo ===", len(flows[flow_key]['data']))
-                flows[flow_key]['data'].append(data)
+                flows[flow_key]['data'].append(data[:128])
                 flows[flow_key]['info'].append(message[6])
                 if len(flows[flow_key]['data']) == MAX_PACKET_PER_FLOW:
                     print("=== aloo 2 ===")
@@ -60,10 +49,6 @@ def main():
                         routing_key=config.PRODUCER_ROUTING_KEY,
                         body=json.dumps(flow_dict))
                     print("=== flow_dict ===", json.dumps(flow_dict))
-
-                    if config.DEBUG:
-                        flow_dict[flow_key] = flows[flow_key]
-                        client['DEV']['flow'].insert_one(flow_dict)
 
                     flow_dict = {}
                     flows[flow_key]['data'] = []
@@ -83,7 +68,7 @@ def main():
                 'dst_port': message[4],
                 'ip_proto': message[5],
                 'info': [message[6]],
-                'data': [data]
+                'data': [data[:128]]
             }
 
             flows[flow_key_2] = {
@@ -95,7 +80,7 @@ def main():
                 'dst_port': message[2],
                 'ip_proto': message[5],
                 'info': [message[6]],
-                'data': [data]
+                'data': [data[:128]]
             }
 
         # print(" [x] Received %r" % body)

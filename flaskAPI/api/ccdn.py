@@ -110,7 +110,7 @@ class Update_weight_ccdn(object):
 
             # version max in mongo
             version_mongo_max = Version.get_version_max()
-            print("versionnnnnnnnnn", version_mongo_max)
+            print("versionnnnnnnnnn maxxxxxx", version_mongo_max)
             # version_staleness: Do ben cua tung version canh
             # version_staleness = Trung binh version cua moi canh
             version_staleness, max_version = self.calculate_version_staleness(link_versions, version_mongo_max)

@@ -1,0 +1,18 @@
+https://stackoverflow.com/questions/28082904/use-tcpreplay-for-real-trace-internet-dataset
+
+https://tcpreplay.appneta.com/wiki/tcprewrite
+
+https://superuser.com/questions/356907/how-to-get-real-time-network-statistics-in-linux-with-kb-mb-bytes-format-and-for
+http://puremonkey2010.blogspot.com/2015/05/linux-how-to-capture-and-replay-network.html
+
+https://gist.github.com/niranjan-nagaraju/4532037
+
+sudo tshark -i h1-eth0 -T fields -e frame.number -e _ws.col.Info -e tcp.payload -e data -E header=n -E separator=, -E quote=d -E occurrence=f -a 10
+
+sudo tshark -i h1-eth0 -Y "gquic.payload" -T fields -e frame.time_epoch -e ip.src -e udp.srcport -e ip.dst -e udp.dstport -e ip.proto -e _ws.col.Info -e gquic.payload -E header=n -E separator=, -E quote=d -E occurrence=f -a duration:10 >> test.csv
+
+tcpreplay -i h1-eth0 -tK --loop 50 --unique-ip youtube.pcap
+
+tcpreplay -i h1-eth0 -tK --unique-ip youtube.pcap
+
+tshark -i ens33 -Y "tcp.payload" -T fields -e frame.time_epoch -e ip.src -e tcp.srcport -e ip.dst -e tcp.dstport -e ip.proto -e _ws.col.Info -e tcp.payload  -E header=n -E separator=, -E quote=d -E occurrence=f -a duration:10 >> test.csv

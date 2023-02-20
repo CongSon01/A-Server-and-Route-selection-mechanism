@@ -29,8 +29,12 @@ import logging
 
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
-# Init app
+# Init appV
 app = Flask(__name__)
+
+# get service-server mapping from config file
+service_server_mapping = json.load(open(
+    PATH_ABSOLUTE + 'flaskAPI/set_up/set_up_topo.json'))["service-server"]
 
 # get full ip of SDN
 list_ip = json.load(open(
@@ -40,6 +44,9 @@ number_ip = len(list_ip) + 1
 
 generate_topo_info = generate_topo.generate_topo_info()
 generate_topo_info.get_api()
+# hien thi thong tin cac canh trong do thi
+print("thong tin canh trong do thi")
+generate_topo_info.display_topo_infor()
 
 topo_network = generate_topo_info.get_topo_from_api()
 # add do thi topo.json va host.json vao topo
@@ -47,7 +54,9 @@ graph = generate_topo_info.get_graph_from_api()
 
 # get tap host va server tronng topo
 hosts = generate_topo_info.get_host_from_api()
+# servers = generate_topo_info.get_topo_from_api()
 servers = generate_topo_info.get_server_from_api()
+
 
 print("HOSTS: ", hosts)
 
@@ -61,7 +70,50 @@ priority = 200
 starttime = time.time()
 index_server = 0
 
+########################### route service anh hoang goi den
+@app.route('/getIpServerBasedService', methods=['POST'])
+def get_ip_server_based_service():
+    """
+      input: ip_host
+      output: ip_server
+    """
+    if request.method == 'POST':
+        global priority
+        global index_server
+        priority += 10
 
+        input = json.loads(request.data, object_pairs_hook=deunicodify_hook)
+        print("inputttttttttttttttttttt", input, type(input))
+        host_ip = input['host_ip'] # string
+        service_type = input['service_type'] # string 
+
+        #### lay cum ip cua server theo service
+        servers_ip_list = service_server_mapping[service_type]
+        #### lay tap dictionary serverIp-serverObject theo service
+        servers_objects = get_server_objects_from(servers_ip_list)
+        print("serverrrrrrrrrrrrrrrrrrrrrrrrr")
+        print(servers_objects)
+
+        # khoi tao object routing
+        object = DijkstraLearning.hostServerConnection(topo_network, hosts, servers_objects, priority)  
+        # truyen ip xuat phat va lay ra ip server dich den
+        object.set_host_ip(host_ip=str(host_ip))
+        dest_ip = object.find_shortest_path()
+
+        return str(dest_ip)
+
+def get_server_objects_from(servers_ip_list):
+
+    results = dict()
+    for server_ip in servers_ip_list:
+        server_ip = '10.0.0.' + server_ip.encode('utf-8')[1:]
+        server_object = topo_network.get_server_object(server_ip)
+        # key_value = {
+        #     server_ip: server_object
+        # }
+        results[server_ip] = server_object
+    return results
+        
 @app.route('/getIpServer', methods=['POST'])
 def get_ip_server():
     """
@@ -101,7 +153,6 @@ def get_ip_server():
         # chay thuat toan Dijkstra
         else:
             host_ip = request.data
-            
             object = DijkstraLearning.hostServerConnection(topo_network, hosts, servers, priority)
             # object = LSTM_Learning.hostServerConnection(
             #     topo_network, hosts, servers, priority)
@@ -112,7 +163,6 @@ def get_ip_server():
             dest_ip = object.find_shortest_path()
 
             return str(dest_ip)
-
 
 def deunicodify_hook(pairs):
     new_pairs = []
@@ -157,7 +207,10 @@ route_cost = RouteCost(topo=topo_network, list_ip=list_ip)
 @app.route('/update_cost_base_on_service',  methods=['GET', 'POST'])
 def update_cost():
   if request.method == 'POST':
-    print("hello world ===============")
+    print("chay update cost based on services")
+    """
+    content: service type (int): 1,2,3,4
+    """
     content = request.data
     route_cost.read_R_links_data_from_other_domains(3)
     route_cost.update_route_cost_in_data_base(int(content))
@@ -262,6 +315,7 @@ def ccdn():
 
 if __name__ == '__main__':
     threading.Thread(target=flask_ngu).start()
+    # tat luong ccdn de chay luong anh hoang
     # threading.Thread(target=ccdn).start()
 
 # cmt dong 192 va 194 de chay round robin
