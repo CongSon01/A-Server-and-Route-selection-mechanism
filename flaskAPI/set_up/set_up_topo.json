@@ -12,12 +12,12 @@
   
     "controller_type": "remote",
   
-    "bridges": [["s8", "s10"], ["s7","s28"], ["s6", "s14"], ["s10", "s15"], ["s15", "s16"], ["s26", "s27"], ["s25", "s24"]],
+    "bridges": [["s5", "s6"], ["s14","s21"], ["s26", "s20"], ["s15", "s16"], ["s8", "s10"]],
   
     "controllers": [
-        {"ip":"10.20.0.202", "controller": "onos","controller_port": 6653, "rest_port": 8181, "switches" : ["s8", "s9", "s3", "s2", "s1", "s4", "s6", "s28"]},
-        {"ip":"10.20.0.203", "controller": "onos","controller_port": 6653, "rest_port": 8181,  "switches" : ["s7", "s10", "s11", "s15", "s12", "s13", "s14"]},
-        {"ip":"10.20.0.204", "controller": "onos" ,"controller_port": 6653, "rest_port": 8181, "switches" : ["s16", "s17", "s18", "s19", "s20", "s26", "s25"]},
-        {"ip":"10.20.0.205", "controller": "onos","controller_port": 6653, "rest_port": 8181,  "switches" : ["s27", "s22",  "s21", "s23", "s24"]}
+        {"ip":"10.20.0.202", "controller": "onos","controller_port": 6653, "rest_port": 8181, "switches" : ["s8", "s9", "s3", "s2", "s1", "s4", "s5"]},
+        {"ip":"10.20.0.203", "controller": "onos","controller_port": 6653, "rest_port": 8181,  "switches" : ["s10", "s7", "s28", "s6", "s14", "s13", "s12", "s15", "s11"]},
+        {"ip":"10.20.0.204", "controller": "onos" ,"controller_port": 6653, "rest_port": 8181, "switches" : ["s16", "s17", "s18", "s19", "s20"]},
+        {"ip":"10.20.0.205", "controller": "onos","controller_port": 6653, "rest_port": 8181,  "switches" : ["s21", "s22",  "s23", "s24", "s25", "s26", "s27"]}
     ]
-  }
+}

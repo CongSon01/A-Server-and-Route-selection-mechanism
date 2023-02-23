@@ -1,18 +1,23 @@
 LIFE_TIME = 70 # Thoi gian moi host chay
-PERIOD = 90 # Random Thoi gian chay cua host
-INTERVAL = 1000 # So lan 1 host duoc xuat phat
-MAX_IPERF = 60000000  # flow traffict trong mang toi da ( Mb/s )
-MIN_IPERF = 20000000  # flow traffict trong mang toi thieu ( Mb/s )
-FILE_SIZE_MIN = 10 # MG Byte 
-FILE_SIZE_MAX = 60 # MG Byte 
-# MAX BANG THONG LA 25MG Byte
+PERIOD = 90 # sau 90s co mot host khac ping toi server
+INTERVAL = 1000 # So lan 1 host duoc thiet lap ket noi
+
+
+########## iperf
+# MAX_IPERF = 60000000  # flow traffict trong mang toi da ( Mb/s )
+# MIN_IPERF = 20000000  # flow traffict trong mang toi thieu ( Mb/s )
+
+########## http server
+FILE_SIZE_MIN = 3.75 # MByte to Mbit = 0.5 * 8 = 4 Mbit
+FILE_SIZE_MAX = 15 # MGByte  = 1 * 8 = 8 Mbit
+# MAX BANG THONG LA 10Mb
 
 # Tren moi canh
 # MAX_CAPACITY_BW = 100 # Dung luong toi da tren moi canh ( Mb/s )
-MAX_CAPACITY_BW = 800 # Dung luong toi da tren moi canh ( 800Mb/s xap xi 100 MB)
-LINK_DELAY = '3ms' # m/s thoi gian chuyen goi tin tren moi canh
+MAX_CAPACITY_BW = 150 # Dung luong toi da tren moi canh ( 10Mb/s xap xi 10/8 MB)
+LINK_DELAY = '100ms' # m/s thoi gian chuyen goi tin tren moi canh
 LOSS_PER = 1 # % Phan tram mat mat goi tin
 
-ARR_LOSS = [0.1, 1, 2, 5]
+ARR_LOSS = [0.1, 0.2, 0.5, 1]
 
 #sudo python3 -E run_final.py 

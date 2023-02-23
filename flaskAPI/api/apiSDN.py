@@ -14,22 +14,25 @@ class BytesEncoder(json.JSONEncoder):
 
 
 def call_topo_api_sdn(list_ip):
-    print("HELLooooooo")
+    print("Doc Yopo API")
     for i in range(len(list_ip)):
-        if list_ip[i]['controller'] == "onos":
-            response = requests.get('http://' + list_ip[i]['ip'] + ':8181/onos/test/localTopology/getTopo',
-                auth=HTTPBasicAuth('onos', 'rocks'))
+        try:
+            if list_ip[i]['controller'] == "onos":
+                response = requests.get('http://' + list_ip[i]['ip'] + ':8181/onos/test/localTopology/getTopo',
+                    auth=HTTPBasicAuth('onos', 'rocks'))
 
-        elif list_ip[i]['controller'] == "ryu":
-            response = requests.get(
-                'http://' + list_ip[i]['ip'] + ':8080/onos/test/localTopology/getTopo')
-        with open('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/topos/topo_'+str(i+1)+'.json', 'w') as f:
-            json.dump(response.content, f, cls=BytesEncoder)
-        print(response)
+            elif list_ip[i]['controller'] == "ryu":
+                response = requests.get(
+                    'http://' + list_ip[i]['ip'] + ':8080/onos/test/localTopology/getTopo')
+            with open('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/topos/topo_'+str(i+1)+'.json', 'w') as f:
+                json.dump(response.content, f, cls=BytesEncoder)
+        except requests.exceptions.RequestException as e:
+             print("Error when calling topo API from", list_ip[i]['ip'])
+            #  print(response)
 
 
 def call_host_api_sdn(list_ip):
-    print("HELLo222222222")
+    print("Doc host API")
     for i in range(len(list_ip)):
         if list_ip[i]['controller'] == "onos":
             response = requests.get('http://' + list_ip[i]['ip'] + ':8181/onos/v1/hosts',
@@ -41,4 +44,3 @@ def call_host_api_sdn(list_ip):
         with open('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/hosts/host_'+str(i+1)+'.json', 'w') as f:
             json.dump(response.content, f, cls=BytesEncoder)
         print(response)
-

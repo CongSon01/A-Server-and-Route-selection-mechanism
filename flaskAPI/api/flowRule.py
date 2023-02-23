@@ -244,23 +244,24 @@ class flowRule(object):
         controllers = [controller for controller in set_up_topo["controllers"]]
     
         for i in range(len(controllers)):
-            # id of flow
-            query = {'appID': "test" + str(i)}
-            list_sw = controllers[i]['switches']
-            flows_value = self.get_flow_of_controller(data_raw, list_sw)
-            if controllers[i]['controller'] == "onos":
-                # print("Add flow cho onos")
-                # print(flows_value)
-                url_post = "http://"+ controllers[i]["ip"] + ":8181/onos/v1/flows?appId=onos.onosproject.routing"
-                response = requests.post(url_post, params=query,auth=HTTPBasicAuth('onos', 'rocks'), data = json.dumps(flows_value), headers=  headers )
-                # print("Add flow may "+str(controllers[i]['ip']) +" : "+ str(response))
+            try:
+                # id of flow
+                query = {'appID': "test" + str(i)}
+                list_sw = controllers[i]['switches']
+                flows_value = self.get_flow_of_controller(data_raw, list_sw)
+                if controllers[i]['controller'] == "onos":
+                    print("Add flow cho onos")
+                    # print(flows_value)
+                    url_post = "http://"+ controllers[i]["ip"] + ":8181/onos/v1/flows?appId=onos.onosproject.routing"
+                    response = requests.post(url_post, params=query,auth=HTTPBasicAuth('onos', 'rocks'), data = json.dumps(flows_value), headers=  headers )
+                    print("Add flow may "+str(controllers[i]['ip']) +" : "+ str(response))
 
-            elif controllers[i]['controller'] == "ryu":
-                print("Add flow cho ryu")
-                self.add_flow_ryu(flows_value, str(controllers[i]['ip']))
-
-        # except:
-        #     print("add flow xitttttttt")
+                elif controllers[i]['controller'] == "ryu":
+                    print("Add flow cho ryu")
+                    self.add_flow_ryu(flows_value, str(controllers[i]['ip']))
+            except:
+                print("add flow xitttttttt")
+                
         
         
     

@@ -1,5 +1,7 @@
+#!/usr/bin/python3
 import subprocess as sb
 import sys, os
+print(sys.executable)
 import pika
 import config
 
@@ -15,18 +17,18 @@ channel.queue_declare(queue=config.CONSUMER_QUEUE)
 #         -e _ws.col.Info -e gquic.payload \
 #         -E header=n -E separator=, -E quote=d -E occurrence=f'
 
-# cmd = 'sudo tshark -i "any" -Y "udp and gquic.payload" \
-#         -d udp.port==443,gquic \
-#         -T fields \
-#         -e frame.time_epoch -e ip.src -e udp.srcport -e ip.dst -e udp.dstport -e ip.proto \
-#         -e _ws.col.Info -e gquic.payload \
-#         -E header=n -E separator=, -E quote=d -E occurrence=f'
-        
-cmd = 'sudo tshark -i "any" -Y "tcp" \
+cmd = 'sudo tshark -i "s1-eth3" -Y "udp and gquic.payload" \
+        -d udp.port==443,gquic \
         -T fields \
-        -e frame.time_epoch -e ip.src -e tcp.srcport -e ip.dst -e tcp.dstport -e ip.proto \
-        -e _ws.col.Info -e tcp.payload \
+        -e frame.time_epoch -e ip.src -e udp.srcport -e ip.dst -e udp.dstport -e ip.proto \
+        -e _ws.col.Info -e gquic.payload \
         -E header=n -E separator=, -E quote=d -E occurrence=f'
+        
+# cmd = 'sudo tshark -i "any" -Y "tcp" \
+#         -T fields \
+#         -e frame.time_epoch -e ip.src -e tcp.srcport -e ip.dst -e tcp.dstport -e ip.proto \
+#         -e _ws.col.Info -e tcp.payload \
+#         -E header=n -E separator=, -E quote=d -E occurrence=f'
 
 def main():
     with open("packet-capture.log", "wb") as file:

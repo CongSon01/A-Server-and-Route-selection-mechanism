@@ -29,39 +29,45 @@ class ThreadedConsumer(threading.Thread):
         channel.basic_ack(delivery_tag=method.delivery_tag)
 
     def predict(self, message):
-        model = tf.keras.models.load_model(PATH_ABSOLUTE + "/model/model.h5")
-        temp = next(iter(message.values()))
-        list_of_lists = temp["data"]
-        ip_src = temp["ip_src"]
+        try:
+            model = tf.keras.models.load_model(PATH_ABSOLUTE + "/model/model.h5")
+            temp = next(iter(message.values()))
+            list_of_lists = temp["data"]
+            
+            ip_src = temp["ip_src"]
+            ip_dst = temp["ip_dst"]
 
-        # Determine the maximum length of the lists
-        max_len = max(len(lst) for lst in list_of_lists)
+            # Determine the maximum length of the lists
+            max_len = max(len(lst) for lst in list_of_lists)
 
-        # Pad each list with the default value (0 in this case)
-        padded_list_of_lists = [lst + [0] * (max_len - len(lst)) for lst in list_of_lists]
+            # Pad each list with the default value (0 in this case)
+            padded_list_of_lists = [lst + [0] * (max_len - len(lst)) for lst in list_of_lists]
 
-        # Convert the list of lists to a 2D NumPy array
-        x_test = np.array(padded_list_of_lists)
-        x_test = x_test / 255
-        x_test = x_test.reshape(-1, 20, 128, 1)
-        
-        prediction = model.predict(x_test)
-        one_flow_pred = int(np.argmax(prediction, axis=-1))
+            # Convert the list of lists to a 2D NumPy array
+            x_test = np.array(padded_list_of_lists)
+            x_test = x_test / 255
+            x_test = x_test.reshape(-1, 20, 128, 1)
+            
+            prediction = model.predict(x_test)
+            one_flow_pred = int(np.argmax(prediction, axis=-1))
 
-        label_dict = {'FileTransfer': 0, 'Music': 1, 'VoIP': 2, 'Youtube': 3}
-        for key, value in label_dict.items():
-            if one_flow_pred == value:
-                print(f"=== one_flow_pred === {one_flow_pred}")
+            label_dict = {'FileTransfer': 0, 'Music': 1, 'VoIP': 2, 'Youtube': 3}
+            for key, value in label_dict.items():
+                if one_flow_pred == value:
+                    print(f"=== one_flow_pred === {key}")
+                    
+            url_server_selection = "http://10.20.0.201:5000/getIpServerBasedService"
+            print("===test====", ip_src, ip_dst, one_flow_pred)
+            response_server_selection = requests.post(url_server_selection, data = json.dumps({"host_ip": ip_src, "server_ip": ip_dst, "service_type": one_flow_pred}))
+            print("response url_server_selection: ", response_server_selection)
 
-        url_update_cost = "http://10.20.0.201:5000/update_cost_base_on_service"
-        response_update_cost = requests.post(url_update_cost, {"host_ip": ip_src, "service_type": str(one_flow_pred)})
-        print("response: ", response_update_cost)
+            url_update_cost = "http://10.20.0.201:5000/update_cost_base_on_service"
+            response_update_cost = requests.post(url_update_cost, data = json.dumps({"service_type": one_flow_pred}))
+            print("response url_update_cost: ", response_update_cost)
 
-        url_server_selection = "http://10.20.0.201:5000/getIpServerBasedService"
-        response_server_selection = requests.post(url_server_selection, {"host_ip": ip_src, "service_type": str(one_flow_pred)})
-        print("response: ", response_server_selection)
-
-        return one_flow_pred
+            return one_flow_pred
+        except Exception as e:
+            print(e)
 
     def run(self):
         print ('starting thread to consume from rabbit...')

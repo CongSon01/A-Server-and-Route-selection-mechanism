@@ -6,6 +6,9 @@ PATH_ABSOLUTE = "/home/onos/Downloads/A-Server-and-Route-selection-mechanism/fla
 
 sys.path.append(PATH_ABSOLUTE + 'model')
 sys.path.append(PATH_ABSOLUTE + 'model/databaseHandler')
+sys.path.append(PATH_ABSOLUTE + 'routingAlgorithm')
+
+# from flaskAPI.routingAlgorithm.QoS_metrics_config import *
 from QoS_metrics_config import *
 
 
@@ -34,6 +37,7 @@ class RouteCost:
                 response = requests.get(url)
                 link_object = json.loads(response.text)
                 self.link_versions.extend(link_object['link_versions'])
+                print("Read data from R may")
             except:
                 print("DOC API R LOI")
         # return link_versions
@@ -109,17 +113,20 @@ class RouteCost:
         ALPHA * PACKET LOSS + BETA * DELAY + GAMMA * LINK UTILIZATION
         """
         if  service_type == 0:
-            return ALPHA_FILE_TRANSFER * link_loss + BETA_FILE_TRANSFER * link_delay + GAMMA_FILE_TRANSFER * link_utilization
+            return (ALPHA_FILE_TRANSFER * link_loss + 0.5 - ALPHA_FILE_TRANSFER) + (BETA_FILE_TRANSFER * link_delay + 0.5 - BETA_FILE_TRANSFER) + GAMMA_FILE_TRANSFER * link_utilization
         elif service_type == 1:
             return ALPHA_GOOGLE_MUSIC * link_loss + BETA_GOOGLE_MUSIC * link_delay + GAMMA_GOOGLE_MUSIC * link_utilization
         elif service_type == 2:
-            return ALPHA_GOOGLEHANGOUT_VOIP * link_loss + BETA_GOOGLEHANGOUT_VOIP * link_delay + GAMMA_GOOGLEHANGOUT_VOIP * link_utilization
+            return (ALPHA_GOOGLEHANGOUT_VOIP * link_loss - 0.5 - ALPHA_GOOGLEHANGOUT_VOIP) + (BETA_GOOGLEHANGOUT_VOIP * link_delay + 0.5 - BETA_GOOGLEHANGOUT_VOIP) + GAMMA_GOOGLEHANGOUT_VOIP * link_utilization
         elif service_type == 3:
-            return ALPHA_YOUTUBE * link_loss + BETA_YOUTUBE * link_delay + GAMMA_YOUTUBE * link_utilization
+            return (ALPHA_YOUTUBE * link_loss + 0.5 - ALPHA_YOUTUBE) + (BETA_YOUTUBE * link_delay + 0.5 - BETA_YOUTUBE) + GAMMA_YOUTUBE * link_utilization
         
     def normalize_QoS_metric(self, QoS_metric, min_range, max_range):
         ###### cong them 1 luong 10^-7 de tranh mau so bang 0 
-        return (QoS_metric - min_range) / (max_range - min_range + pow(10, -7))
+        if QoS_metric <= min_range: # chuan hoa de tranh gia tri am
+            return 0
+        else:
+            return (QoS_metric - min_range) / (max_range - min_range + pow(10, -7))
         
     # def update_link_cost_through_time(self, current_link_cost, 
     #                                   culmulative_link_cost):

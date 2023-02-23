@@ -63,7 +63,7 @@ class connectGraph(object):
                     try:    
                         host_ip = str(host['ipAddresses'][0]) 
                     except:
-                        print("----------------------------------------rong host ip")
+                        print("rong host ip cua host co mac = ", host_mac)
 
                     
                         
@@ -79,7 +79,7 @@ class connectGraph(object):
                     # print(device_id)
 
                     if  str(device_id) in list_bridges:
-                        print("XOA HOST ", host_ip, "TU SWITCH CAU ", device_id)
+                        # print("XOA HOST ", host_ip, "TU SWITCH CAU ", device_id)
                         continue
 
                     else:
@@ -92,6 +92,8 @@ class connectGraph(object):
                                         'ipAddresses': host_ip
                                 }
                         result_host['hosts'].append(host_value)
+                        print('Add host: ', host_value['ipAddresses'], "to device        ", host_value['deviceId'])
+                        # print(host_value)
 
         # ghi ra file host cuoi cung       
         file_host_done =  '/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/host.json'

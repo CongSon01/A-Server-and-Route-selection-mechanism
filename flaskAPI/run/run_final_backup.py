@@ -10,9 +10,6 @@ import numpy as np
 import generate_topo
 
 os.system("sudo mn -c")
-os.system("sudo mn -c")
-os.system("sudo mn -c")
-
 set_up_topo = json.load(open('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/set_up/set_up_topo.json'))
 MAX_CAPACITY_BW = set_up_mininet.MAX_CAPACITY_BW
 LINK_DELAY = set_up_mininet.LINK_DELAY
@@ -57,23 +54,30 @@ for switch_name in switches_graph:
 
 info( '*** Adding hosts\n' )
 count_hosts = len(set_up_topo['hosts']) + len(set_up_topo['servers'])
-print("num hosts and servers = ", count_hosts)
+print("numer of hosts and servers = ", count_hosts)
 # CLI(net)
 for host_name in hosts_graph:
     if host_name not in not_host:
-        suffix_ip = str(int(host_name.replace("h", "")))
-        ipv4 = "10.0.0." + suffix_ip
-        print("iP HOST LA", ipv4)
+        if host_name in set_up_topo['hosts'] or host_name in set_up_topo['servers']:
+            suffix_ip = str(int(host_name.replace("h", "")))
+            ipv4 = "10.0.0." + suffix_ip
+            print("iP HOST LA", ipv4)
 
-        ################# cau hinh ip mac thu cong
-        prefix_mac = "00:00:00:00:00:" 
-        suffix_mac_list = range(1, count_hosts + 1)
-        mac = prefix_mac + format(int(suffix_ip), "02d")
-        print("mac host la la = ", mac)
+            ################# cau hinh ip mac thu cong
+            prefix_mac = "00:00:00:00:00:" 
+            suffix_mac_list = range(1, count_hosts + 1)
+            mac = prefix_mac + format(int(suffix_ip), "02d")
+            print("mac host la la = ", mac)
 
-        host_net = net.addHost(host_name,cls=Host, ip=ipv4, mac=mac, defaultRoute=None)
-        hosts_save[host_name] = host_net
-
+            host_net = net.addHost(host_name,cls=Host, ip=ipv4, defaultRoute=None, mac=mac)
+            ########## cau hinh interface cho host
+            # interface = "%s-eth0" % host_name
+            # host_net.addIntf(interface)
+            # print('interface cua host la', interface)
+            # save host vao tap key-value
+            hosts_save[host_name] = host_net
+    
+print("tap cac hosts va servers la \n", hosts_save)
 n = len(switches_graph)
 Matrix_graph = [[0 for x in range(n)] for y in range(n)]
 
@@ -88,7 +92,7 @@ for edge in edges:
     ######################## add cau
     # print("edge dang ket noi", edge)
     if edge in set_up_topo["bridges"]:
-        print("edge in bridge")
+        # print("edge in bridge")
         net.addLink(switches_save[edge[0]], switches_save[edge[1]], port1= 10, port2=10, delay=LINK_DELAY, loss=LOSS_PER, bw=MAX_CAPACITY_BW, use_htb=True)
         with open(filename, 'a') as outfile:
             entry = {"src": {
@@ -114,6 +118,7 @@ for edge in edges:
             outfile.close()
     else:
         net.addLink(switches_save[edge[0]], switches_save[edge[1]], delay=LINK_DELAY, loss=LOSS_PER, bw=MAX_CAPACITY_BW, use_htb=True)
+        print("add canh", switches_save[edge[0]], "--->", switches_save[edge[1]])
     # print("CONFIGSWITCH ", switches_save[edge[0]].dpid, " NHE: ", switches_save[edge[0]].config(loss=99, bw=5))
     Matrix_graph[int(edge[0].replace("s", ""))-1][int(edge[1].replace("s", ""))-1] = 1
     Matrix_graph[int(edge[1].replace("s", ""))-1][int(edge[0].replace("s", ""))-1] = 1
@@ -121,7 +126,8 @@ for edge in edges:
 np.savetxt('graph_matrix.txt',Matrix_graph, fmt='%s')
 
 #them canh noi switch -> host
-print("Thong tin switch endPoint")
+###### folder server_info chua ten cua switch cam voi hosts de ket noi
+print("Add servers to switches endpoint")
 file_server_info = '/home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/run/server_info.txt'
 open(file_server_info, "w").close()
 for host_name in hosts_save:
@@ -134,12 +140,15 @@ for host_name in hosts_save:
             outfile.write(server_data)
             outfile.write("\n")
             outfile.close()
-            print(switches_save[name_switch].dpid, host_ip)
-    net.addLink(hosts_save[host_name], switches_save[name_switch], delay=LINK_DELAY, loss=LOSS_PER, bw=MAX_CAPACITY_BW, use_htb=True)
-    
+            print("add switch end point", switches_save[name_switch].dpid, host_ip)
+            net.addLink(hosts_save[host_name], switches_save[name_switch], delay=LINK_DELAY, loss=LOSS_PER, bw=MAX_CAPACITY_BW, use_htb=True)
+    elif host_name in set_up_topo['hosts']:
+        print("Add", hosts_save[host_name], "to", "switch", switches_save[name_switch]) 
+        net.addLink(hosts_save[host_name], switches_save[name_switch], delay=LINK_DELAY, loss=LOSS_PER, bw=MAX_CAPACITY_BW, use_htb=True)
 
+        
 # net.build() #sinh ip cho cac host
-print("hosts: ", list(hosts_save.keys()))
+print("hosts and servers: ", list(hosts_save.keys()))
 print("num switch: ", len(switches_save))
 print("num host: ", len(hosts_save))
 
@@ -161,13 +170,29 @@ for c in controllers_save:
         net.get(switch).start([controllers_save[c]])
 
 def ping_host_in_sdn(net, controllers, not_host):
+    # for c in controllers:
+    #     # hst = [ "h" + str(int(switch.replace("s", ""))) for switch in c['switches'] if "h"+str(int(switch.replace("s", ""))) not in not_host]
+    #     for h_i in range(len(hosts_save)):
+    #         if h_i not in not_host:
+    #             if hosts_save[h_i] in set_up_topo['hosts'] or hosts_save[h_i] in set_up_topo['servers']:
+    #                 net.ping([ hosts_save[h_i], hosts_save[h_i]] ])
+
+    hosts_servers_ping = []
     for c in controllers:
-        hst = [ "h" + str(int(switch.replace("s", ""))) for switch in c['switches'] if "h"+str(int(switch.replace("s", ""))) not in not_host]
-        for h_i in range(len(hst)):
-            net.ping([ hosts_save[hst[0]], hosts_save[hst[h_i]] ])
+        for switch in c['switches']:
+            host_name = "h"+str(int(switch.replace("s", "")))
+            if host_name not in not_host:
+                if host_name in set_up_topo['hosts'] or host_name in set_up_topo['servers']:
+                    hosts_servers_ping.append(host_name)
+
+    for h_i in range(len(hosts_servers_ping)):
+        host_0_name = hosts_servers_ping[0]
+        host_i_name = hosts_servers_ping[h_i]
+        net.ping( [hosts_save[host_0_name], hosts_save[host_i_name]])
 
 
-ping_host_in_sdn(net, controllers, not_host)
+# ping_host_in_sdn(net, controllers, not_host)
+net.pingAll()
 # change_network_condition_loss.main_change(net)
 # CLI(net)
 kq = input("Chay luon nhe:")

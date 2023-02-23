@@ -81,7 +81,10 @@ class generate_topo_info:
 def generate_topo(net, hosts_save):
     gtopo = generate_topo_info()
     name_hosts, name_servers = gtopo.get_api()
-    print(name_hosts, name_servers)
+    print("Tap hosts sau khi ping", name_hosts)
+    print("Tap servers sau khi ping", name_servers)
+#
+    # print(name_hosts, name_servers)
     print(hosts_save)
     server_list = [ hosts_save[h] for h in  name_servers ]
     print(server_list)
@@ -114,9 +117,9 @@ def generate_topo(net, hosts_save):
 
     # print("Cho 10 phut")
     # time.sleep(60*10)
-    next = input("Enter continues: ")
-    if next == 'ok':
-        run_shedule(starting_table,net,life_time)
+    # next = input("Enter continues: ")
+    # if next == 'ok':
+    #     run_shedule(starting_table,net,life_time)
 
 def create_starting_table(host_list, period, interval, life_time):
     generate_flow = {}
@@ -192,7 +195,7 @@ def run_shedule(generate_flow, net, life_time):
                 # plc_cmd =  'iperf -c %s -b %d -u -p 1337 -t %d &' %(des, rate, life_time)
                 # p.cmd(plc_cmd)   
                 # rate =  set_up_mininet.FILE_SIZE_MAX
-                rate = random.randint(set_up_mininet.FILE_SIZE_MIN, set_up_mininet.FILE_SIZE_MAX)   #MG Byte
+                rate = random.uniform(set_up_mininet.FILE_SIZE_MIN, set_up_mininet.FILE_SIZE_MAX)   #MG Byte
                 print("------------- gui du lieu-----------", rate)
                 plc_cmd = 'source /home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/get_reponding_time/venv/bin/activate; python /home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/get_reponding_time/cli-client.py %s -m b -p -s %d -srt >> ./server_info/%s.txt &' %(des, rate, des)
                 p.cmd(plc_cmd)  

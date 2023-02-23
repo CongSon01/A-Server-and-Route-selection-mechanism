@@ -1,0 +1,12 @@
+folder run/server_info chua cac file ip cua server/host duoc cam vao switch
+
+folder run/setup/set_up_topo.json chua file cau hinh mang
+
+cac cong thuc link cost cong them 1 luong base de chuan hoa cho link vuot qua SLA 
+
+folder flaskAPI/ host and topo.json chua final graph de input vao do thi topology
+
+
+folder flaskAPI/ api/ run/ set_up_mininet.py cau hinh cac thong so mininet
+
+flaskAPI/ Qos metrics chua cac file chinh chuan hoa link cost

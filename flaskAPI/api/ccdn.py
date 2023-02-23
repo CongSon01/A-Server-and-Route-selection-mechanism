@@ -132,8 +132,6 @@ class Update_weight_ccdn(object):
             if ( version_staleness, max_version != 0, 0 ):
                 self.write_log_parameter(R, W, int(read_delay), int(write_delay), time_staleness, version_staleness, avg_overhead)
             
-            
-
             # update canh co version max
             # for data in link_object['link_versions']:
             #     data_search = {'src': data['src'], 'dst': data['dst']}
@@ -157,4 +155,3 @@ class Update_weight_ccdn(object):
         link_weight = updateLinkTopo.updateLinkTopo(link_verions= link_versions)
         link_weight.get_link_weight()
         self.topo.read_update_weight()
-      

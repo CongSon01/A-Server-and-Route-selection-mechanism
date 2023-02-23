@@ -39,16 +39,14 @@ def main():
         def add_flow(flow_key):
             flow_dict = {}
             if flow_key in flows and not flows[flow_key]['stop']:
-                print("=== aloo ===", len(flows[flow_key]['data']))
                 flows[flow_key]['data'].append(data[:128])
                 flows[flow_key]['info'].append(message[6])
                 if len(flows[flow_key]['data']) == MAX_PACKET_PER_FLOW:
-                    print("=== aloo 2 ===")
+                    print("=== send data to rabbitmq ===")
                     flow_dict[flow_key] = flows[flow_key]
                     producer_channel.basic_publish(exchange='',
                         routing_key=config.PRODUCER_ROUTING_KEY,
                         body=json.dumps(flow_dict))
-                    print("=== flow_dict ===", json.dumps(flow_dict))
 
                     flow_dict = {}
                     flows[flow_key]['data'] = []
@@ -92,9 +90,9 @@ def main():
 if __name__ == '__main__':
     try:
         main()
-    except KeyboardInterrupt:
-        print('Interrupted')
-        try:
-            sys.exit(0)
-        except SystemExit:
-            os._exit(0)
+    except Exception as e:
+        print(e)
+        # try:
+        #     sys.exit(0)
+        # except SystemExit:
+        #     os._exit(0)

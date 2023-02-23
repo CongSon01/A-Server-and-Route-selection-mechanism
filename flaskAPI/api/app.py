@@ -45,8 +45,8 @@ number_ip = len(list_ip) + 1
 generate_topo_info = generate_topo.generate_topo_info()
 generate_topo_info.get_api()
 # hien thi thong tin cac canh trong do thi
-print("thong tin canh trong do thi")
-generate_topo_info.display_topo_infor()
+# print("thong tin canh trong do thi")
+# generate_topo_info.display_topo_infor()
 
 topo_network = generate_topo_info.get_topo_from_api()
 # add do thi topo.json va host.json vao topo
@@ -58,9 +58,11 @@ hosts = generate_topo_info.get_host_from_api()
 servers = generate_topo_info.get_server_from_api()
 
 
-print("HOSTS: ", hosts)
+print("HOSTSsssss: ")
+print(hosts.keys())
 
-print("SERVER: ", servers)
+print("SERVERrrrrr: ")
+print(servers.keys())
 ############################ CCDN ###############################
 update_server = updateEndPointModel.updateEndPointModel(servers)
 update_weight = ccdn.Update_weight_ccdn(
@@ -71,7 +73,7 @@ starttime = time.time()
 index_server = 0
 
 ########################### route service anh hoang goi den
-@app.route('/getIpServerBasedService', methods=['POST'])
+@app.route('/getIpServerBasedService', methods=['GET', 'POST'])
 def get_ip_server_based_service():
     """
       input: ip_host
@@ -81,21 +83,48 @@ def get_ip_server_based_service():
         global priority
         global index_server
         priority += 10
+        print("toi da di vao day")
+        # input = json.loads(request.data, object_pairs_hook=deunicodify_hook)
+        content = request.data
+#       for learn_weight in json.loads(content)['learn_weights']:
+        print("Errrrrrrrrrrrrrrrrrrrrrrrrrrr = ", content)
+        host_ip = json.loads(content, object_pairs_hook=deunicodify_hook)['host_ip']
+        print(host_ip)
 
-        input = json.loads(request.data, object_pairs_hook=deunicodify_hook)
-        print("inputttttttttttttttttttt", input, type(input))
-        host_ip = input['host_ip'] # string
-        service_type = input['service_type'] # string 
+        # end_point = json.loads(content)['EndPoint_datas']
+        
+        if host_ip not in hosts:
+            return "not in hosts", 200
+        host_object = hosts[host_ip]
+        host_key_value = {
+            host_ip: host_object
+        }
 
-        #### lay cum ip cua server theo service
+        service_type = json.loads(content)['service_type']# string 
+
+        server_ip = json.loads(content, object_pairs_hook=deunicodify_hook)['server_ip']# string
+        server_object = servers[server_ip]
+        server_key_value = {
+            server_ip: server_object
+        }
+
+
+        print("Tap hosts va servers")
+        print(host_key_value)
+        print(server_key_value)
+
+        '''filter server based services: de ve sau tai su dung 
+        lay cum ip cua server theo service
         servers_ip_list = service_server_mapping[service_type]
-        #### lay tap dictionary serverIp-serverObject theo service
+        lay tap dictionary serverIp-serverObject theo service
         servers_objects = get_server_objects_from(servers_ip_list)
-        print("serverrrrrrrrrrrrrrrrrrrrrrrrr")
         print(servers_objects)
 
+        thay doi params hostServerConnection(topo_network, hosts, servers_objects, priority)  
+        '''
+
         # khoi tao object routing
-        object = DijkstraLearning.hostServerConnection(topo_network, hosts, servers_objects, priority)  
+        object = DijkstraLearning.hostServerConnection(topo_network, host_key_value, server_key_value, priority)  
         # truyen ip xuat phat va lay ra ip server dich den
         object.set_host_ip(host_ip=str(host_ip))
         dest_ip = object.find_shortest_path()
@@ -211,10 +240,23 @@ def update_cost():
     """
     content: service type (int): 1,2,3,4
     """
-    content = request.data
-    route_cost.read_R_links_data_from_other_domains(3)
-    route_cost.update_route_cost_in_data_base(int(content))
-    route_cost.pull_new_cost_to_topology()
+
+    try:
+        content = request.data
+        service_type = json.loads(content)['service_type']
+        print(service_type)
+
+        # content = json.loads(request.data, object_pairs_hook=deunicodify_hook)
+        # content = request.data
+
+        route_cost.read_R_links_data_from_other_domains(3)
+        route_cost.update_route_cost_in_data_base(service_type)
+        route_cost.pull_new_cost_to_topology()
+        # print("Typeeeeeeeeeeeeeeeeeeeee")
+        # print(type(content['service_type']))
+    except Exception as ex:
+        print(ex)
+    
     return content
 
 # @app.route('/write_learn_weights/',  methods=['GET', 'POST'])
@@ -314,7 +356,8 @@ def ccdn():
             starttime = time.time()
 
 if __name__ == '__main__':
-    threading.Thread(target=flask_ngu).start()
+    # threading.Thread(target=flask_ngu).start()
+    app.run(host='10.20.0.201', debug=True, use_reloader=True)
     # tat luong ccdn de chay luong anh hoang
     # threading.Thread(target=ccdn).start()
 
