@@ -64,7 +64,7 @@ class hostServerConnection(object):
 
             # reset routing
             self.sol.routing()
-
+            ############### COST FUNCTION
             current_cost = 0.55 * self.sol.get_minimum_cost() + 0.45 * self.servers[server].get_server_cost()
             # print("2 ong chau")
             # print( self.sol.get_minimum_cost(), self.servers[server].get_server_cost())

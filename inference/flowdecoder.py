@@ -12,13 +12,17 @@ def string_hex_to_int(hex_string):
     return [int(hex_string[i:i+2], 16) for i in range(0, len(hex_string), 3)]
 
 def main():
-    consumer_con = pika.BlockingConnection(pika.ConnectionParameters(host=config.RABBIT_URL))
-    consumer_channel = consumer_con.channel()
-    consumer_channel.queue_declare(queue=config.CONSUMER_QUEUE)
+    try:
+        print("try to connect rabbitmq")
+        consumer_con = pika.BlockingConnection(pika.ConnectionParameters(host=config.RABBIT_URL, heartbeat=60))
+        consumer_channel = consumer_con.channel()
+        consumer_channel.queue_declare(queue=config.CONSUMER_QUEUE)
 
-    producer_con = pika.BlockingConnection(pika.ConnectionParameters(host=config.RABBIT_URL))
-    producer_channel = producer_con.channel()
-    producer_channel.queue_declare(queue=config.PRODUCER_QUEUE)
+        producer_con = pika.BlockingConnection(pika.ConnectionParameters(host=config.RABBIT_URL, heartbeat=60))
+        producer_channel = producer_con.channel()
+        producer_channel.queue_declare(queue=config.PRODUCER_QUEUE)
+    except Exception as e:
+        print(e)
 
     flows = {}
 
@@ -44,9 +48,19 @@ def main():
                 if len(flows[flow_key]['data']) == MAX_PACKET_PER_FLOW:
                     print("=== send data to rabbitmq ===")
                     flow_dict[flow_key] = flows[flow_key]
-                    producer_channel.basic_publish(exchange='',
-                        routing_key=config.PRODUCER_ROUTING_KEY,
-                        body=json.dumps(flow_dict))
+                    try:
+                        consumer_con = pika.BlockingConnection(pika.ConnectionParameters(host=config.RABBIT_URL, heartbeat=60))
+                        consumer_channel = consumer_con.channel()
+                        consumer_channel.queue_declare(queue=config.CONSUMER_QUEUE)
+
+                        producer_con = pika.BlockingConnection(pika.ConnectionParameters(host=config.RABBIT_URL, heartbeat=60))
+                        producer_channel = producer_con.channel()
+                        producer_channel.queue_declare(queue=config.PRODUCER_QUEUE)
+                        producer_channel.basic_publish(exchange='',
+                            routing_key=config.PRODUCER_ROUTING_KEY,
+                            body=json.dumps(flow_dict))
+                    except Exception as e:
+                        print(e)
 
                     flow_dict = {}
                     flows[flow_key]['data'] = []
@@ -81,11 +95,13 @@ def main():
                 'data': [data[:128]]
             }
 
-        # print(" [x] Received %r" % body)
-
-    consumer_channel.basic_consume(queue=config.CONSUMER_QUEUE, on_message_callback=callback, auto_ack=True)
-    print(' [*] Waiting for messages. To exit press CTRL+C')
-    consumer_channel.start_consuming()
+    
+    try:
+        consumer_channel.basic_consume(queue=config.CONSUMER_QUEUE, on_message_callback=callback, auto_ack=True)
+        print(' [*] Waiting for messages. To exit press CTRL+C')
+        consumer_channel.start_consuming()
+    except Exception as e:
+        print("Exception", e)
 
 if __name__ == '__main__':
     try:

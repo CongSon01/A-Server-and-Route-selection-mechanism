@@ -29,12 +29,12 @@ nodes_graph = graph.nodes()
 edges = [[ "s"+str(int(edge[0].replace("n", ""))+1),  "s"+str(int(edge[1].replace("n", ""))+1)] for edge in graph.edges()] 
 hosts_graph = ['h'+str(n+1) for n in range(len(nodes_graph))]
 switches_graph = ['s'+str(n+1) for n in range(len(nodes_graph))]
-print("=== ", switches_graph)
+# print("=== ", switches_graph)
 
 # print("hosts ", hosts_graph)
 # print("num hosts ", len(hosts_graph))
 # print("nodes ", nodes_graph)
-print("edge ", edges)
+# print("edge ", edges)
 # CLI(net)
 controllers_save = {}
 switches_save = {} #luu theo loai cu the
@@ -63,13 +63,13 @@ for host_name in hosts_graph:
     if host_name not in not_host:
         suffix_ip = str(int(host_name.replace("h", "")))
         ipv4 = "10.0.0." + suffix_ip
-        print("iP HOST LA", ipv4)
+        # print("iP HOST LA", ipv4)
 
         ################# cau hinh ip mac thu cong
         prefix_mac = "00:00:00:00:00:" 
         suffix_mac_list = range(1, count_hosts + 1)
         mac = prefix_mac + format(int(suffix_ip), "02d")
-        print("mac host la la = ", mac)
+        # print("mac host la la = ", mac)
 
         host_net = net.addHost(host_name,cls=Host, ip=ipv4, mac=mac, defaultRoute=None)
         hosts_save[host_name] = host_net
@@ -88,7 +88,7 @@ for edge in edges:
     ######################## add cau
     # print("edge dang ket noi", edge)
     if edge in set_up_topo["bridges"]:
-        print("edge in bridge")
+        print("Add bridge ------------------------", edge)
         net.addLink(switches_save[edge[0]], switches_save[edge[1]], port1= 10, port2=10, delay=LINK_DELAY, loss=LOSS_PER, bw=MAX_CAPACITY_BW, use_htb=True)
         with open(filename, 'a') as outfile:
             entry = {"src": {
@@ -114,6 +114,8 @@ for edge in edges:
             outfile.close()
     else:
         net.addLink(switches_save[edge[0]], switches_save[edge[1]], delay=LINK_DELAY, loss=LOSS_PER, bw=MAX_CAPACITY_BW, use_htb=True)
+        # print("Add canh", edge)
+
     # print("CONFIGSWITCH ", switches_save[edge[0]].dpid, " NHE: ", switches_save[edge[0]].config(loss=99, bw=5))
     Matrix_graph[int(edge[0].replace("s", ""))-1][int(edge[1].replace("s", ""))-1] = 1
     Matrix_graph[int(edge[1].replace("s", ""))-1][int(edge[0].replace("s", ""))-1] = 1
@@ -163,8 +165,12 @@ for c in controllers_save:
 def ping_host_in_sdn(net, controllers, not_host):
     for c in controllers:
         hst = [ "h" + str(int(switch.replace("s", ""))) for switch in c['switches'] if "h"+str(int(switch.replace("s", ""))) not in not_host]
+        print("Domain ", c['ip'], c['switches'] )
+        print("ping trong tap ", hst)
         for h_i in range(len(hst)):
-            net.ping([ hosts_save[hst[0]], hosts_save[hst[h_i]] ])
+            for h_j in range(len(hst)):
+                # net.ping([ hosts_save[hst[0]], hosts_save[hst[h_i]] ])
+                net.ping([ hosts_save[hst[h_i]], hosts_save[hst[h_j]] ])
 
 
 ping_host_in_sdn(net, controllers, not_host)
@@ -173,7 +179,7 @@ ping_host_in_sdn(net, controllers, not_host)
 kq = input("Chay luon nhe:")
 if kq == 'ok':
     generate_topo.generate_topo(net, hosts_save)
-    CLI(net)
+    # CLI(net)
 
 net.stop()
 

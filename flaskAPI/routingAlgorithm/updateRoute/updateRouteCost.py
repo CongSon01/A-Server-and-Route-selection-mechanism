@@ -120,6 +120,8 @@ class RouteCost:
             return (ALPHA_GOOGLEHANGOUT_VOIP * link_loss - 0.5 - ALPHA_GOOGLEHANGOUT_VOIP) + (BETA_GOOGLEHANGOUT_VOIP * link_delay + 0.5 - BETA_GOOGLEHANGOUT_VOIP) + GAMMA_GOOGLEHANGOUT_VOIP * link_utilization
         elif service_type == 3:
             return (ALPHA_YOUTUBE * link_loss + 0.5 - ALPHA_YOUTUBE) + (BETA_YOUTUBE * link_delay + 0.5 - BETA_YOUTUBE) + GAMMA_YOUTUBE * link_utilization
+        elif service_type == 5: # chay mac dinh youtube ko can update cost theo youtube
+            return 0.35 * link_loss + 0.35 * link_delay + 0.3 * link_utilization
         
     def normalize_QoS_metric(self, QoS_metric, min_range, max_range):
         ###### cong them 1 luong 10^-7 de tranh mau so bang 0 

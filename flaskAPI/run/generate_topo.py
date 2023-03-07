@@ -85,9 +85,9 @@ def generate_topo(net, hosts_save):
     print("Tap servers sau khi ping", name_servers)
 #
     # print(name_hosts, name_servers)
-    print(hosts_save)
+    # print(hosts_save)
     server_list = [ hosts_save[h] for h in  name_servers ]
-    print(server_list)
+    # print(server_list)
     name_host = name_hosts
 
     period = set_up_mininet.PERIOD # random data from 0 to period 
@@ -117,9 +117,9 @@ def generate_topo(net, hosts_save):
 
     # print("Cho 10 phut")
     # time.sleep(60*10)
-    # next = input("Enter continues: ")
-    # if next == 'ok':
-    #     run_shedule(starting_table,net,life_time)
+    next = input("Enter continues: ")
+    if next == 'ok':
+        run_shedule(starting_table,net,life_time)
 
 def create_starting_table(host_list, period, interval, life_time):
     generate_flow = {}
@@ -198,6 +198,8 @@ def run_shedule(generate_flow, net, life_time):
                 rate = random.uniform(set_up_mininet.FILE_SIZE_MIN, set_up_mininet.FILE_SIZE_MAX)   #MG Byte
                 print("------------- gui du lieu-----------", rate)
                 plc_cmd = 'source /home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/get_reponding_time/venv/bin/activate; python /home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/get_reponding_time/cli-client.py %s -m b -p -s %d -srt >> ./server_info/%s.txt &' %(des, rate, des)
+                # plc_cmd = 'venv/bin/python /home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/get_reponding_time/ /home/onos/Downloads/A-Server-and-Route-selection-mechanism/flaskAPI/get_reponding_time/cli-client.py %s -m b -p -s %d -srt >> ./server_info/%s.txt &' %(des, rate, des)
+                
                 p.cmd(plc_cmd)  
 
                 full_times.remove(min(full_times))

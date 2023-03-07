@@ -7,7 +7,7 @@ import numpy as np
 #Cogentco
 #Cesnet200706
 #VtlWavenet2011
-graph = networkx.read_graphml("/home/onos/Downloads/topologyzoo/"+"Dataxchange"+".graphml")
+graph = networkx.read_graphml("/home/onos/Downloads/topologyzoo/"+"Darkstrand"+".graphml")
 nodes_graph = graph.nodes()
 edges = [[ "s"+str(int(edge[0].replace("n", ""))+1),  "s"+str(int(edge[1].replace("n", ""))+1)] for edge in graph.edges()] 
 hosts_graph = ['h'+str(n+1) for n in range(len(nodes_graph))]

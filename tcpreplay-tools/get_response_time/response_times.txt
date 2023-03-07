@@ -1,2 +1,0 @@
-Response time: 394.83 ms
-Response time: 0.51 ms

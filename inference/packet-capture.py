@@ -4,11 +4,7 @@ import sys, os
 print(sys.executable)
 import pika
 import config
-
-credentials = pika.PlainCredentials('guest', 'guest')
-connection = pika.BlockingConnection(pika.ConnectionParameters(config.RABBIT_URL, credentials=credentials))
-channel = connection.channel()
-channel.queue_declare(queue=config.CONSUMER_QUEUE)
+import time 
 
 # cmd = 'sudo tshark -i "any" -Y "udp and gquic.payload" \
 #         -d udp.port==443,gquic \
@@ -17,7 +13,7 @@ channel.queue_declare(queue=config.CONSUMER_QUEUE)
 #         -e _ws.col.Info -e gquic.payload \
 #         -E header=n -E separator=, -E quote=d -E occurrence=f'
 
-cmd = 'sudo tshark -i "s1-eth3" -Y "udp and gquic.payload" \
+cmd = 'sudo tshark -i "s9-eth3" -Y "udp and gquic.payload" \
         -d udp.port==443,gquic \
         -T fields \
         -e frame.time_epoch -e ip.src -e udp.srcport -e ip.dst -e udp.dstport -e ip.proto \
@@ -32,23 +28,29 @@ cmd = 'sudo tshark -i "s1-eth3" -Y "udp and gquic.payload" \
 
 def main():
     with open("packet-capture.log", "wb") as file:
+        
         proc = sb.Popen(cmd, shell=True, stdout=sb.PIPE, stdin=sb.PIPE)
         line = ''
         for char in iter(lambda: proc.stdout.read(1), b''):
             file.write(char)
             if char == b'\n':
-                channel.basic_publish(exchange='', routing_key=config.CONSUMER_ROUTING_KEY, body=line)
-                line = ''
-                continue
+                try:
+                    credentials = pika.PlainCredentials('guest', 'guest')
+                    connection = pika.BlockingConnection(pika.ConnectionParameters(config.RABBIT_URL,credentials=credentials,heartbeat=60))
+                    channel = connection.channel()
+                    channel.queue_declare(queue=config.CONSUMER_QUEUE)
+                    print("send data to rabbitmq")
+                    channel.basic_publish(exchange='', routing_key=config.CONSUMER_ROUTING_KEY, body=line)
+                    line = ''
+                    continue
+                except Exception as e:
+                    print(e)
             line += char.decode('latin-1')
-    connection.close()
+    # connection.close()
 
 if __name__ == '__main__':
     try:
         main()
-    except KeyboardInterrupt:
-        print('Interrupted')
-        try:
-            sys.exit(0)
-        except SystemExit:
-            os._exit(0)
+    except Exception as e:
+        print('Interrupted', e)
+       

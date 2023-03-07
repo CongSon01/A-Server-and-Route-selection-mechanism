@@ -14,19 +14,25 @@ class ThreadedConsumer(threading.Thread):
         self.thread_id = thread_id
 
         # parameters = pika.URLParameters(RABBIT_URL)
-        connection = pika.BlockingConnection(pika.ConnectionParameters(host=config.RABBIT_URL))
-        self.channel = connection.channel()
-        # self.channel.queue_declare(queue=QUEUE_NAME, auto_delete=False)
-        # self.channel.queue_bind(queue=QUEUE_NAME, exchange=EXCHANGE, routing_key=ROUTING_KEY)
-        self.channel.basic_qos(prefetch_count=config.PREFETCH_COUNT)
-        self.channel.basic_consume(config.PRODUCER_QUEUE, on_message_callback=self.callback, auto_ack=False)
-        threading.Thread(target=self.channel.basic_consume(config.PRODUCER_QUEUE, on_message_callback=self.callback))
+        try:
+            connection = pika.BlockingConnection(pika.ConnectionParameters(host=config.RABBIT_URL, heartbeat=60))
+            self.channel = connection.channel()
+            # self.channel.queue_declare(queue=QUEUE_NAME, auto_delete=False)
+            # self.channel.queue_bind(queue=QUEUE_NAME, exchange=EXCHANGE, routing_key=ROUTING_KEY)
+            self.channel.basic_qos(prefetch_count=config.PREFETCH_COUNT)
+            self.channel.basic_consume(config.PRODUCER_QUEUE, on_message_callback=self.callback, auto_ack=False)
+            threading.Thread(target=self.channel.basic_consume(config.PRODUCER_QUEUE, on_message_callback=self.callback))
+        except Exception as e:
+            print(e)
 
     def callback(self, channel, method, properties, body):
         message = json.loads(body)
         # time.sleep(5)
         self.predict(message)
-        channel.basic_ack(delivery_tag=method.delivery_tag)
+        try:
+            channel.basic_ack(delivery_tag=method.delivery_tag)
+        except Exception as e:
+            print(e)
 
     def predict(self, message):
         try:
@@ -71,7 +77,10 @@ class ThreadedConsumer(threading.Thread):
 
     def run(self):
         print ('starting thread to consume from rabbit...')
-        self.channel.start_consuming()
+        try:
+            self.channel.start_consuming()
+        except Exception as e:
+            print(e)
 
 def main():
     for thread_id in range(config.THREADS):

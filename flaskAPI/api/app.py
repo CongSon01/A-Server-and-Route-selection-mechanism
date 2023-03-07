@@ -58,11 +58,6 @@ hosts = generate_topo_info.get_host_from_api()
 servers = generate_topo_info.get_server_from_api()
 
 
-print("HOSTSsssss: ")
-print(hosts.keys())
-
-print("SERVERrrrrr: ")
-print(servers.keys())
 ############################ CCDN ###############################
 update_server = updateEndPointModel.updateEndPointModel(servers)
 update_weight = ccdn.Update_weight_ccdn(
@@ -83,13 +78,13 @@ def get_ip_server_based_service():
         global priority
         global index_server
         priority += 10
-        print("toi da di vao day")
+        # print("toi da di vao day")
         # input = json.loads(request.data, object_pairs_hook=deunicodify_hook)
         content = request.data
 #       for learn_weight in json.loads(content)['learn_weights']:
-        print("Errrrrrrrrrrrrrrrrrrrrrrrrrrr = ", content)
+        # print("Errrrrrrrrrrrrrrrrrrrrrrrrrrr = ", content)
         host_ip = json.loads(content, object_pairs_hook=deunicodify_hook)['host_ip']
-        print(host_ip)
+        # print(host_ip)
 
         # end_point = json.loads(content)['EndPoint_datas']
         
@@ -109,9 +104,9 @@ def get_ip_server_based_service():
         }
 
 
-        print("Tap hosts va servers")
-        print(host_key_value)
-        print(server_key_value)
+        # print("Tap hosts va servers")
+        # print(host_key_value)
+        # print(server_key_value)
 
         '''filter server based services: de ve sau tai su dung 
         lay cum ip cua server theo service
@@ -303,6 +298,17 @@ def change_acction(x, r, w):
         8: (get_x(r + 1), get_x(w + 1)),
     }[x]
 
+def call_update_route_default():
+    global starttime  
+    R = 3
+    service_type = 5 # mac dinh service trong so
+  
+    while True:
+        # print("123")
+        if time.time() - starttime > 60:
+            route_cost.read_R_links_data_from_other_domains(R)
+            route_cost.update_route_cost_in_data_base(service_type)
+            route_cost.pull_new_cost_to_topology()
 
 # threading ccdn
 # def ccdn():
@@ -356,9 +362,11 @@ def ccdn():
             starttime = time.time()
 
 if __name__ == '__main__':
-    # threading.Thread(target=flask_ngu).start()
-    app.run(host='10.20.0.201', debug=True, use_reloader=True)
+    ######### chay luong mac dinh
+    threading.Thread(target=flask_ngu).start()
+    # app.run(host='0.0.0.0', debug=True, use_reloader=True)
     # tat luong ccdn de chay luong anh hoang
     # threading.Thread(target=ccdn).start()
+    threading.Thread(target=call_update_route_default).start()
 
 # cmt dong 192 va 194 de chay round robin

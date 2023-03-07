@@ -35,7 +35,6 @@ class connectGraph(object):
             for line in bridges:
                 result_topo['links'].append( json.loads(line) )
 
-
             # add switches to Topo file 
             # result_topo['devices'] = [ switch for switch in devices ]
             for switch in devices:
@@ -65,8 +64,7 @@ class connectGraph(object):
                     except:
                         print("rong host ip cua host co mac = ", host_mac)
 
-                    
-                        
+                                   
                     locations = host['locations']                 
                     location = locations[0]     
                     port = int(location['port'])              
@@ -92,7 +90,7 @@ class connectGraph(object):
                                         'ipAddresses': host_ip
                                 }
                         result_host['hosts'].append(host_value)
-                        print('Add host: ', host_value['ipAddresses'], "to device        ", host_value['deviceId'])
+                        # print('Add host: ', host_value['ipAddresses'], "to device        ", host_value['deviceId'])
                         # print(host_value)
 
         # ghi ra file host cuoi cung       

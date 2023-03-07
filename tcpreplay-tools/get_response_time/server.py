@@ -1,22 +1,32 @@
 from scapy.all import *
 
 # Set the IP address and port to listen on
-ip = "10.0.0.1"
+src_ip = sys.argv[1]
+
+def filter_gquic(pkt):
+    try:
+        return UDP in pkt
+        #return (UDP in pkt and pkt[UDP].dport == 443 and pkt[IP].src == src_ip) or (UDP in pkt)
+    except Exception as e:
+        print(e)
+        return UDP in pkt
 
 # Define a callback function to handle incoming packets
 def handle_packet(packet):
+    print("server start sniff")
     if IP in packet:
         print(f"hit")
         # Create a new IP packet with the source and destination IP addresses reversed
-        ip_pkt = IP(src=packet[IP].dst, dst=packet[IP].src)
+        print(f"{packet[IP].src}-{packet.src}, {packet[IP].dst}-{packet.dst}")
 
-        # Create a new ICMP ping reply packet
-        icmp_pkt = ICMP(type=0, code=0)
+        eth = Ether(src=packet.dst, dst=packet.src)
+        ip = IP(src=packet[IP].dst, dst=packet[IP].src)
+        icmp = ICMP()
 
         # Combine the IP and ICMP packets and send them back to the client
-        reply_pkt = ip_pkt / icmp_pkt
-        send(reply_pkt)
-        print("sent icmp response")
+        reply = eth/ip/icmp
+        sendp(reply)
+        print(f"sent icmp response: {packet.id}")
 
 # Start a scapy sniffing session to listen for incoming packets
-sniff(filter=f"src {ip}", prn=handle_packet)
+sniff(lfilter=filter_gquic, prn=handle_packet)
