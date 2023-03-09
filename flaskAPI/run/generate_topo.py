@@ -80,9 +80,12 @@ class generate_topo_info:
 
 def generate_topo(net, hosts_save):
     gtopo = generate_topo_info()
-    name_hosts, name_servers = gtopo.get_api()
-    print("Tap hosts sau khi ping", name_hosts)
-    print("Tap servers sau khi ping", name_servers)
+    try:
+        name_hosts, name_servers = gtopo.get_api()
+        print("Tap hosts sau khi ping", name_hosts)
+        print("Tap servers sau khi ping", name_servers)
+    except Exception as err:
+        print(err)
 #
     # print(name_hosts, name_servers)
     # print(hosts_save)

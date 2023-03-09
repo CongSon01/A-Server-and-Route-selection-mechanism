@@ -8,7 +8,7 @@ INTERVAL = 1000 # So lan 1 host duoc thiet lap ket noi
 # MIN_IPERF = 20000000  # flow traffict trong mang toi thieu ( Mb/s )
 
 ########## http server MByte. Can truyen to Mbit
-FILE_SIZE_MIN = 3.75 
+FILE_SIZE_MIN = 3.75 # day la dang truyen 3.75 MByte xap xi 20% BW
 FILE_SIZE_MAX = 15 
 # MAX BANG THONG LA 10Mb
 
