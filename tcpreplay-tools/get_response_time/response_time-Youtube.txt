@@ -1117,3 +1117,8 @@
 'service_type': Youtube, 'src_ip': 10.0.0.9, 'dst_ip': 10.0.0.25, 'response_time': 0.0685666629246303
 'service_type': Youtube, 'src_ip': 10.0.0.9, 'dst_ip': 10.0.0.25, 'response_time': 0.05994336945669992
 'service_type': Youtube, 'src_ip': 10.0.0.9, 'dst_ip': 10.0.0.25, 'response_time': 0.06438677651541573
+'service_type': Youtube, 'src_ip': 10.0.0.9, 'dst_ip': 10.0.0.25, 'response_time': 0.07199819882710774
+'service_type': Youtube, 'src_ip': 10.0.0.9, 'dst_ip': 10.0.0.25, 'response_time': 0.053740368949042425
+'service_type': Youtube, 'src_ip': 10.0.0.9, 'dst_ip': 10.0.0.25, 'response_time': 0.04825147986412048
+'service_type': Youtube, 'src_ip': 10.0.0.9, 'dst_ip': 10.0.0.25, 'response_time': 0.06504106521606445
+'service_type': Youtube, 'src_ip': 10.0.0.9, 'dst_ip': 10.0.0.25, 'response_time': 0.05606275796890259
