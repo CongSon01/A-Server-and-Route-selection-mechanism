@@ -99,3 +99,4 @@
 'service_type': FileTransfer, 'src_ip': 10.0.0.1, 'dst_ip': 10.0.0.11, 'response_time': 0.05232969335643329
 'service_type': FileTransfer, 'src_ip': 10.0.0.1, 'dst_ip': 10.0.0.11, 'response_time': 0.06447816588301772
 'service_type': FileTransfer, 'src_ip': 10.0.0.1, 'dst_ip': 10.0.0.11, 'response_time': 0.056065603734690175
+'service_type': FileTransfer, 'src_ip': 10.0.0.1, 'dst_ip': 10.0.0.11, 'response_time': 0.06493633517011284

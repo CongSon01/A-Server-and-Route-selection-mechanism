@@ -120,9 +120,9 @@ def generate_topo(net, hosts_save):
 
     # print("Cho 10 phut")
     # time.sleep(60*10)
-    next = input("Enter continues: ")
-    if next == 'ok':
-        run_shedule(starting_table,net,life_time)
+    # next = input("Enter continues: ")
+    # if next == 'ok':
+    #     run_shedule(starting_table,net,life_time)
 
 def create_starting_table(host_list, period, interval, life_time):
     generate_flow = {}

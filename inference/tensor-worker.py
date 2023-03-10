@@ -57,19 +57,19 @@ class ThreadedConsumer(threading.Thread):
             prediction = model.predict(x_test)
             one_flow_pred = int(np.argmax(prediction, axis=-1))
 
-            label_dict = {'FileTransfer': 0, 'Music': 1, 'VoIP': 2, 'Youtube': 3}
+            label_dict = {'Music': 0, 'Youtube': 1, 'VoIP': 2, 'FileTransfer': 3}
             for key, value in label_dict.items():
                 if one_flow_pred == value:
                     print(f"=== one_flow_pred === {key}")
-                    
-            url_server_selection = "http://10.20.0.201:5000/getIpServerBasedService"
-            print("===test====", ip_src, ip_dst, one_flow_pred)
-            response_server_selection = requests.post(url_server_selection, data = json.dumps({"host_ip": ip_src, "server_ip": ip_dst, "service_type": one_flow_pred}))
-            print("response url_server_selection: ", response_server_selection)
 
             url_update_cost = "http://10.20.0.201:5000/update_cost_base_on_service"
             response_update_cost = requests.post(url_update_cost, data = json.dumps({"service_type": one_flow_pred}))
             print("response url_update_cost: ", response_update_cost)
+
+            url_server_selection = "http://10.20.0.201:5000/getIpServerBasedService"
+            print("===test====", ip_src, ip_dst, one_flow_pred)
+            response_server_selection = requests.post(url_server_selection, data = json.dumps({"host_ip": ip_src, "server_ip": ip_dst, "service_type": one_flow_pred}))
+            print("response url_server_selection: ", response_server_selection)
 
             return one_flow_pred
         except Exception as e:

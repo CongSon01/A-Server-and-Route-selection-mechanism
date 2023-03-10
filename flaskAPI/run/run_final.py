@@ -179,7 +179,7 @@ ping_host_in_sdn(net, controllers, not_host)
 kq = input("Chay luon nhe:")
 if kq == 'ok':
     generate_topo.generate_topo(net, hosts_save)
-    # CLI(net)
+    CLI(net)
 
 net.stop()
 

@@ -362,11 +362,16 @@ def ccdn():
             starttime = time.time()
 
 if __name__ == '__main__':
-    ######### chay luong mac dinh
-    threading.Thread(target=flask_ngu).start()
-    # app.run(host='0.0.0.0', debug=True, use_reloader=True)
+    ######### chay luong flask
+    # threading.Thread(target=flask_ngu).start()
+
+    ##### chay app
+    app.run(host='0.0.0.0', debug=True, use_reloader=True)
+
     # tat luong ccdn de chay luong anh hoang
     # threading.Thread(target=ccdn).start()
-    threading.Thread(target=call_update_route_default).start()
+
+    # luong de chay trong so mac dinh
+    # threading.Thread(target=call_update_route_default).start()
 
 # cmt dong 192 va 194 de chay round robin

@@ -21,6 +21,16 @@ class RouteCost:
     def __init__(self, topo, list_ip):
         # data base route cost
         self.db = MongoDbHandler(database="SDN_data", collection="LinkCost")
+        self.min_max_db = MongoDbHandler(database="SDN_data", collection="min_max_db")
+        new_route = {
+            "max_delay": INIT_MAX_DELAY,
+            "min_delay": INIT_MIN_DELAY,
+            "max_packet_loss": INIT_MAX_PACKET_LOSS_RATE,
+            "min_packet_loss": INIT_MIN_PACKET_LOSS_RATE,
+            "max_link_utilization": INIT_MAX_LINK_UTILZATION,
+            "min_link_utilization": INIT_MIN_LINK_UTILZATION
+        }
+        self.min_max_db.insert_one_data(new_route)
         # self.db.remove_all()
         self.R_links_data = []
         self.list_ip = list_ip
@@ -52,12 +62,50 @@ class RouteCost:
         # self.link_versions = []
         # print("dataaaaaaaaaaaa")
         # print(self.link_versions)
+        MIN_DELAY = 0
+        MAX_DELAY = 1000
         for link_data in self.link_versions:
             src = link_data["src"]
             dst = link_data["dst"]
             delay = float(link_data["delay"])
             packet_loss = float(link_data["packetLoss"])
             link_utilization = float(link_data["linkUtilization"])   
+
+            if (delay > MAX_DELAY):
+                query = {}
+                new_value = {"$set": {"max_delay": delay}}
+                self.min_max_db.update_one(query, new_value)
+            if (delay < MIN_DELAY):
+                query = {}
+                new_value = {"$set": {"min_delay": delay}}
+                self.min_max_db.update_one(query, new_value)
+            if (packet_loss > MAX_PACKET_LOSS_RATE):
+                query = {}
+                new_value = {"$set": {"max_packet_loss": packet_loss}}
+                self.min_max_db.update_one(query, new_value)
+            if (packet_loss < MIN_PACKET_LOSS_RATE):
+                query = {}
+                new_value = {"$set": {"min_packet_loss": packet_loss}}
+                self.min_max_db.update_one(query, new_value)
+            if (link_utilization_normalized > MAX_LINK_UTILZATION):
+                query = {}
+                new_value = {"$set": {"max_packet_loss": link_utilization_normalized}}
+                self.min_max_db.update_one(query, new_value)
+            if (link_utilization_normalized < MIN_LINK_UTILZATION):
+                query = {}
+                new_value = {"$set": {"min_packet_loss": link_utilization_normalized}}
+                self.min_max_db.update_one(query, new_value)
+                
+
+
+            MIN_DELAY = self.min_max_db.find({}, {"min_delay": 1})
+            MAX_DELAY = self.min_max_db.find({}, {"max_delay": 1})
+
+            MIN_PACKET_LOSS_RATE = self.min_max_db.find({}, {"min_packet_loss": 1}) 
+            MAX_PACKET_LOSS_RATE = self.min_max_db.find({}, {"max_packet_loss": 1})  
+
+            MIN_LINK_UTILZATION = self.min_max_db.find({}, {"min_link_utilization": 1})
+            MAX_LINK_UTILZATION = self.min_max_db.find({}, {"max_link_utilization": 1})
 
             delay_normalized = self.normalize_QoS_metric(QoS_metric=delay, 
                                                          min_range= MIN_DELAY, 
@@ -130,20 +178,4 @@ class RouteCost:
         else:
             return (QoS_metric - min_range) / (max_range - min_range + pow(10, -7))
         
-    # def update_link_cost_through_time(self, current_link_cost, 
-    #                                   culmulative_link_cost):
-        
-    #     return (current_link_cost + culmulative_link_cost) / 2
-
-
-        #  temp_data = {"src": src,
-        #                  "dst": dst,
-        #                  "delay": float(delay),
-        #                  "linkUtilization": float(link_utilization),
-        #                  "packetLoss": float(packet_loss),
-        #                  "linkVersion": self.link_version,
-        #                  "IpSDN": self.ip_local,
-        #                  "overhead": float(overhead),
-        #                  "byteSent": float(byte_sent),
-        #                  "byt
     
