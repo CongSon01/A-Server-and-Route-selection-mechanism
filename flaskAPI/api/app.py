@@ -11,7 +11,7 @@
 import logging
 import sys
 
-PATH_ABSOLUTE = "/home/onos/Downloads/A-Server-and-Route-selection-mechanism/"
+PATH_ABSOLUTE = "/usr/local/Downloads/A-Server-and-Route-selection-mechanism/"
 sys.path.append(PATH_ABSOLUTE+'flaskAPI/dataBaseMongo')
 sys.path.append(PATH_ABSOLUTE+'flaskAPI/linkTopo')
 
@@ -36,7 +36,7 @@ log.setLevel(logging.ERROR)
 # Init app
 app = Flask(__name__)
 
-PATH_ABSOLUTE = "/home/onos/Downloads/A-Server-and-Route-selection-mechanism/"
+PATH_ABSOLUTE = "/usr/local/Downloads/A-Server-and-Route-selection-mechanism/"
 
 sys.path.append(PATH_ABSOLUTE + 'utils')
 from get_local_ip import get_local_ip
