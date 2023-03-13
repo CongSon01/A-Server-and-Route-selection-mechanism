@@ -1,6 +1,6 @@
 
 import sys, json, random
-PATH_ABSOLUTE = "/home/onos/Downloads/A-Server-and-Route-selection-mechanism/"
+PATH_ABSOLUTE = "/usr/local/Downloads/A-Server-and-Route-selection-mechanism/"
 
 sys.path.append(PATH_ABSOLUTE + 'dataBaseMongo')
 import Lstm
