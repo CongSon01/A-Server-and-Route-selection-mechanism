@@ -6,6 +6,7 @@ WORKDIR /usr/local
 RUN apt update -y
 RUN apt install curl \
                 wget \
+                net-tools \
                 gnupg2 \
                 mongodb \
                 python3 \
