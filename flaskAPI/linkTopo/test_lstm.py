@@ -2,7 +2,7 @@ import sys
 # from keras.models import load_model
 import numpy as np
 
-PATH_ABSOLUTE = "/usr/local/"
+PATH_ABSOLUTE = "/home/onos/"
 sys.path.append(PATH_ABSOLUTE+'flaskAPI/linkTopo')
 import learnWeight
 # import predict_linkWeight, lstm_model

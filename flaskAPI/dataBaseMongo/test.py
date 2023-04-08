@@ -1,5 +1,5 @@
 import sys
-PATH_ABSOLUTE = "/usr/local/"
+PATH_ABSOLUTE = "/home/onos/"
 sys.path.append(PATH_ABSOLUTE+'flaskAPI/dataBaseMongo')
 sys.path.append(PATH_ABSOLUTE+'flaskAPI/linkTopo')
 

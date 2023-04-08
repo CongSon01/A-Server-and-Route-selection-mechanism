@@ -19,7 +19,7 @@ logging.basicConfig(
         filename="./logging/basic.log",
     )
 
-PATH_ABSOLUTE = "/usr/local/A-Server-and-Route-selection-mechanism/"
+PATH_ABSOLUTE = "/home/onos/A-Server-and-Route-selection-mechanism/"
 sys.path.append(PATH_ABSOLUTE+'flaskAPI/dataBaseMongo')
 sys.path.append(PATH_ABSOLUTE+'flaskAPI/linkTopo')
 sys.path.append(PATH_ABSOLUTE+'config')
