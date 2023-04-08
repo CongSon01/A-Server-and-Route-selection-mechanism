@@ -19,7 +19,7 @@ logging.basicConfig(
         filename="./logging/basic.log",
     )
 
-PATH_ABSOLUTE = "/home/onos/Downloads/A-Server-and-Route-selection-mechanism/"
+PATH_ABSOLUTE = "/usr/local/A-Server-and-Route-selection-mechanism/"
 sys.path.append(PATH_ABSOLUTE+'flaskAPI/dataBaseMongo')
 sys.path.append(PATH_ABSOLUTE+'flaskAPI/linkTopo')
 sys.path.append(PATH_ABSOLUTE+'config')
@@ -48,7 +48,6 @@ log.setLevel(logging.ERROR)
 # Init app
 app = Flask(__name__)
 
-PATH_ABSOLUTE = "/usr/local/"
 
 sys.path.append(PATH_ABSOLUTE + 'utils')
 from get_local_ip import get_local_ip
