@@ -1,0 +1,555 @@
+2023-03-21 11:42:53 INFO Cap nhap du lieu. Byte sent: 5.517842E7 Byte received: 5.5233788E7
+2023-03-21 11:42:53 INFO Cap nhap du lieu. Byte sent: 5.5182536E7 Byte received: 5.5177536E7
+2023-03-21 11:42:53 INFO Cap nhap du lieu. Byte sent: 5.5274752E7 Byte received: 5.8849096E7
+2023-03-21 11:42:53 INFO Cap nhap du lieu. Byte sent: 5.8849096E7 Byte received: 5.8946804E7
+2023-03-21 11:42:53 INFO Cap nhap du lieu. Byte sent: 5.5249764E7 Byte received: 5.5275144E7
+2023-03-21 11:42:53 INFO Cap nhap du lieu. Byte sent: 5.5233788E7 Byte received: 5.5250744E7
+2023-03-21 11:42:53 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:42:53 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:42:53 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:42:53 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:42:53 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:42:53 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:42:53 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1039
+2023-03-21 11:42:53 INFO Cap nhap du lieu. Byte sent: 5.5182536E7 Byte received: 5.5177536E7
+2023-03-21 11:42:53 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:42:53 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1290
+2023-03-21 11:42:53 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1039
+2023-03-21 11:42:53 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1543
+2023-03-21 11:42:53 INFO Cap nhap du lieu. Byte sent: 5.8849096E7 Byte received: 5.8946804E7
+2023-03-21 11:42:53 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 525
+2023-03-21 11:42:53 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:42:53 INFO Cap nhap du lieu. Byte sent: 5.517842E7 Byte received: 5.5233788E7
+2023-03-21 11:42:53 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:42:53 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1290
+2023-03-21 11:42:53 INFO Cap nhap du lieu. Byte sent: 5.8753728E7 Byte received: 5.5275144E7
+2023-03-21 11:42:54 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:42:54 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1543
+2023-03-21 11:42:54 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1543
+2023-03-21 11:42:54 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1543
+2023-03-21 11:42:54 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1553
+2023-03-21 11:43:03 INFO Cap nhap du lieu. Byte sent: 2.61513E7 Byte received: 2.6602786E7
+2023-03-21 11:43:03 INFO Cap nhap du lieu. Byte sent: 5.0824072E7 Byte received: 2.6015276E7
+2023-03-21 11:43:04 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:43:04 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:43:04 INFO Cap nhap du lieu. Byte sent: 2.6602002E7 Byte received: 2.7021344E7
+2023-03-21 11:43:04 INFO Cap nhap du lieu. Byte sent: 2.59602E7 Byte received: 2.6150614E7
+2023-03-21 11:43:04 INFO Cap nhap du lieu. Byte sent: 2.6015276E7 Byte received: 2.5960494E7
+2023-03-21 11:43:04 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:43:04 INFO Cap nhap du lieu. Byte sent: 2.5881196E7 Byte received: 5.082564E7
+2023-03-21 11:43:04 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:43:04 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:43:04 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:43:04 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1554
+2023-03-21 11:43:04 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1560
+2023-03-21 11:43:04 INFO Cap nhap du lieu. Byte sent: 2.61513E7 Byte received: 2.6602786E7
+2023-03-21 11:43:04 INFO Cap nhap du lieu. Byte sent: 5.0824072E7 Byte received: 2.6015276E7
+2023-03-21 11:43:04 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1552
+2023-03-21 11:43:04 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:43:04 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:43:04 INFO Cap nhap du lieu. Byte sent: 2.59602E7 Byte received: 2.6150614E7
+2023-03-21 11:43:04 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:43:04 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1559
+2023-03-21 11:43:04 INFO Cap nhap du lieu. Byte sent: 2.6015276E7 Byte received: 2.5960494E7
+2023-03-21 11:43:04 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:43:04 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1548
+2023-03-21 11:43:04 INFO Cap nhap du lieu. Byte sent: 2.5881196E7 Byte received: 5.082564E7
+2023-03-21 11:43:04 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:43:04 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1548
+2023-03-21 11:43:04 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1561
+2023-03-21 11:43:04 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1548
+2023-03-21 11:43:04 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1548
+2023-03-21 11:43:04 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1548
+2023-03-21 11:43:04 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1548
+2023-03-21 11:43:14 INFO Cap nhap du lieu. Byte sent: 6521802.0 Byte received: 6409788.0
+2023-03-21 11:43:14 INFO Cap nhap du lieu. Byte sent: 6579622.0 Byte received: 6523664.0
+2023-03-21 11:43:14 INFO Cap nhap du lieu. Byte sent: 6409200.0 Byte received: 6265238.0
+2023-03-21 11:43:14 INFO Cap nhap du lieu. Byte sent: 6265238.0 Byte received: 6047090.0
+2023-03-21 11:43:14 INFO Cap nhap du lieu. Byte sent: 6523664.0 Byte received: 6522096.0
+2023-03-21 11:43:14 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:43:14 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:43:14 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:43:14 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:43:14 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:43:14 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1578
+2023-03-21 11:43:14 INFO Cap nhap du lieu. Byte sent: 6409200.0 Byte received: 6265238.0
+2023-03-21 11:43:14 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1578
+2023-03-21 11:43:14 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:43:14 INFO Cap nhap du lieu. Byte sent: 6265238.0 Byte received: 6047090.0
+2023-03-21 11:43:14 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1555
+2023-03-21 11:43:14 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:43:14 INFO Cap nhap du lieu. Byte sent: 6521802.0 Byte received: 6409788.0
+2023-03-21 11:43:14 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:43:14 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1578
+2023-03-21 11:43:14 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1579
+2023-03-21 11:43:14 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1579
+2023-03-21 11:43:14 INFO Cap nhap du lieu. Byte sent: 6523664.0 Byte received: 6522096.0
+2023-03-21 11:43:14 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:43:14 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1579
+2023-03-21 11:43:14 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1579
+2023-03-21 11:43:14 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1579
+2023-03-21 11:43:24 INFO Cap nhap du lieu. Byte sent: 3.6626224E7 Byte received: 3.3387718E7
+2023-03-21 11:43:24 INFO Cap nhap du lieu. Byte sent: 4.0070728E7 Byte received: 3.8832108E7
+2023-03-21 11:43:24 INFO Cap nhap du lieu. Byte sent: 3.8840144E7 Byte received: 3.6625344E7
+2023-03-21 11:43:24 INFO Cap nhap du lieu. Byte sent: 3.3388208E7 Byte received: 2.9623146E7
+2023-03-21 11:43:24 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:43:24 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:43:24 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:43:24 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:43:24 INFO Cap nhap du lieu. Byte sent: 3.8831716E7 Byte received: 3.8839456E7
+2023-03-21 11:43:24 INFO Cap nhap du lieu. Byte sent: 4.0185192E7 Byte received: 4.0071808E7
+2023-03-21 11:43:24 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:43:24 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:43:24 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1572
+2023-03-21 11:43:24 INFO Cap nhap du lieu. Byte sent: 3.6626224E7 Byte received: 3.3387718E7
+2023-03-21 11:43:24 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:43:24 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1575
+2023-03-21 11:43:24 INFO Cap nhap du lieu. Byte sent: 3.8840144E7 Byte received: 3.6625344E7
+2023-03-21 11:43:24 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:43:24 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1574
+2023-03-21 11:43:24 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1572
+2023-03-21 11:43:24 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1575
+2023-03-21 11:43:24 INFO Cap nhap du lieu. Byte sent: 3.8831716E7 Byte received: 3.8839456E7
+2023-03-21 11:43:24 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1574
+2023-03-21 11:43:24 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1574
+2023-03-21 11:43:24 INFO Cap nhap du lieu. Byte sent: 4.0070728E7 Byte received: 3.8832108E7
+2023-03-21 11:43:24 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1574
+2023-03-21 11:43:24 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:43:24 INFO Cap nhap du lieu. Byte sent: 3.3388208E7 Byte received: 2.9623146E7
+2023-03-21 11:43:24 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:43:24 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1574
+2023-03-21 11:43:24 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1574
+2023-03-21 11:43:24 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:43:24 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1574
+2023-03-21 11:44:44 INFO Cap nhap du lieu. Byte sent: 8.8518992E7 Byte received: 8.4799792E7
+2023-03-21 11:44:44 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:44:44 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1834
+2023-03-21 11:44:44 INFO Cap nhap du lieu. Byte sent: 8.8518992E7 Byte received: 8.4799792E7
+2023-03-21 11:44:44 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:44:44 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 1834
+2023-03-21 11:44:48 INFO Cap nhap du lieu. Byte sent: 7.6136592E7 Byte received: 7.5743808E7
+2023-03-21 11:44:48 INFO Cap nhap du lieu. Byte sent: 7.9197328E7 Byte received: 7.6181472E7
+2023-03-21 11:44:48 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:44:48 INFO Cap nhap du lieu. Byte sent: 7.6142376E7 Byte received: 7.6136592E7
+2023-03-21 11:44:48 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:44:48 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:44:48 INFO Cap nhap du lieu. Byte sent: 7.6182656E7 Byte received: 7.6143648E7
+2023-03-21 11:44:48 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 2090
+2023-03-21 11:44:48 INFO Cap nhap du lieu. Byte sent: 9.2610784E7 Byte received: 7.9195168E7
+2023-03-21 11:44:48 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:44:48 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 2349
+2023-03-21 11:44:48 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 2611
+2023-03-21 11:44:48 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:44:48 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 2873
+2023-03-21 11:44:48 INFO Cap nhap du lieu. Byte sent: 7.9197328E7 Byte received: 7.6181472E7
+2023-03-21 11:44:48 INFO Cap nhap du lieu. Byte sent: 7.6142376E7 Byte received: 7.6136592E7
+2023-03-21 11:44:48 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3133
+2023-03-21 11:44:48 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:44:48 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:44:48 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3133
+2023-03-21 11:44:48 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3133
+2023-03-21 11:44:54 INFO Cap nhap du lieu. Byte sent: 8.640856E7 Byte received: 8.6105152E7
+2023-03-21 11:44:54 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:44:54 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3135
+2023-03-21 11:44:54 INFO Cap nhap du lieu. Byte sent: 8.640856E7 Byte received: 8.6105152E7
+2023-03-21 11:44:54 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:44:54 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3135
+2023-03-21 11:44:58 INFO Cap nhap du lieu. Byte sent: 8.538544E7 Byte received: 8.531096E7
+2023-03-21 11:44:58 INFO Cap nhap du lieu. Byte sent: 8.301972E7 Byte received: 8.5552432E7
+2023-03-21 11:44:58 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:44:58 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:44:58 INFO Cap nhap du lieu. Byte sent: 8.5550864E7 Byte received: 8.538544E7
+2023-03-21 11:44:58 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3136
+2023-03-21 11:44:58 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3128
+2023-03-21 11:44:58 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:44:58 INFO Cap nhap du lieu. Byte sent: 8.5552432E7 Byte received: 8.5550864E7
+2023-03-21 11:44:59 INFO Cap nhap du lieu. Byte sent: 8.538544E7 Byte received: 8.531096E7
+2023-03-21 11:44:59 INFO Cap nhap du lieu. Byte sent: 8.3001296E7 Byte received: 8.3020112E7
+2023-03-21 11:44:59 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3130
+2023-03-21 11:44:59 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:44:59 INFO Cap nhap du lieu. Byte sent: 8.301972E7 Byte received: 8.5552432E7
+2023-03-21 11:44:59 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:44:59 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:44:59 INFO Cap nhap du lieu. Byte sent: 8.5550864E7 Byte received: 8.538544E7
+2023-03-21 11:44:59 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:44:59 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3131
+2023-03-21 11:44:59 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:44:59 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3124
+2023-03-21 11:44:59 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3131
+2023-03-21 11:44:59 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3124
+2023-03-21 11:44:59 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3124
+2023-03-21 11:45:04 INFO Cap nhap du lieu. Byte sent: 9.6621728E7 Byte received: 9.6826352E7
+2023-03-21 11:45:04 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:04 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3114
+2023-03-21 11:45:04 INFO Cap nhap du lieu. Byte sent: 9.6621728E7 Byte received: 9.6826352E7
+2023-03-21 11:45:04 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:04 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3114
+2023-03-21 11:45:09 INFO Cap nhap du lieu. Byte sent: 7.8575616E7 Byte received: 7.865088E7
+2023-03-21 11:45:09 INFO Cap nhap du lieu. Byte sent: 7.753368E7 Byte received: 7.8042496E7
+2023-03-21 11:45:09 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:09 INFO Cap nhap du lieu. Byte sent: 7.8055824E7 Byte received: 7.8574832E7
+2023-03-21 11:45:09 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:09 INFO Cap nhap du lieu. Byte sent: 7.8042104E7 Byte received: 7.8056608E7
+2023-03-21 11:45:09 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3112
+2023-03-21 11:45:09 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:09 INFO Cap nhap du lieu. Byte sent: 8.6478336E7 Byte received: 7.753368E7
+2023-03-21 11:45:09 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3112
+2023-03-21 11:45:09 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:09 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:09 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3091
+2023-03-21 11:45:09 INFO Cap nhap du lieu. Byte sent: 7.8042104E7 Byte received: 7.8056608E7
+2023-03-21 11:45:09 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3091
+2023-03-21 11:45:09 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3099
+2023-03-21 11:45:09 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:09 INFO Cap nhap du lieu. Byte sent: 7.8055824E7 Byte received: 7.8574832E7
+2023-03-21 11:45:09 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:09 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3099
+2023-03-21 11:45:09 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3099
+2023-03-21 11:45:14 INFO Cap nhap du lieu. Byte sent: 7.096376E7 Byte received: 7.0984144E7
+2023-03-21 11:45:14 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:14 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3100
+2023-03-21 11:45:14 INFO Cap nhap du lieu. Byte sent: 7.096376E7 Byte received: 7.0984144E7
+2023-03-21 11:45:14 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:14 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3100
+2023-03-21 11:45:19 INFO Cap nhap du lieu. Byte sent: 9.6580176E7 Byte received: 9.6181904E7
+2023-03-21 11:45:19 INFO Cap nhap du lieu. Byte sent: 9.6182688E7 Byte received: 7.1035384E7
+2023-03-21 11:45:19 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:19 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3107
+2023-03-21 11:45:19 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:19 INFO Cap nhap du lieu. Byte sent: 9.7270096E7 Byte received: 9.6559792E7
+2023-03-21 11:45:19 INFO Cap nhap du lieu. Byte sent: 9.6559792E7 Byte received: 9.6580176E7
+2023-03-21 11:45:19 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:19 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3115
+2023-03-21 11:45:19 INFO Cap nhap du lieu. Byte sent: 8.5441888E7 Byte received: 9.727088E7
+2023-03-21 11:45:19 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:19 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3121
+2023-03-21 11:45:19 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:19 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3121
+2023-03-21 11:45:19 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3113
+2023-03-21 11:45:19 INFO Cap nhap du lieu. Byte sent: 9.6559792E7 Byte received: 9.6580176E7
+2023-03-21 11:45:19 INFO Cap nhap du lieu. Byte sent: 8.5441888E7 Byte received: 9.727088E7
+2023-03-21 11:45:19 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:19 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:19 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3113
+2023-03-21 11:45:19 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3113
+2023-03-21 11:45:24 INFO Cap nhap du lieu. Byte sent: 9.665152E7 Byte received: 9.6083904E7
+2023-03-21 11:45:24 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:24 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3120
+2023-03-21 11:45:24 INFO Cap nhap du lieu. Byte sent: 9.665152E7 Byte received: 9.6083904E7
+2023-03-21 11:45:24 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:24 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3121
+2023-03-21 11:45:29 INFO Cap nhap du lieu. Byte sent: 7.0570976E7 Byte received: 7.0584304E7
+2023-03-21 11:45:29 INFO Cap nhap du lieu. Byte sent: 7.0585088E7 Byte received: 7.0576464E7
+2023-03-21 11:45:29 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:29 INFO Cap nhap du lieu. Byte sent: 7.0576464E7 Byte received: 7.0571272E7
+2023-03-21 11:45:29 INFO Cap nhap du lieu. Byte sent: 7.0585872E7 Byte received: 7.0577248E7
+2023-03-21 11:45:29 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:29 INFO Cap nhap du lieu. Byte sent: 7.058352E7 Byte received: 7.0586064E7
+2023-03-21 11:45:29 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:29 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3113
+2023-03-21 11:45:29 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:29 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:29 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3122
+2023-03-21 11:45:29 INFO Cap nhap du lieu. Byte sent: 7.0585088E7 Byte received: 7.0576464E7
+2023-03-21 11:45:29 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:29 INFO Cap nhap du lieu. Byte sent: 7.0576464E7 Byte received: 7.0571272E7
+2023-03-21 11:45:29 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3113
+2023-03-21 11:45:29 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3125
+2023-03-21 11:45:29 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:29 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3125
+2023-03-21 11:45:29 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3125
+2023-03-21 11:45:29 INFO Cap nhap du lieu. Byte sent: 7.0570976E7 Byte received: 7.0584304E7
+2023-03-21 11:45:29 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3125
+2023-03-21 11:45:29 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:29 INFO Cap nhap du lieu. Byte sent: 7.058352E7 Byte received: 7.0586064E7
+2023-03-21 11:45:29 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3125
+2023-03-21 11:45:29 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:29 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3125
+2023-03-21 11:45:34 INFO Cap nhap du lieu. Byte sent: 7.7470176E7 Byte received: 7.7981344E7
+2023-03-21 11:45:34 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:34 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3117
+2023-03-21 11:45:34 INFO Cap nhap du lieu. Byte sent: 7.7470176E7 Byte received: 7.7981344E7
+2023-03-21 11:45:34 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:34 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3117
+2023-03-21 11:45:45 INFO Cap nhap du lieu. Byte sent: 8.5709232E7 Byte received: 8.538936E7
+2023-03-21 11:45:45 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:45 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3125
+2023-03-21 11:45:45 INFO Cap nhap du lieu. Byte sent: 8.5709232E7 Byte received: 8.538936E7
+2023-03-21 11:45:45 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:45 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3125
+2023-03-21 11:45:49 INFO Cap nhap du lieu. Byte sent: 8.5681792E7 Byte received: 8.4927392E7
+2023-03-21 11:45:49 INFO Cap nhap du lieu. Byte sent: 8.49268E7 Byte received: 8.4933072E7
+2023-03-21 11:45:49 INFO Cap nhap du lieu. Byte sent: 8.4933856E7 Byte received: 8.4410928E7
+2023-03-21 11:45:49 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:49 INFO Cap nhap du lieu. Byte sent: 8.4410928E7 Byte received: 8.4307632E7
+2023-03-21 11:45:49 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:49 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:49 INFO Cap nhap du lieu. Byte sent: 8.6952952E7 Byte received: 8.5681008E7
+2023-03-21 11:45:49 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:49 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:49 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3124
+2023-03-21 11:45:49 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3125
+2023-03-21 11:45:49 INFO Cap nhap du lieu. Byte sent: 8.5681792E7 Byte received: 8.4927392E7
+2023-03-21 11:45:49 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3127
+2023-03-21 11:45:49 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3127
+2023-03-21 11:45:49 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3133
+2023-03-21 11:45:49 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:49 INFO Cap nhap du lieu. Byte sent: 8.4410928E7 Byte received: 8.4307632E7
+2023-03-21 11:45:49 INFO Cap nhap du lieu. Byte sent: 8.49268E7 Byte received: 8.4933072E7
+2023-03-21 11:45:49 INFO Cap nhap du lieu. Byte sent: 8.6952952E7 Byte received: 8.5681008E7
+2023-03-21 11:45:49 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3133
+2023-03-21 11:45:49 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:49 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:49 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:49 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3133
+2023-03-21 11:45:49 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3133
+2023-03-21 11:45:49 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3134
+2023-03-21 11:45:55 INFO Cap nhap du lieu. Byte sent: 9.6595856E7 Byte received: 9.82156E7
+2023-03-21 11:45:55 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:55 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3127
+2023-03-21 11:45:55 INFO Cap nhap du lieu. Byte sent: 9.6595856E7 Byte received: 9.82156E7
+2023-03-21 11:45:55 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:45:55 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3127
+2023-03-21 11:47:37 INFO Cap nhap du lieu. Byte sent: 4.4655072E7 Byte received: 4.4645664E7
+2023-03-21 11:47:37 INFO Cap nhap du lieu. Byte sent: 4.4655856E7 Byte received: 4.464488E7
+2023-03-21 11:47:37 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:47:37 INFO Cap nhap du lieu. Byte sent: 4.4657424E7 Byte received: 4.4645664E7
+2023-03-21 11:47:37 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:47:37 INFO Cap nhap du lieu. Byte sent: 4.464488E7 Byte received: 4.4657424E7
+2023-03-21 11:47:37 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3138
+2023-03-21 11:47:37 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:47:37 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:47:37 INFO Cap nhap du lieu. Byte sent: 4.4655856E7 Byte received: 4.464488E7
+2023-03-21 11:47:37 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3138
+2023-03-21 11:47:37 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3133
+2023-03-21 11:47:37 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3140
+2023-03-21 11:47:37 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:47:37 INFO Cap nhap du lieu. Byte sent: 4.4644976E7 Byte received: 4.4655464E7
+2023-03-21 11:47:37 INFO Cap nhap du lieu. Byte sent: 4.4655072E7 Byte received: 4.4645664E7
+2023-03-21 11:47:37 INFO Cap nhap du lieu. Byte sent: 4.4661344E7 Byte received: 4.4655072E7
+2023-03-21 11:47:37 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3133
+2023-03-21 11:47:37 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:47:37 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:47:37 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:47:37 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3137
+2023-03-21 11:47:37 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3137
+2023-03-21 11:47:37 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3137
+2023-03-21 11:47:47 INFO Cap nhap du lieu. Byte sent: 4.0022416E7 Byte received: 4.0032608E7
+2023-03-21 11:47:47 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:47:47 INFO Cap nhap du lieu. Byte sent: 4.0032608E7 Byte received: 4.0022416E7
+2023-03-21 11:47:47 INFO Cap nhap du lieu. Byte sent: 4.0020064E7 Byte received: 4.002712E7
+2023-03-21 11:47:47 INFO Cap nhap du lieu. Byte sent: 4.0032608E7 Byte received: 4.0020064E7
+2023-03-21 11:47:47 INFO Cap nhap du lieu. Byte sent: 4.002712E7 Byte received: 4.002614E7
+2023-03-21 11:47:47 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:47:47 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:47:47 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:47:47 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3138
+2023-03-21 11:47:47 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:47:47 INFO Cap nhap du lieu. Byte sent: 4.2515912E7 Byte received: 4.0033392E7
+2023-03-21 11:47:47 INFO Cap nhap du lieu. Byte sent: 4.0022416E7 Byte received: 4.0032608E7
+2023-03-21 11:47:47 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:47:47 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:47:47 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3138
+2023-03-21 11:47:47 INFO Cap nhap du lieu. Byte sent: 4.0032608E7 Byte received: 4.0022416E7
+2023-03-21 11:47:47 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:47:47 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3138
+2023-03-21 11:47:47 INFO Cap nhap du lieu. Byte sent: 4.0020064E7 Byte received: 4.002712E7
+2023-03-21 11:47:47 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:47:47 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3138
+2023-03-21 11:47:47 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3139
+2023-03-21 11:47:47 INFO Cap nhap du lieu. Byte sent: 4.002712E7 Byte received: 4.002614E7
+2023-03-21 11:47:47 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:47:47 INFO Cap nhap du lieu. Byte sent: 4.0032608E7 Byte received: 4.0020064E7
+2023-03-21 11:47:47 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:47:47 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3137
+2023-03-21 11:47:47 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3137
+2023-03-21 11:47:47 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3137
+2023-03-21 11:47:47 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3137
+2023-03-21 11:47:47 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3137
+2023-03-21 11:47:47 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3137
+2023-03-21 11:48:01 INFO Cap nhap du lieu. Byte sent: 3.6362704E7 Byte received: 3.63776E7
+2023-03-21 11:48:01 INFO Cap nhap du lieu. Byte sent: 3.6377992E7 Byte received: 3.6358784E7
+2023-03-21 11:48:01 INFO Cap nhap du lieu. Byte sent: 3.6358784E7 Byte received: 3.6374464E7
+2023-03-21 11:48:01 INFO Cap nhap du lieu. Byte sent: 3.637368E7 Byte received: 3.6383088E7
+2023-03-21 11:48:01 INFO Cap nhap du lieu. Byte sent: 3.6382304E7 Byte received: 3.6359568E7
+2023-03-21 11:48:01 INFO Cap nhap du lieu. Byte sent: 3.8572016E7 Byte received: 3.6362704E7
+2023-03-21 11:48:01 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:48:01 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:48:01 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:48:01 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:48:01 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:48:01 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:48:01 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3135
+2023-03-21 11:48:01 INFO Cap nhap du lieu. Byte sent: 3.6382304E7 Byte received: 3.6359568E7
+2023-03-21 11:48:01 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:48:01 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3125
+2023-03-21 11:48:01 INFO Cap nhap du lieu. Byte sent: 3.6358784E7 Byte received: 3.6374464E7
+2023-03-21 11:48:01 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3127
+2023-03-21 11:48:01 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3125
+2023-03-21 11:48:01 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3125
+2023-03-21 11:48:01 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:48:01 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3124
+2023-03-21 11:48:01 INFO Cap nhap du lieu. Byte sent: 3.6362704E7 Byte received: 3.63776E7
+2023-03-21 11:48:01 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3124
+2023-03-21 11:48:01 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:48:01 INFO Cap nhap du lieu. Byte sent: 3.637368E7 Byte received: 3.6362704E7
+2023-03-21 11:48:01 INFO Cap nhap du lieu. Byte sent: 3.637368E7 Byte received: 3.6383088E7
+2023-03-21 11:48:01 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:48:01 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3124
+2023-03-21 11:48:01 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3124
+2023-03-21 11:48:01 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:48:01 INFO Cap nhap du lieu. Byte sent: 3.6377992E7 Byte received: 3.6358784E7
+2023-03-21 11:48:01 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3127
+2023-03-21 11:48:01 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3127
+2023-03-21 11:48:01 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:48:01 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3127
+2023-03-21 11:49:33 INFO Cap nhap du lieu. Byte sent: 6.1129168E7 Byte received: 6.2279392E7
+2023-03-21 11:49:33 INFO Cap nhap du lieu. Byte sent: 6.2279392E7 Byte received: 6.2984304E7
+2023-03-21 11:49:33 INFO Cap nhap du lieu. Byte sent: 6.2984896E7 Byte received: 6.3056336E7
+2023-03-21 11:49:33 INFO Cap nhap du lieu. Byte sent: 6.3056336E7 Byte received: 6.3696376E7
+2023-03-21 11:49:33 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:49:33 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:49:33 INFO Cap nhap du lieu. Byte sent: 6.3696176E7 Byte received: 9.6006288E7
+2023-03-21 11:49:33 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:49:33 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:49:33 INFO Cap nhap du lieu. Byte sent: 6.1215504E7 Byte received: 6.112848E7
+2023-03-21 11:49:33 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:49:33 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3125
+2023-03-21 11:49:33 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:49:33 INFO Cap nhap du lieu. Byte sent: 6.1129168E7 Byte received: 6.2279392E7
+2023-03-21 11:49:33 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:49:33 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3124
+2023-03-21 11:49:33 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3134
+2023-03-21 11:49:33 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3133
+2023-03-21 11:49:33 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3122
+2023-03-21 11:49:33 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3124
+2023-03-21 11:49:33 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3122
+2023-03-21 11:49:33 INFO Cap nhap du lieu. Byte sent: 6.3056336E7 Byte received: 6.3696376E7
+2023-03-21 11:49:33 INFO Cap nhap du lieu. Byte sent: 6.2984896E7 Byte received: 6.3056336E7
+2023-03-21 11:49:33 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:49:33 INFO Cap nhap du lieu. Byte sent: 6.3696176E7 Byte received: 9.6006288E7
+2023-03-21 11:49:33 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:49:33 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3122
+2023-03-21 11:49:33 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:49:33 INFO Cap nhap du lieu. Byte sent: 6.2279392E7 Byte received: 6.2984304E7
+2023-03-21 11:49:33 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:49:33 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3122
+2023-03-21 11:49:33 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3122
+2023-03-21 11:49:33 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3122
+2023-03-21 11:50:06 INFO Cap nhap du lieu. Byte sent: 8.0357552E7 Byte received: 8.0400768E7
+2023-03-21 11:50:06 INFO Cap nhap du lieu. Byte sent: 8.0422032E7 Byte received: 8.0357456E7
+2023-03-21 11:50:06 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:50:06 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:50:06 INFO Cap nhap du lieu. Byte sent: 8.0394888E7 Byte received: 8.0398416E7
+2023-03-21 11:50:06 INFO Cap nhap du lieu. Byte sent: 8.0398904E7 Byte received: 8.0428504E7
+2023-03-21 11:50:06 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3116
+2023-03-21 11:50:06 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3116
+2023-03-21 11:50:06 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:50:06 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:50:06 INFO Cap nhap du lieu. Byte sent: 8.0362648E7 Byte received: 8.0422232E7
+2023-03-21 11:50:06 INFO Cap nhap du lieu. Byte sent: 8.04288E7 Byte received: 8.0362648E7
+2023-03-21 11:50:06 INFO Cap nhap du lieu. Byte sent: 8.0422032E7 Byte received: 8.0357456E7
+2023-03-21 11:50:06 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:50:06 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3104
+2023-03-21 11:50:06 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3104
+2023-03-21 11:50:06 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:50:06 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:50:06 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3096
+2023-03-21 11:50:06 INFO Cap nhap du lieu. Byte sent: 8.0394888E7 Byte received: 8.0398416E7
+2023-03-21 11:50:06 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3104
+2023-03-21 11:50:06 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3096
+2023-03-21 11:50:06 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:50:06 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3104
+2023-03-21 11:52:20 INFO Cap nhap du lieu. Byte sent: 490.0 Byte received: 2475464.0
+2023-03-21 11:52:20 INFO Cap nhap du lieu. Byte sent: 0.0 Byte received: 0.0
+2023-03-21 11:52:20 INFO Cap nhap du lieu. Byte sent: 0.0 Byte received: 0.0
+2023-03-21 11:52:20 INFO Cap nhap du lieu. Byte sent: 0.0 Byte received: 0.0
+2023-03-21 11:52:20 INFO Cap nhap du lieu. Byte sent: 0.0 Byte received: 0.0
+2023-03-21 11:52:20 INFO Cap nhap du lieu. Byte sent: 784.0 Byte received: 784.0
+2023-03-21 11:52:20 INFO Cap nhap du lieu. Byte sent: 784.0 Byte received: 784.0
+2023-03-21 11:52:20 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:52:20 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:52:20 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:52:20 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:52:20 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:52:20 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:52:20 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:52:20 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 2976
+2023-03-21 11:52:20 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3065
+2023-03-21 11:52:20 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3065
+2023-03-21 11:52:20 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 2918
+2023-03-21 11:52:20 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 2925
+2023-03-21 11:52:20 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 2925
+2023-03-21 11:52:20 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 3021
+2023-03-21 11:52:33 INFO Cap nhap du lieu. Byte sent: 0.0 Byte received: 0.0
+2023-03-21 11:52:33 INFO Cap nhap du lieu. Byte sent: 0.0 Byte received: 0.0
+2023-03-21 11:52:33 INFO Cap nhap du lieu. Byte sent: 784.0 Byte received: 980.0
+2023-03-21 11:52:33 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:52:33 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:52:33 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:52:33 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 2917
+2023-03-21 11:52:33 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 2918
+2023-03-21 11:52:33 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 2918
+2023-03-21 11:52:33 INFO Cap nhap du lieu. Byte sent: 0.0 Byte received: 0.0
+2023-03-21 11:52:33 INFO Cap nhap du lieu. Byte sent: 0.0 Byte received: 0.0
+2023-03-21 11:52:33 INFO Cap nhap du lieu. Byte sent: 0.0 Byte received: 0.0
+2023-03-21 11:52:33 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:52:33 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:52:33 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:52:33 INFO Cap nhap du lieu. Byte sent: 0.0 Byte received: 0.0
+2023-03-21 11:52:33 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 2917
+2023-03-21 11:52:33 INFO Cap nhap du lieu. Byte sent: 784.0 Byte received: 784.0
+2023-03-21 11:52:33 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 2859
+2023-03-21 11:52:33 INFO Cap nhap du lieu. Byte sent: 980.0 Byte received: 980.0
+2023-03-21 11:52:33 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:52:33 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:52:33 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:52:33 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 2859
+2023-03-21 11:52:33 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 2814
+2023-03-21 11:52:33 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 2790
+2023-03-21 11:52:33 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 2790
+2023-03-21 11:52:42 INFO Cap nhap du lieu. Byte sent: 0.0 Byte received: 0.0
+2023-03-21 11:52:42 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:52:42 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 2790
+2023-03-21 11:52:46 INFO Cap nhap du lieu. Byte sent: 866.0 Byte received: 98.0
+2023-03-21 11:52:46 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:52:46 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 2789
+2023-03-21 11:52:50 INFO Cap nhap du lieu. Byte sent: 0.0 Byte received: 0.0
+2023-03-21 11:52:50 INFO Cap nhap du lieu. Byte sent: 0.0 Byte received: 0.0
+2023-03-21 11:52:50 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:52:50 INFO Cap nhap du lieu. Byte sent: 0.0 Byte received: 0.0
+2023-03-21 11:52:50 INFO Cap nhap du lieu. Byte sent: 98.0 Byte received: 588.0
+2023-03-21 11:52:50 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:52:50 INFO Cap nhap du lieu. Byte sent: 0.0 Byte received: 0.0
+2023-03-21 11:52:50 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:52:50 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:52:50 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 2789
+2023-03-21 11:52:50 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:52:50 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 2789
+2023-03-21 11:52:50 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 2789
+2023-03-21 11:52:50 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 2815
+2023-03-21 11:52:50 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 2815
+2023-03-21 11:52:50 INFO Cap nhap du lieu. Byte sent: 0.0 Byte received: 0.0
+2023-03-21 11:52:50 INFO Cap nhap du lieu. Byte sent: 588.0 Byte received: 588.0
+2023-03-21 11:52:50 INFO Cap nhap du lieu. Byte sent: 0.0 Byte received: 0.0
+2023-03-21 11:52:50 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:52:50 INFO Cap nhap du lieu. Byte sent: 784.0 Byte received: 98.0
+2023-03-21 11:52:50 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:52:50 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:52:50 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:52:50 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 2805
+2023-03-21 11:52:50 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 2815
+2023-03-21 11:52:50 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 2806
+2023-03-21 11:52:50 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 2805
+2023-03-21 11:52:52 INFO Cap nhap du lieu. Byte sent: 0.0 Byte received: 0.0
+2023-03-21 11:52:52 INFO Cap nhap du lieu. Byte sent: 490.0 Byte received: 588.0
+2023-03-21 11:52:52 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:52:52 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:52:52 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 2797
+2023-03-21 11:52:52 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 2797
+2023-03-21 11:52:54 INFO Cap nhap du lieu. Byte sent: 0.0 Byte received: 0.0
+2023-03-21 11:52:54 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:52:54 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 2797
+2023-03-21 11:52:58 INFO Cap nhap du lieu. Byte sent: 0.0 Byte received: 0.0
+2023-03-21 11:52:58 DEBUG Starting new HTTP connection (1): 10.20.0.201:5000
+2023-03-21 11:52:58 DEBUG http://10.20.0.201:5000 "POST /write_full_data/ HTTP/1.1" 200 2797
