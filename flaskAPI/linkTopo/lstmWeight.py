@@ -1,13 +1,13 @@
 
 import sys, json, random
-PATH_ABSOLUTE = "/home/onos/"
+PATH_ABSOLUTE = "/home/onos/Downloads/A-Server-and-Route-selection-mechanism/"
 
 sys.path.append(PATH_ABSOLUTE + 'dataBaseMongo')
 import Lstm
 
 sys.path.append(PATH_ABSOLUTE + 'utils')
 from get_local_ip import get_local_ip
-suffix = get_local_ip("eth0").split(".")[-1]
+suffix = get_local_ip("ens33").split(".")[-1]
 class lstmWeight():
     def __init__(self):
         self.ip_local = str(json.load(open(PATH_ABSOLUTE +'config/config-' + suffix + '.json'))['ip_local'])

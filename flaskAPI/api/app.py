@@ -19,7 +19,7 @@ logging.basicConfig(
         filename="./logging/basic.log",
     )
 
-PATH_ABSOLUTE = "/home/onos/A-Server-and-Route-selection-mechanism/"
+PATH_ABSOLUTE = "/home/onos/Downloads/A-Server-and-Route-selection-mechanism/"
 sys.path.append(PATH_ABSOLUTE+'flaskAPI/dataBaseMongo')
 sys.path.append(PATH_ABSOLUTE+'flaskAPI/linkTopo')
 sys.path.append(PATH_ABSOLUTE+'config')
@@ -51,7 +51,7 @@ app = Flask(__name__)
 
 sys.path.append(PATH_ABSOLUTE + 'utils')
 from get_local_ip import get_local_ip
-suffix = get_local_ip("eth0").split(".")[-1]
+suffix = get_local_ip("ens33").split(".")[-1]
 
 ip_ccdn = str(json.load(open(PATH_ABSOLUTE + 'config/config-' + suffix + '.json'))['ip_ccdn'])
 

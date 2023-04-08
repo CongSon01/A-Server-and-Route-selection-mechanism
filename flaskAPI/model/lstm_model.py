@@ -6,8 +6,8 @@ import joblib
 
 class lstm_model():
     def __init__(self):
-        self.model = self.load_model("/home/onos/Desktop/paper1/paper1/model/best_model_lstm_new.hdf5")
-        self.scaler = joblib.load('/home/onos/Desktop/paper1/paper1/model/scaler.save')
+        self.model = self.load_model("/home/onos/Downloads/A-Server-and-Route-selection-mechanism/Desktop/paper1/paper1/model/best_model_lstm_new.hdf5")
+        self.scaler = joblib.load('/home/onos/Downloads/A-Server-and-Route-selection-mechanism/Desktop/paper1/paper1/model/scaler.save')
         # return self._model()
     
     def load_model(self, filepath):
