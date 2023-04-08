@@ -1,6 +1,6 @@
 import sys
 
-PATH_ABSOLUTE = "/home/onos/Downloads/A-Server-and-Route-selection-mechanism/"
+PATH_ABSOLUTE = "/usr/local/"
 
 sys.path.append(PATH_ABSOLUTE + 'dataBaseMongo')
 # sys.path.append(PATH_ABSOLUTE + 'api')

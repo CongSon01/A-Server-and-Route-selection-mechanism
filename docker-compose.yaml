@@ -1,0 +1,62 @@
+version: "2.2"
+
+services:
+  slave-1:
+    image: slave:latest
+    ports:
+      - 8080:8080
+      - 5000:5000
+      - 27017:27017
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - /home/khn/Documents/A-Server-and-Route-selection-mechanism:/usr/local
+    networks:
+      controllers:
+        ipv4_address: 172.10.0.202
+  slave-2:
+    image: slave:latest
+    ports:
+      - 8080:8080
+      - 5000:5000
+      - 27017:27017
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - /home/khn/Documents/A-Server-and-Route-selection-mechanism:/usr/local
+    networks:
+      controllers:
+        ipv4_address: 172.10.0.203
+  slave-3:
+    image: slave:latest
+    ports:
+      - 8080:8080
+      - 5000:5000
+      - 27017:27017
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - /home/khn/Documents/A-Server-and-Route-selection-mechanism:/usr/local
+    networks:
+      controllers:
+        ipv4_address: 172.10.0.204
+  slave-4:
+    image: slave:latest
+    ports:
+      - 8080:8080
+      - 5000:5000
+      - 27017:27017
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - /home/khn/Documents/A-Server-and-Route-selection-mechanism:/usr/local
+    networks:
+      controllers:
+        ipv4_address: 172.10.0.205
+
+networks:
+  controllers:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.10.0.0/16

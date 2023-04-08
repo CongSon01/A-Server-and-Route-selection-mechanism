@@ -1,6 +1,6 @@
 import sys
-sys.path.append('/home/onos/Desktop/paper1/paper1/dataBaseMongo')
-sys.path.append('/home/onos/Desktop/paper1/paper1/api')
+sys.path.append('/usr/local/Desktop/paper1/paper1/dataBaseMongo')
+sys.path.append('/usr/local/Desktop/paper1/paper1/api')
 import numpy as np
 
 class linkWeight(object):

@@ -1,6 +1,6 @@
 import sys
 
-PATH_ABSOLUTE = "/home/onos/Downloads/A-Server-and-Route-selection-mechanism/"
+PATH_ABSOLUTE = "/usr/local/"
 
 sys.path.append(PATH_ABSOLUTE + 'dataBaseMongo')
 sys.path.append(PATH_ABSOLUTE + 'api')
@@ -16,7 +16,7 @@ import linkWeight
 
 sys.path.append(PATH_ABSOLUTE + 'utils')
 from get_local_ip import get_local_ip
-suffix = get_local_ip("ens33").split(".")[-1]
+suffix = get_local_ip("eth0").split(".")[-1]
 
 class updateWeight(object):
 

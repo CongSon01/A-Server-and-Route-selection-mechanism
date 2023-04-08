@@ -3,3 +3,4 @@
 
 /flaskAPI/**/__pycache__
 /flaskAPI/**/*.pyc
+*.pyc
