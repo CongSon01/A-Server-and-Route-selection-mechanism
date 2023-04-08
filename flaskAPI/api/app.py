@@ -11,9 +11,20 @@
 import logging
 import sys
 
+# ouput nhung login co do serve nang hon debug 
+logging.basicConfig(
+        level=logging.DEBUG,
+        format="%(asctime)s %(levelname)s %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
+        filename="./logging/basic.log",
+    )
+
 PATH_ABSOLUTE = "/home/onos/Downloads/A-Server-and-Route-selection-mechanism/"
 sys.path.append(PATH_ABSOLUTE+'flaskAPI/dataBaseMongo')
 sys.path.append(PATH_ABSOLUTE+'flaskAPI/linkTopo')
+sys.path.append(PATH_ABSOLUTE+'config')
+
+from Qos_threshold import OVERHEAD_THRESHOLD
 
 from flask import Flask, request, jsonify
 
@@ -28,8 +39,9 @@ import requests
 from updateRouteCost import RouteCost
 
 # ignore log in flask
+# Flask logs all requests and responses to the console using the "werkzeug" logger
 log = logging.getLogger('werkzeug')
-# log.setLevel(logging.INFO)
+# only record messages that indicate an error occurred or more severe.
 log.setLevel(logging.ERROR)
 
 
@@ -84,12 +96,18 @@ def write_data():
             else:
                 dicdata[d[0]] = d[1]
 
-        #  remove default data
+       #  remove default data
         check_overhead = (float(dicdata['byteSent']) + float(dicdata['byteReceived']))
         
         # if check_overhead > 15000000:
-        if check_overhead > 600:
-            print("****************** Cap nhat du lieu ******************")
+        ############## check > 1000 bytes de remove outliers
+        if check_overhead <= OVERHEAD_THRESHOLD:
+            # print("****************** Cap nhat du lieu ******************")
+
+            log_data = "Cap nhap du lieu. Byte sent: " + dicdata['byteSent'] + \
+                         " Byte received: " + dicdata['byteReceived']
+            logging.info(log_data)
+
             # push data to rabbit (mechanism pub/sub)
             # pub.connectRabbitMQ(data=dicdata)
 
@@ -171,4 +189,4 @@ def read_learn_link():
 
 if __name__ == '__main__':
     ip_local = str(json.load(open(PATH_ABSOLUTE+'config/config-' + suffix + '.json'))['ip_local'])
-    app.run(host="0.0.0.0", debug=True, use_reloader=False)
+    app.run(host="0.0.0.0", debug=True, use_reloader=True)
