@@ -6,6 +6,8 @@ import pika
 import config
 import time 
 
+nic = sys.argv[1]
+
 # cmd = 'sudo tshark -i "any" -Y "udp and gquic.payload" \
 #         -d udp.port==443,gquic \
 #         -T fields \
@@ -14,7 +16,7 @@ import time
 #         -E header=n -E separator=, -E quote=d -E occurrence=f'
 
 #s9-eth3
-cmd = 'sudo tshark -i "s9-eth3" -Y "udp and gquic.payload" \
+cmd = 'sudo tshark -i ${nic} -Y "udp and gquic.payload" \
         -d udp.port==443,gquic \
         -T fields \
         -e frame.time_epoch -e ip.src -e udp.srcport -e ip.dst -e udp.dstport -e ip.proto \
