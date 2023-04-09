@@ -13,7 +13,7 @@ import sys
 
 # ouput nhung login co do serve nang hon debug 
 logging.basicConfig(
-        level=logging.DEBUG,
+        level=logging.INFO,
         format="%(asctime)s %(levelname)s %(message)s",
         datefmt="%Y-%m-%d %H:%M:%S",
         filename="./logging/basic.log",
@@ -39,10 +39,10 @@ import requests
 from updateRouteCost import RouteCost
 
 # ignore log in flask
-# Flask logs all requests and responses to the console using the "werkzeug" logger
-log = logging.getLogger('werkzeug')
-# only record messages that indicate an error occurred or more severe.
-log.setLevel(logging.ERROR)
+# Flask logs all API requests and responses to the console using the "werkzeug" logger
+# log = logging.getLogger('werkzeug')
+# # only record messages that indicate an error occurred or more severe.
+# log.setLevel(logging.ERROR)
 
 
 # Init app
@@ -103,7 +103,7 @@ def write_data():
         if check_overhead <= OVERHEAD_THRESHOLD:
             # print("****************** Cap nhat du lieu ******************")
 
-            log_data = "Cap nhap du lieu. Byte sent: " + dicdata['byteSent'] + \
+            log_data = "Byte sent: " + dicdata['byteSent'] + \
                          " Byte received: " + dicdata['byteReceived']
             logging.info(log_data)
 
