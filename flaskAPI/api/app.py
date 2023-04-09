@@ -1,4 +1,3 @@
-
 # This is a basic forwarding component used in the article:
 # Authors: Nam-Thang Hoang, Hai-Anh Tran, Cong-Son Duong, Le-Tuan Nguyen
 # SOICT 
@@ -104,7 +103,9 @@ def write_data():
             # print("****************** Cap nhat du lieu ******************")
 
             log_data = "Byte sent: " + dicdata['byteSent'] + \
-                         " Byte received: " + dicdata['byteReceived']
+                         " Byte received: " + dicdata['byteReceived'] + \
+                         " LU: " + dicdata['linkUtilization']
+            # print(log_data)
             logging.info(log_data)
 
             # push data to rabbit (mechanism pub/sub)
